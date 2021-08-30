@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="src\Enums.hpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClInclude Include="src\PCH.hpp" />
+    <ClCompile Include="src\PCH.cpp" />
+    <ClCompile Include="src\characters\enemies\Enemy.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClInclude Include="src\characters\enemies\Enemy.hpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\characters\enemies\Humanoid.hpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClCompile Include="src\characters\enemies\Humanoid.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClInclude Include="src\characters\Player.hpp">
+      <Filter>Characters</Filter>
+    </ClInclude>
+    <ClCompile Include="src\characters\Player.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClInclude Include="src\characters\enemies\Slime.hpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClInclude>
+    <ClCompile Include="src\characters\enemies\Slime.cpp">
+      <Filter>Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\items\bullet\Projectile.cpp">
+      <Filter>Items\Bullet</Filter>
+    </ClCompile>
+    <ClInclude Include="src\items\bullet\Projectile.hpp">
+      <Filter>Items\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="src\items\loot\Gem.hpp">
+      <Filter>Items\Loot</Filter>
+    </ClInclude>
+    <ClCompile Include="src\items\loot\Gem.cpp">
+      <Filter>Items\Loot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\items\loot\Gold.cpp">
+      <Filter>Items\Loot</Filter>
+    </ClCompile>
+    <ClInclude Include="src\items\loot\Gold.hpp">
+      <Filter>Items\Loot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\items\loot\Heart.hpp">
+      <Filter>Items\Loot</Filter>
+    </ClInclude>
+    <ClCompile Include="src\items\loot\Heart.cpp">
+      <Filter>Items\Loot</Filter>
+    </ClCompile>
+    <ClInclude Include="src\items\loot\Key.hpp">
+      <Filter>Items\Loot</Filter>
+    </ClInclude>
+    <ClCompile Include="src\items\loot\Key.cpp">
+      <Filter>Items\Loot</Filter>
+    </ClCompile>
+    <ClCompile Include="src\items\loot\Potion.cpp">
+      <Filter>Items\Loot</Filter>
+    </ClCompile>
+    <ClInclude Include="src\items\loot\Potion.hpp">
+      <Filter>Items\Loot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\items\environment\Torch.hpp">
+      <Filter>Items\Environment</Filter>
+    </ClInclude>
+    <ClCompile Include="src\items\environment\Torch.cpp">
+      <Filter>Items\Environment</Filter>
+    </ClCompile>
+    <ClInclude Include="src\scenes\GameScene.hpp">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClCompile Include="src\scenes\GameScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClInclude Include="src\scenes\Level.hpp">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClCompile Include="src\scenes\Level.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Entity.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClInclude Include="src\core\Entity.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Game.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClCompile Include="src\core\Game.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClInclude Include="src\core\Input.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClCompile Include="src\core\Input.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Item.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClInclude Include="src\core\Item.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Object.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClCompile Include="src\core\Object.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClInclude Include="src\core\Scene.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClCompile Include="src\core\Scene.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClInclude Include="src\manager\SoundBufferManager.hpp">
+      <Filter>Manager Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\manager\TextureManager.hpp">
+      <Filter>Manager Classes</Filter>
+    </ClInclude>
+    <ClCompile Include="src\manager\SoundBufferManager.cpp">
+      <Filter>Manager Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\manager\TextureManager.cpp">
+      <Filter>Manager Classes</Filter>
+    </ClCompile>
+    <ClInclude Include="src\utils\Util.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClCompile Include="src\utils\MathUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClInclude Include="src\utils\MathUtils.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a874391d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager Classes">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters">
+      <UniqueIdentifier>{0034e1f8-58f6-4194-8bb6-25994b5fd723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Characters\Enemies">
+      <UniqueIdentifier>{04b3795c-51fc-45bb-8f43-d384c6a1da89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{2c1f17f0-1735-404a-adba-440b45d3cc21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\Loot">
+      <UniqueIdentifier>{76f2544c-ca10-4a56-b4b1-218621830ce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\Environment">
+      <UniqueIdentifier>{99a6506d-1579-4b48-b6cc-2f7e909e1097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\Bullet">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743916}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\utils\Util.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
