@@ -3,16 +3,23 @@ The source code ased on files to book "D.Green - Procedural Content Generation f
 
 
 ## directory structure: 
-. \
-- deliveries - third-party libraries, like SFML
-- resources
-- src - sourse code.
+- . core
+- \deliveries - third-party libraries, like SFML
+- \resources
+- \src - sourse code.
 
 
 ## Tasks:
 - [ ] Common resources manager
 - [ ] Provide some config file to load all scene's resurse, choose xml or json or other
 
+
+pic delivery lib from https://en.cppreference.com/w/cpp/links/libs
+expexted: 
+- xml or json for scene's resurses
+- apy config like ini ?
+- entyty engine + box2d ?
+- logger or custom ?
 
 
 
