@@ -13,7 +13,7 @@ m_canTakeDamage(true),
 m_statPoints(0)
 {
 	// Generate a random class.
-	m_class = RandomEnum(PLAYER_CLASS::COUNT);
+	m_class = Random(PLAYER_CLASS::COUNT);
 	std::string className;
 
 	// Set class-specific variables.
@@ -183,7 +183,7 @@ void Player::Update(float timeDelta, Level& level)
 		if (!IsAnimated())
 		{
 			// Update sprite to walking version.
-			m_currentTextureIndex -= 4;
+			//m_currentTextureIndex -= 4;
 			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Start movement animations.
@@ -238,7 +238,7 @@ void Player::SetRandomTraits()
 {
 	// Generate the traits.
 	for (int i = 0; i < PLAYER_TRAIT_COUNT; ++i)
-		m_traits[i] = RandomEnum(PLAYER_TRAIT::COUNT);
+		m_traits[i] = Random(PLAYER_TRAIT::COUNT);
 
 	// Action the traits.
 	for (PLAYER_TRAIT trait : m_traits)

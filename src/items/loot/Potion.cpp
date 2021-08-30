@@ -12,7 +12,7 @@ m_dexterity(0),
 m_stamina(0)
 {
 	// Set the potion type.
-	m_potionType = RandomEnum(POTION::COUNT);
+	m_potionType = Random(POTION::COUNT);
 
 	// Set stat modifiers, sprite file path, and item name.
 	switch (m_potionType)

@@ -8,7 +8,7 @@
 Humanoid::Humanoid()
 {
 	// Generate a humanoid type. (Skeleton or Goblin)
-	HUMANOID humanoidType = RandomEnum(HUMANOID::COUNT);
+	HUMANOID humanoidType = Random(HUMANOID::COUNT);
 	std::string enemyName;
 
 	// Set enemy specific variables.

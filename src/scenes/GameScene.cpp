@@ -635,7 +635,7 @@ void GameScene::PopulateLevel()
 		if (Random())
 		{
 			//only gem or gold
-			SpawnItem(RandomEnum(ITEM::GOLD));
+			SpawnItem(Random(ITEM::GOLD));
 		}
 	}
 
@@ -644,7 +644,7 @@ void GameScene::PopulateLevel()
 	{
 		if (Random())
 		{
-			SpawnEnemy(RandomEnum(ENEMY::COUNT));
+			SpawnEnemy(Random(ENEMY::COUNT));
 		}
 	}
 }
@@ -909,7 +909,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 					{
 						position.x += Random(-15, 15);
 						position.y += Random(-15, 15);
-						SpawnItem(RandomEnum(ITEM::GOLD), position);	// Generates a number 0 - 2
+						SpawnItem(Random(ITEM::GOLD), position);	// Generates a number 0 - 2
 					}
 
 					if (Random(4) == 0)			// 1 in 5 change of spawning health.

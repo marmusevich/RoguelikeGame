@@ -110,7 +110,8 @@ inline bool Random()
  * \return a random number between 0 and max-1
  */
 template <typename T>
-inline T Random(T max)
+typename std::enable_if<std::is_integral<T>::value, T>::type
+Random(T max)
 {
 	T ret = static_cast<T>(0);
 	if (static_cast<int>(max) + 1 != 0)
@@ -121,7 +122,22 @@ inline T Random(T max)
 }
 
 template <typename T>
-inline  T RandomEnum(T max)
+typename std::enable_if<std::is_floating_point<T>::value, T>::type
+Random(T max)
+{
+	// TODO revork by calculate fraction digits 
+	const int mFactor = 1000;
+	T ret = static_cast<T>(0);
+	if (static_cast<int>(max * mFactor) + 1 != 0)
+	{
+		ret = static_cast<T>(std::rand() % (static_cast<int>(max * mFactor) + 1) / mFactor);
+	}
+	return ret;
+}
+
+template <typename T>
+typename std::enable_if<std::is_enum<T>::value, T>::type
+Random(T max)
 {
 	T ret = static_cast<T>(0);
 	if (static_cast<int>(max) != 0)
@@ -130,51 +146,6 @@ inline  T RandomEnum(T max)
 	}
 	return ret;
 }
-
-
-// TODO  make specilization to ENUMS and FLOAT (DOUBLE), avoid not numeric spec
-
-//template <typename T, std::size_t, typename = void>
-//template <typename T/*, typename = void*/>
-//inline T Random(T max);
-//
-//template <typename T>
-//inline typename std::enable_if< std::is_integral<T>::value, T >::type Random <>(T max)
-////typename std::enable_if<std::is_integral<T>::value, bool>::type
-////inline Random(T max) 
-//{
-//	T ret = static_cast<T>(0);
-//	if (static_cast<int>(max) + 1 != 0)
-//	{
-//	ret = static_cast<T>(std::rand() % (static_cast<int>(max) + 1));
-//	}
-//	return ret;
-//}
-//
-//template <typename T>
-//inline typename std::enable_if< std::is_enum<T>::value, T >::type Random<>(T max)
-////typename std::enable_if<std::is_enum<T>::value, bool>::type
-////inline Random(T max)
-//{
-//	T ret = static_cast<T>(0);
-//	if (static_cast<int>(max) != 0)
-//	{
-//		ret = static_cast<T>(std::rand() % (static_cast<int>(max) ));
-//	}
-//	return ret;
-//}
-
-//template <typename T>
-//inline T Random< T, typename std::enable_if< std::is_floating_point<T>::value >::type >(T max)
-//{
-//	T ret = static_cast<T>(0);
-//	if (static_cast<int>(max) != 0)
-//	{
-//		ret = static_cast<T>(std::rand() % (static_cast<int>(max)));
-//	}
-//	return ret;
-//}
-
 
 /**
  * The random function generates pseudo-random numbers.
