@@ -9,7 +9,7 @@ float DistanceBetweenPoints(sf::Vector2f poit1, sf::Vector2f poit2)
 
 float Magnitude(sf::Vector2f vec)
 {
-	return std::sqrtf(std::powf(vec.x, 2) + std::powf(vec.y, 2));
+	return std::hypotf(vec.x, vec.y);
 }
 
 float AngleBetweenVectors(sf::Vector2f vec1, sf::Vector2f vec2)

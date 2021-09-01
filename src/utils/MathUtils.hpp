@@ -8,7 +8,13 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
 
-//Magnitude
+
+/**
+ * TODO instead vector2 util use std::complex and provide convert func beetwen.
+ * all func from this file has in std::complex and so more ...
+ */
+
+
 //typedef Vector2<int>          Vector2i;
 //typedef Vector2<unsigned int> Vector2u;
 //typedef Vector2<float>        Vector2f;
@@ -16,47 +22,40 @@
 
 constexpr const float PI = 3.141592653589793238462643383279502884f;
 
-
 inline float RadToGrad(float rad);
 
 inline float GradToRad(float grad);
 
 
-
 /**
  * Linear interpolation.
  * \tparam - scalar type of functions (int, float ant etc.)
- * \param x - the number to map
+ * \param x - the number to interpolate, in range 'in'
  * \param in_min - the lower bound of the value's current range
  * \param in_max - the upper bound of the value's current range
  * \param out_min - the lower bound of the value's target range
  * \param out_max - the upper bound of the value's target range
- * \return The mapped value.
+ * \return The interpolated value, in range 'out'.
  *
- * NOTE ReWrite discriptions
- * Re-maps a number from one range to another. That is, a value of fromLow would get mapped to toLow,
+ * Linear interpolation a number from one range to another. That is, a value of fromLow would get mapped to toLow,
  * a value of fromHigh to toHigh, values in-between to values in-between, etc.
  *
  * Does not constrain values to within the range, because out-of-range values are sometimes intended and useful.
  * The constrain() function may be used either before or after this function, if limits to the ranges are desired.
  *
  * Note that the "lower bounds" of either range may be larger or smaller than the "upper bounds"
- * so the map() function may be used to reverse a range of numbers, for example
+ * so the LinearInterpolation() function may be used to reverse a range of numbers, for example
  *
- * y = map(x, 1, 50, 50, 1);
+ * y = LinearInterpolation(x, 1, 50, 50, 1);
  * The function also handles negative numbers well, so that this example
- * y = map(x, 1, 50, 50, -100);
+ * y = LinearInterpolation(x, 1, 50, 50, -100);
  * is also valid and works well.
- *
- * The map() function uses integer math so will not generate fractions, when the math might indicate that it
- * should do so. Fractional remainders are truncated, and are not rounded or averaged.
-  */
+ */
 template <typename T>
 inline T LinearInterpolation(T x, T in_min, T in_max, T out_min, T out_max)
 {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
-
 
 /*
 * 2D Vectors
