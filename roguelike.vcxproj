@@ -137,10 +137,12 @@
     <ClInclude Include="src\items\bullet\Projectile.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\manager\SoundBufferManager.cpp" />
-    <ClInclude Include="src\manager\SoundBufferManager.hpp" />
-    <ClInclude Include="src\manager\TextureManager.hpp" />
-    <ClCompile Include="src\manager\TextureManager.cpp" />
+    <ClCompile Include="src\core\manager\SoundBufferManager.cpp" />
+    <ClInclude Include="src\core\manager\SoundBufferManager.hpp" />
+    <ClInclude Include="src\core\manager\TextureManager.hpp" />
+    <ClCompile Include="src\core\manager\TextureManager.cpp" />
+    <ClInclude Include="src\core\manager\ResourceHolder.hpp" />
+    <ClInclude Include="src\core\manager\ResourceHolder.ipp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\scenes\GameScene.hpp" />

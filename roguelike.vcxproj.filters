@@ -119,18 +119,24 @@
     <ClCompile Include="src\core\Scene.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClInclude Include="src\manager\SoundBufferManager.hpp">
-      <Filter>Manager Classes</Filter>
+    <ClInclude Include="src\core\manager\SoundBufferManager.hpp">
+      <Filter>Core\Manager Classes</Filter>
     </ClInclude>
-    <ClInclude Include="src\manager\TextureManager.hpp">
-      <Filter>Manager Classes</Filter>
+    <ClInclude Include="src\core\manager\TextureManager.hpp">
+      <Filter>Core\Manager Classes</Filter>
     </ClInclude>
-    <ClCompile Include="src\manager\SoundBufferManager.cpp">
-      <Filter>Manager Classes</Filter>
+    <ClCompile Include="src\core\manager\SoundBufferManager.cpp">
+      <Filter>Core\Manager Classes</Filter>
     </ClCompile>
-    <ClCompile Include="src\manager\TextureManager.cpp">
-      <Filter>Manager Classes</Filter>
+    <ClCompile Include="src\core\manager\TextureManager.cpp">
+      <Filter>Core\Manager Classes</Filter>
     </ClCompile>
+    <ClInclude Include="src\core\manager\ResourceHolder.hpp">
+      <Filter>Core\Manager Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\manager\ResourceHolder.ipp">
+      <Filter>Core\Manager Classes</Filter>
+    </ClInclude>
     <ClInclude Include="src\utils\Util.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -151,9 +157,6 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743912}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager Classes">
-      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743913}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Characters">
       <UniqueIdentifier>{0034e1f8-58f6-4194-8bb6-25994b5fd723}</UniqueIdentifier>
     </Filter>
@@ -171,6 +174,9 @@
     </Filter>
     <Filter Include="Items\Bullet">
       <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Manager Classes">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743913}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
