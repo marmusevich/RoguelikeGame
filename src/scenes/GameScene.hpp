@@ -19,6 +19,18 @@
 
 #include <unordered_map>
 
+//TODO
+//move to core/Scene
+#include "manager/ResourceHolder.hpp"
+/*
+#include <memory>
+//fwd
+template <typename T>
+class ResourceHolder;
+*/
+
+
+
 class GameScene : public Scene
 {
 	using tBase = Scene;
@@ -136,11 +148,6 @@ private:
 	sf::View m_views[static_cast<int>(VIEW::COUNT)];
 
 	/**
-	 * The default font to be used when drawing text.
-	 */
-	sf::Font m_font;
-
-	/**
 	 * A vector that holds all items within the level.
 	 */
 	std::vector<std::unique_ptr<Item>> m_items;
@@ -159,11 +166,6 @@ private:
 	 * The main player object. Only one instance of this object should be created at any one time.
 	 */
 	Player m_player;
-
-	/**
-	 * Text used by the DrawText() function.
-	 */
-	sf::Text m_text;
 
 	/**
 	 * A vector containing all sprites that make up the lighting grid.
@@ -365,15 +367,28 @@ private:
 	 */
 	int m_playerUiTextureIDs[static_cast<int>(PLAYER_CLASS::COUNT)];
 
-
-
-
 	std::unordered_map<POTION, int> m_potionTextureIDs;
 	std::unordered_map<GOLD_TEXTURE_TYPE, int> m_goldTextureIDs;
 	int m_gemTextureID;
 	int m_keyTextureID;
 	int m_heartTextureID;
 	int m_lightTextureID;
+
+
+	/**
+	 * The default font to be used when drawing text.
+	 */
+	sf::Font m_font;
+
+	ResourceHolder<EResurceType::Font> mFonts;
+
+	//std::unique_ptr< ResourceHolder<> >  mFonts;
+
+	//TODO way m_text is class member, maybe prefer local variable
+	//sf::Text text;
+	///Text used by the DrawText() function.
+	sf::Text m_text;
+
 };
 
 #endif //SCENE_H

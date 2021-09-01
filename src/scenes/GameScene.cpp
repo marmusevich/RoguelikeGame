@@ -12,6 +12,7 @@
 #include <sstream>
 
 
+
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
 static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies that can be spawned each room.
 
@@ -51,6 +52,15 @@ bool GameScene::BeforeLoad()
 	// Create the game font.
 	m_font.loadFromFile("resources/fonts/ADDSBP__.TTF");
 	//m_font.loadFromFile("resources/fonts/arial.TTF");
+
+	//m_text.setFont(m_font);
+	
+	//OR
+
+	const tResurceID font_id =  mFonts.Load("resources/fonts/ADDSBP__.TTF");
+	m_text.setFont(mFonts.Get(font_id));
+
+
 
 	// Load the correct projectile texture.
 	switch (m_player.GetClass())
@@ -998,8 +1008,11 @@ void GameScene::UpdateProjectiles(float timeDelta)
 // Draw the given string at the given position.
 void GameScene::DrawString(sf::RenderWindow& window, std::string text, sf::Vector2f position, unsigned int size)
 {
+	//TODO way m_text is class member, maybe prefer local variable
+	//sf::Text text;
+	//text.setFont(m_font);
+
 	m_text.setString(text);
-	m_text.setFont(m_font);
 	m_text.setCharacterSize(size);
 	m_text.setPosition(position.x - (m_text.getLocalBounds().width / 2.f), position.y - (m_text.getLocalBounds().height / 2.f));
 
