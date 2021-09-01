@@ -1,7 +1,7 @@
 //#include "PCH.hpp"
 #include "items/loot/Heart.hpp"
-#include "manager\TextureManager.hpp"
-#include "utils\MathUtils.hpp"
+#include "core/manager/TextureManager.hpp"
+#include "utils/MathUtils.hpp"
 // Default constructor.
 Heart::Heart()
 {

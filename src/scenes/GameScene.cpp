@@ -1,16 +1,18 @@
-//#include "PCH.hpp"
 
-#include "scenes\GameScene.hpp"
+#include "scenes/GameScene.hpp"
 
 #include "core/Game.hpp"
-#include "manager/TextureManager.hpp"
-#include "manager/SoundBufferManager.hpp"
+#include "core/manager/TextureManager.hpp"
+#include "core/manager/SoundBufferManager.hpp"
 #include "utils/Util.hpp"
 #include "utils/MathUtils.hpp"
 
 #include <algorithm>
 #include <sstream>
 
+
+//? TODO how hide detals, move to base scene and wrap in cpp ?
+#include "core/manager/ResourceHolder.hpp"
 
 
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
@@ -57,8 +59,8 @@ bool GameScene::BeforeLoad()
 	
 	//OR
 
-	const tResurceID font_id =  mFonts.Load("resources/fonts/ADDSBP__.TTF");
-	m_text.setFont(mFonts.Get(font_id));
+	const NResursesManagement::tResurceID font_id =  mResurceManager.mFonts->Load("resources/fonts/ADDSBP__.TTF");
+	m_text.setFont(mResurceManager.mFonts->Get(font_id));
 
 
 

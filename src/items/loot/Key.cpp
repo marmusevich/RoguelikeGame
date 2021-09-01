@@ -1,6 +1,6 @@
 //#include "PCH.hpp"
 #include "items/loot/Key.hpp"
-#include "manager\TextureManager.hpp"
+#include "core/manager/TextureManager.hpp"
 
 // Default constructor.
 Key::Key()

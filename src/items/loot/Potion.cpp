@@ -1,7 +1,7 @@
 //#include "PCH.hpp"
-#include "items\loot\Potion.hpp"
-#include "manager\TextureManager.hpp"
-#include "utils\MathUtils.hpp"
+#include "items/loot/Potion.hpp"
+#include "core/manager/TextureManager.hpp"
+#include "utils/MathUtils.hpp"
 
 // Default constructor.
 Potion::Potion(const std::unordered_map<POTION, int>& textureIDs) :

@@ -88,8 +88,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\manager\ResurceManager.cpp" />
     <ClCompile Include="src\utils\Util.cpp" />
     <ClCompile Include="src\utils\MathUtils.cpp" />
+    <ClInclude Include="src\core\manager\ResurceManager.hpp" />
+    <ClInclude Include="src\core\manager\ResurceTraits.hpp" />
+    <ClInclude Include="src\core\manager\ResurceType.hpp" />
     <ClInclude Include="src\Enums.hpp" />
     <ClCompile Include="src\main.cpp" />
     <ClInclude Include="src\PCH.hpp" />

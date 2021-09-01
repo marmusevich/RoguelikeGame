@@ -146,6 +146,15 @@
     <ClInclude Include="src\utils\MathUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\manager\ResurceManager.hpp">
+      <Filter>Core\Manager Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\manager\ResurceTraits.hpp">
+      <Filter>Core\Manager Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\manager\ResurceType.hpp">
+      <Filter>Core\Manager Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -182,6 +191,9 @@
   <ItemGroup>
     <ClCompile Include="src\utils\Util.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\manager\ResurceManager.cpp">
+      <Filter>Core\Manager Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

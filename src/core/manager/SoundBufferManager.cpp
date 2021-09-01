@@ -1,5 +1,5 @@
 //#include "PCH.hpp"
-#include "manager\SoundBufferManager.hpp"
+#include "core/manager/SoundBufferManager.hpp"
 
 std::unordered_map<std::string, std::pair<int, std::unique_ptr<sf::SoundBuffer>>> SoundBufferManager::m_soundBuffers;
 int SoundBufferManager::m_currentId = 0;

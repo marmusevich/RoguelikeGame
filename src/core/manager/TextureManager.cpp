@@ -1,5 +1,5 @@
 //#include "PCH.hpp"
-#include "manager\TextureManager.hpp"
+#include "core/manager/TextureManager.hpp"
 
 std::unordered_map<std::string, int> TextureManager::m_FileToId;
 std::unordered_map<int, std::unique_ptr<sf::Texture>> TextureManager::m_textures;

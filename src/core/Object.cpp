@@ -2,7 +2,8 @@
 #include "core/Object.hpp"
 
 // Default constructor.
-Object::Object() : 
+Object::Object() 
+	: 
 m_position{ 0.f, 0.f },
 m_animationSpeed(0),
 m_isAnimated(false),

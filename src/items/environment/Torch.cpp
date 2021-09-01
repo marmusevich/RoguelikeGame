@@ -1,7 +1,7 @@
 //#include "PCH.hpp"
-#include "items\environment\Torch.hpp"
-#include "manager\TextureManager.hpp"
-#include "utils\MathUtils.hpp"
+#include "items/environment/Torch.hpp"
+#include "core/manager/TextureManager.hpp"
+#include "utils/MathUtils.hpp"
 
 // Default constructor.
 Torch::Torch() :

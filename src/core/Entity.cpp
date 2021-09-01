@@ -1,7 +1,7 @@
 //#include "PCH.hpp"
 #include "Enums.hpp"
 #include "core/Entity.hpp"
-#include "manager/TextureManager.hpp"
+#include "core/manager/TextureManager.hpp"
 
 
 // Default constructor.

@@ -1,6 +1,6 @@
 //#include "PCH.hpp"
 #include "characters/enemies/Humanoid.hpp"
-#include "manager/TextureManager.hpp"
+#include "core/manager/TextureManager.hpp"
 #include "utils/MathUtils.hpp"
 
 

@@ -21,7 +21,7 @@
 
 //TODO
 //move to core/Scene
-#include "manager/ResourceHolder.hpp"
+#include "core/manager/ResurceManager.hpp"
 /*
 #include <memory>
 //fwd
@@ -35,7 +35,7 @@ class GameScene : public Scene
 {
 	using tBase = Scene;
 public:
-	GameScene(const Game& game);
+	explicit GameScene(const Game& game);
 
 	virtual bool BeforeLoad() override;
 
@@ -380,7 +380,9 @@ private:
 	 */
 	sf::Font m_font;
 
-	ResourceHolder<EResurceType::Font> mFonts;
+	//ResourceHolder<EResurceType::Font> mFonts;
+	NResursesManagement::ResurceManager mResurceManager;
+	
 
 	//std::unique_ptr< ResourceHolder<> >  mFonts;
 

@@ -1,7 +1,7 @@
 //#include "PCH.hpp"
 #include "items/loot/Gold.hpp"
-#include "manager/TextureManager.hpp"
-#include "utils\MathUtils.hpp"
+#include "core/manager/TextureManager.hpp"
+#include "utils/MathUtils.hpp"
 
 
 Gold::Gold(const std::unordered_map<GOLD_TEXTURE_TYPE, int>& textureIDs)
