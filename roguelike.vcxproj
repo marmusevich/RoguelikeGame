@@ -51,7 +51,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\src;$(ProjectDir)\deliveries\SFML\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>src\PCH.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -64,16 +64,25 @@
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\openal32.dll" "$(OutDir)"
+               xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-audio-d-2.dll" "$(OutDir)"
+				xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-graphics-d-2.dll" "$(OutDir)"
+				xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-network-d-2.dll" "$(OutDir)"
+				xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-system-d-2.dll" "$(OutDir)"
+				xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-window-d-2.dll" "$(OutDir)"
+				</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\src;$(ProjectDir)\deliveries\SFML\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>src\PCH.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
@@ -86,6 +95,14 @@
       <AdditionalLibraryDirectories>$(ProjectDir)\deliveries\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-main.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\openal32.dll" "$(OutDir)"
+      xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-audio-2.dll" "$(OutDir)"
+      xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-graphics-2.dll" "$(OutDir)"
+      xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-network-2.dll" "$(OutDir)"
+      xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-system-2.dll" "$(OutDir)"
+      xcopy /y /d "$(ProjectDir)deliveries\SFML\bin\sfml-window-2.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\manager\ResurceManager.cpp" />

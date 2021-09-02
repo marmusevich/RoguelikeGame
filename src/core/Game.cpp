@@ -3,6 +3,8 @@
 #include "core/Scene.hpp"
 #include "utils/MathUtils.hpp"
 
+#include "utils/Util.hpp"
+
 Game::Game(sf::RenderWindow* window, const unsigned int FPS)
 	:
 m_window(*window),
@@ -113,6 +115,14 @@ void Game::Run()
 		float newTime = m_timestepClock.getElapsedTime().asSeconds();
 		float frameTime = std::max(0.f, newTime - currentTime);
 		currentTime = newTime;
+
+		
+#ifdef DEBUG
+{
+	float fps = frameTime > 0.0f ? 1 / frameTime : 0.0f;
+	m_window.setTitle(ToStringFormated("fps = %.1f", fps));
+}
+#endif // DEBUG
 
 
 		if (m_curScene)

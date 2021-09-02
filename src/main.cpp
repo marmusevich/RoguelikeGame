@@ -12,7 +12,7 @@
 // Entry point of the application.
 int main()
 {
-	/* todo
+	/**  todo
 	* 1 avoid creation windows directly - push into game
 	* 2 get rid sf:: refers - provide adapter
 	* 4 base scene or game is resurse managed

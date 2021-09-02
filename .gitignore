@@ -6,3 +6,7 @@
 /deliveries/SFML/include
 /deliveries/SFML/doc
 /Debug
+/Release
+/deliveries/SFML/bin
+/deliveries/SFML/examples
+/deliveries/SFML/*.md
