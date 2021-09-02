@@ -1,5 +1,5 @@
 template <EResurceType TYPE>
-ResourceHolder<TYPE>::ResourceHolder()
+ResourceHolder_NumberAutoIncKey<TYPE>::ResourceHolder_NumberAutoIncKey()
 	: mResourceMap()
 	, mCurIndex(static_cast<tResurceID>(0))
 {
@@ -7,7 +7,7 @@ ResourceHolder<TYPE>::ResourceHolder()
 }
 
 template <EResurceType TYPE>
-tResurceID ResourceHolder<TYPE>::Load(const std::string& filename)
+tResurceID ResourceHolder_NumberAutoIncKey<TYPE>::Load(const std::string& filename)
 {
 	for (auto it = mResourceMap.cbegin(); it != mResourceMap.cend(); ++it)
 	{
@@ -31,13 +31,13 @@ tResurceID ResourceHolder<TYPE>::Load(const std::string& filename)
 		else
 		{
 			//LOG
-			throw std::runtime_error("ResourceHolder::Load - Can't add resurse from file " + filename);
+			throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Load - Can't add resurse from file " + filename);
 		}
 	}
 	else
 	{
 		//LOG
-		throw std::runtime_error("ResourceHolder::Load - Failed to load " + filename);
+		throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Load - Failed to load " + filename);
 	}
 
 	//error occured, must NOT reach any way
@@ -45,21 +45,21 @@ tResurceID ResourceHolder<TYPE>::Load(const std::string& filename)
 }
 
 template <EResurceType TYPE>
-const typename ResourceHolder<TYPE>::tResource& ResourceHolder<TYPE>::Get(tResurceID id) const
+const typename ResourceHolder_NumberAutoIncKey<TYPE>::tResource& ResourceHolder_NumberAutoIncKey<TYPE>::Get(tResurceID id) const
 {
 	auto it = mResourceMap.find(id);
 
 	if (it == mResourceMap.end())
 	{
 		//LOG
-		throw std::runtime_error("ResourceHolder::Get - Can't get with id  " + std::to_string(id));
+		throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Get - Can't get with id  " + std::to_string(id));
 	}
 
 	return *(it->second.second);
 }
 
 template <EResurceType TYPE>
-void ResourceHolder<TYPE>::Remove(tResurceID id)
+void ResourceHolder_NumberAutoIncKey<TYPE>::Remove(tResurceID id)
 {
 	auto it = mResourceMap.find(id);
 	if (it != mResourceMap.end())
@@ -67,11 +67,11 @@ void ResourceHolder<TYPE>::Remove(tResurceID id)
 		mResourceMap.erase(it);
 	}
 	// LOG or ?
-	//throw std::runtime_error("ResourceHolder::Remove - Can't delete with id  " + std::to_string(id));
+	//throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Remove - Can't delete with id  " + std::to_string(id));
 }
 
 template <EResurceType TYPE>
-void ResourceHolder<TYPE>::Clear()
+void ResourceHolder_NumberAutoIncKey<TYPE>::Clear()
 {
 	mResourceMap.clear();
 	mCurIndex = static_cast<tResurceID>(0);

@@ -4,10 +4,7 @@
 namespace NResursesManagement
 {
 
-/**
- * .
- */
-using tResurceID = size_t;
+
 
 /**
  * .
@@ -21,14 +18,6 @@ enum class EResurceType : unsigned char
 	Sound,   /** sf::SoundBuffer */
 	// Music, no need?
 };
-
-
-//class ResourceHolderBase
-//{
-//public:
-//	virtual tResurceID Load(const std::string& filename) = 0;
-//
-//};
 
 } // namespace NResursesManagement
 #endif // SCR_CORE_MANAGER_RESOURCETIPE_HPP

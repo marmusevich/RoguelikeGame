@@ -12,22 +12,42 @@
 namespace NResursesManagement
 {
 
+/**
+
+provide holder with key = string, it is more usefull
+the key must asighed from out of holder
+
+TODO
+-ключ строка, доступ к ресурсу через имя ресурса, в конфиг файлах оперируем именами, 
+	обращение нужно только при иницилизации сцены чаще всего - производительность не пострадает
+
+- специлизации функций для разных способов загрузкиб 2 параметр есть / нет, не нужные пометить = delete
+
+
+
+
 // TODO how about texture atlass? one texture file many textures present? or it is sprite
 //			>> one file = one texture, for manupulate alias of texture in level my.sprites classes, name too
 
 // has problem key value losts after remove op
 
 //make no copy and move
+*/
 
+/////////////////////////////////////////////
+
+using tResurceID = size_t;
+
+/**  [[deprecated]]   */
 template <EResurceType TYPE>
-class ResourceHolder //: public ResourceHolderBase
+class ResourceHolder_NumberAutoIncKey
 {
 public:
 	using tResource = typename TResurceTraits<TYPE>::TResource;
 private:
 	using tMap = std::unordered_map<tResurceID, std::pair<std::string /*file name*/, std::unique_ptr<tResource> > >;
 public:
-	ResourceHolder();
+	ResourceHolder_NumberAutoIncKey();
 
 	tResurceID Load(const std::string& filename);
 

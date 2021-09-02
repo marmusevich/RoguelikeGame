@@ -22,13 +22,6 @@
 //TODO
 //move to core/Scene
 #include "core/manager/ResurceManager.hpp"
-/*
-#include <memory>
-//fwd
-template <typename T>
-class ResourceHolder;
-*/
-
 
 
 class GameScene : public Scene
@@ -380,11 +373,11 @@ private:
 	 */
 	sf::Font m_font;
 
-	//ResourceHolder<EResurceType::Font> mFonts;
+	//ResourceHolder_NumberAutoIncKey<EResurceType::Font> mFonts;
 	NResursesManagement::ResurceManager mResurceManager;
 	
 
-	//std::unique_ptr< ResourceHolder<> >  mFonts;
+	//std::unique_ptr< ResourceHolder_NumberAutoIncKey<> >  mFonts;
 
 	//TODO way m_text is class member, maybe prefer local variable
 	//sf::Text text;

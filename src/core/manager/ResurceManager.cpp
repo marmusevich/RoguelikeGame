@@ -6,19 +6,19 @@
 namespace NResursesManagement
 {
 
-template class ResourceHolder<EResurceType::Texture>;
-template class ResourceHolder<EResurceType::Font>;
-template class ResourceHolder<EResurceType::Image>;
-//template class ResourceHolder<EResurceType::Shader>;
-template class ResourceHolder<EResurceType::Sound>;
+template class ResourceHolder_NumberAutoIncKey<EResurceType::Texture>;
+template class ResourceHolder_NumberAutoIncKey<EResurceType::Font>;
+template class ResourceHolder_NumberAutoIncKey<EResurceType::Image>;
+//template class ResourceHolder_NumberAutoIncKey<EResurceType::Shader>;
+template class ResourceHolder_NumberAutoIncKey<EResurceType::Sound>;
 
 
 ResurceManager::ResurceManager()
-: mTexture( std::make_unique<ResourceHolder<EResurceType::Texture>>() )
-, mFonts(   std::make_unique<ResourceHolder<EResurceType::Font>>() )
-, mImage(   std::make_unique<ResourceHolder<EResurceType::Image>>() )
-//, mShader(  std::make_unique<ResourceHolder<EResurceType::Shader>>() )
-, mSound(   std::make_unique<ResourceHolder<EResurceType::Sound>>() )
+: mTexture( std::make_unique<ResourceHolder_NumberAutoIncKey<EResurceType::Texture>>() )
+, mFonts(   std::make_unique<ResourceHolder_NumberAutoIncKey<EResurceType::Font>>() )
+, mImage(   std::make_unique<ResourceHolder_NumberAutoIncKey<EResurceType::Image>>() )
+//, mShader(  std::make_unique<ResourceHolder_NumberAutoIncKey<EResurceType::Shader>>() )
+, mSound(   std::make_unique<ResourceHolder_NumberAutoIncKey<EResurceType::Sound>>() )
 {
 
 }
