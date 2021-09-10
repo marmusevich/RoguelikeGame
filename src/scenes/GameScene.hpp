@@ -368,11 +368,6 @@ private:
 	int m_lightTextureID;
 
 
-	/**
-	 * The default font to be used when drawing text.
-	 */
-	sf::Font m_font;
-
 	//ResourceHolder_NumberAutoIncKey<EResurceType::Font> mFonts;
 	NResursesManagement::ResurceManager mResurceManager;
 	

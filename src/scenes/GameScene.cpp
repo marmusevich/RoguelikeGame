@@ -11,10 +11,6 @@
 #include <sstream>
 
 
-//? TODO how hide detals, move to base scene and wrap in cpp ?
-#include "core/manager/ResourceHolder.hpp"
-
-
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
 static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies that can be spawned each room.
 
@@ -52,15 +48,10 @@ GameScene::GameScene(const Game& game)
 bool GameScene::BeforeLoad()
 {
 	// Create the game font.
-	m_font.loadFromFile("resources/fonts/ADDSBP__.TTF");
-	//m_font.loadFromFile("resources/fonts/arial.TTF");
-
-	//m_text.setFont(m_font);
-	
-	//OR
-
-	const NResursesManagement::tResurceID font_id =  mResurceManager.mFonts->Load("resources/fonts/ADDSBP__.TTF");
-	m_text.setFont(mResurceManager.mFonts->Get(font_id));
+	//mResurceManager.mFonts->Load("font", "resources/fonts/ADDSBP__.TTF");
+	//m_text.setFont(mResurceManager.mFonts->Get("font") );
+	//or 
+	m_text.setFont(mResurceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF"));
 
 
 

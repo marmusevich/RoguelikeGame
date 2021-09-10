@@ -131,10 +131,7 @@
     <ClCompile Include="src\core\manager\TextureManager.cpp">
       <Filter>Core\Manager Classes</Filter>
     </ClCompile>
-    <ClInclude Include="src\core\manager\ResourceHolder.hpp">
-      <Filter>Core\Manager Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\manager\ResourceHolder.ipp">
+    <ClInclude Include="src\core\manager\TResourceHolder.hpp">
       <Filter>Core\Manager Classes</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\Util.hpp">

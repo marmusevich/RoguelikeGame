@@ -162,8 +162,7 @@
     <ClInclude Include="src\core\manager\SoundBufferManager.hpp" />
     <ClInclude Include="src\core\manager\TextureManager.hpp" />
     <ClCompile Include="src\core\manager\TextureManager.cpp" />
-    <ClInclude Include="src\core\manager\ResourceHolder.hpp" />
-    <ClInclude Include="src\core\manager\ResourceHolder.ipp" />
+    <ClInclude Include="src\core\manager\TResourceHolder.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\scenes\GameScene.hpp" />
