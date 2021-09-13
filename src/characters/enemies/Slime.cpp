@@ -16,7 +16,7 @@ Slime::Slime()
 	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/enemies/slime/spr_slime_idle_left.png");
 
 	// Set initial sprite.
-	SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)]), false, 8, 12);
+	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)]), false, 8, 12);
 
 	// Choose the random sprite color and set it.
 	m_sprite.setColor(RandomColor(100u, 255u));

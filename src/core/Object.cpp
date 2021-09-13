@@ -16,7 +16,7 @@ m_timeDelta(0)
 }
 
 // Gives the object the given sprite.
-bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int frameSpeed)
+bool Object::setSprite(sf::Texture& texture, bool isSmooth, int frames, int frameSpeed)
 {
 	// Create a sprite from the loaded texture.
 	m_sprite.setTexture(texture);
@@ -54,13 +54,13 @@ bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int fram
 }
 
 // Returns the object's sprite.
-sf::Sprite& Object::GetSprite()
+sf::Sprite& Object::getSprite()
 {
 	return m_sprite;
 }
 
 // Sets the position of the object.
-void Object::SetPosition(sf::Vector2f position)
+void Object::setPosition(sf::Vector2f position)
 {
 	m_position.x = position.x;
 	m_position.y = position.y;
@@ -68,19 +68,19 @@ void Object::SetPosition(sf::Vector2f position)
 }
 
 // Returns the position of the object.
-sf::Vector2f Object::GetPosition() const
+sf::Vector2f Object::getPosition() const
 {
 	return m_position;
 }
 
 // Gets the current animation state of the object.
-bool Object::IsAnimated()
+bool Object::isAnimated()
 {
 	return m_isAnimated;
 }
 
 // Sets the animation state of the object.
-void Object::SetAnimated(bool isAnimated)
+void Object::setAnimated(bool isAnimated)
 {
 	m_isAnimated = isAnimated;
 
@@ -96,7 +96,7 @@ void Object::SetAnimated(bool isAnimated)
 }
 
 // Draws the object to the given render window.
-void Object::Draw(sf::RenderWindow &window, float timeDelta)
+void Object::draw(sf::RenderWindow &window, float timeDelta)
 {
 	// check if the sprite is animated
 	if (m_isAnimated)
@@ -129,7 +129,7 @@ void Object::NextFrame()
 }
 
 // Gets the frame count of the object.
-int Object::GetFrameCount() const
+int Object::getFrameCount() const
 {
 	return m_frameCount;
 }

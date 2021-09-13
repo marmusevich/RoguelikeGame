@@ -16,7 +16,7 @@ public:
 	 * Updates the brightness of the torch.
 	 * @param timeDelta The time that has passed since the last update.
 	 */
-	void Update(float timeDelta) override;
+	void update(float timeDelta) override;
 
 	/**
 	 * Gets the brightness modifier of the torch. This is used to create flicker.

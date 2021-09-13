@@ -21,8 +21,8 @@ m_velocity({0.f, 0.f})
 {
 }
 
-// Override the default Object::Update function.
-void Entity::Update(float timeDelta)
+// Override the default Object::update function.
+void Entity::update(float timeDelta)
 {
 	// Choose animation state.
 	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(m_currentTextureIndex);
@@ -57,25 +57,25 @@ void Entity::Update(float timeDelta)
 	if ((m_velocity.x == 0) && (m_velocity.y == 0))
 	{
 		// The character is still.
-		if (IsAnimated())
+		if (isAnimated())
 		{
-			// Update sprite to idle version.
+			// update sprite to idle version.
 			m_currentTextureIndex += 4;
 
 			// Stop movement animations.
-			SetAnimated(false);
+			setAnimated(false);
 		}
 	}
 	else
 	{
 		// The character is moving.
-		if (!IsAnimated())
+		if (!isAnimated())
 		{
-			// Update sprite to walking version.
+			// update sprite to walking version.
 			m_currentTextureIndex -= 4;
 
 			// Start movement animations.
-			SetAnimated(true);
+			setAnimated(true);
 		}
 	}
 
@@ -88,73 +88,73 @@ void Entity::Update(float timeDelta)
 }
 
 // Gets the entities health.
-int Entity::GetHealth() const
+int Entity::getHealth() const
 {
 	return m_health;
 }
 
 // Gets the entities max health.
-int Entity::GetMaxHealth() const
+int Entity::getMaxHealth() const
 {
 	return m_maxHealth;
 }
 
 // Gets the entities attack.
-int Entity::GetAttack() const
+int Entity::getAttack() const
 {
 	return m_attack;
 }
 
 // Gets the entities defense.
-int Entity::GetDefense() const
+int Entity::getDefense() const
 {
 	return m_defense;
 }
 
 // Gets the entities strength.
-int Entity::GetStrength() const
+int Entity::getStrength() const
 {
 	return m_strength;
 }
 
 // Gets the entities dexterity.
-int Entity::GetDexterity() const
+int Entity::getDexterity() const
 {
 	return m_dexterity;
 }
 
 // Gets the entities stamina.
-int Entity::GetStamina() const
+int Entity::getStamina() const
 {
 	return m_stamina;
 }
 
 // Sets the entities attack stat.
-void Entity::SetAttack(int attackValue)
+void Entity::setAttack(int attackValue)
 {
 	m_attack = attackValue;
 }
 
 // Sets the entities defense stat.
-void Entity::SetDefense(int defenseValue)
+void Entity::setDefense(int defenseValue)
 {
 	m_defense = defenseValue;
 }
 
 // Sets the entities strength stat.
-void Entity::SetStrength(int strengthValue)
+void Entity::setStrength(int strengthValue)
 {
 	m_strength = strengthValue;
 }
 
 // Sets the entities dexterity stat.
-void Entity::SetDexterity(int dexterityValue)
+void Entity::setDexterity(int dexterityValue)
 {
 	m_dexterity = dexterityValue;
 }
 
 // Sets the entities stamina stat.
-void Entity::SetStamina(int staminaValue)
+void Entity::setStamina(int staminaValue)
 {
 	m_stamina = staminaValue;
 }

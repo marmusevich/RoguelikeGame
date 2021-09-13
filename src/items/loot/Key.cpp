@@ -6,7 +6,7 @@
 Key::Key()
 {
 	// Set item name.
-	SetItemName("Key");
+	setItemName("Key");
 
 	// Set item type.
 	m_type = ITEM::KEY;

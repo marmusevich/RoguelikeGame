@@ -16,7 +16,7 @@ public:
 	 * Returns the amount of health that the heart gives.
 	 * @return The amount of health the heart gives.
 	 */
-	int GetHealth() const;
+	int getHealth() const;
 
 private:
 

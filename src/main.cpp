@@ -28,7 +28,7 @@ int main()
 
 	game.setScene(std::make_shared<GameScene>(game));
 
-	game.Run();
+	game.run();
 
 	// Exit the application.
 	return EXIT_SUCCESS;

@@ -8,33 +8,33 @@ Scene::Scene(const Game& game)
 }
 
 
-bool Scene::BeforeLoad()
+bool Scene::beforeLoad()
 {
 	return true;
 }
 
-bool Scene::LoadResurce()
+bool Scene::loadResurce()
 {
 	return true;
 }
 
-void Scene::AfterLoad(bool isLoaded)
+void Scene::afterLoad(bool isLoaded)
 {
 
 }
 
 
-void Scene::Update(float timeDelta)
+void Scene::update(float timeDelta)
 {
 
 }
 
-void Scene::Draw(sf::RenderWindow& window, float timeDelta)
+void Scene::draw(sf::RenderWindow& window, float timeDelta)
 {
 
 }
 
-const Game& Scene::GetGame() const
+const Game& Scene::getGame() const
 {
 	return m_game;
 }

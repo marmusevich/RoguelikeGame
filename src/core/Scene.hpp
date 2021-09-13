@@ -15,13 +15,13 @@ public :
 	 * The main update loop. This loop in turns calls the update loops of all game objects.
 	 * @param timeDelta The time, in MS, since the last update call.
 	 */
-	virtual void Update(float timeDelta);
+	virtual void update(float timeDelta);
 
 	/**
 	 * Draws all game objects to screen.
 	 * @param tileDelta The time, in MS, since the last draw call.
 	 */
-	virtual void Draw(sf::RenderWindow& window, float timeDelta);
+	virtual void draw(sf::RenderWindow& window, float timeDelta);
 
 
 
@@ -29,7 +29,7 @@ public :
 	 * callbeck before load
 	 * return true if can load resurse
 	 */
-	virtual bool BeforeLoad();
+	virtual bool beforeLoad();
 
 
 	/**
@@ -37,7 +37,7 @@ public :
 	 * do load resurse from file, -> resurse.xml
 	 */
 	 // in protected ??? and freands game
-	bool LoadResurce();
+	bool loadResurce();
 
 	// ???
 	//bool UnLoadResurce();
@@ -46,12 +46,12 @@ public :
 	 *  callback after
 	 * isLoaded resurse loaded
 	 */
-	virtual void AfterLoad(bool isLoaded);
+	virtual void afterLoad(bool isLoaded);
 
 
 protected:
 
-	const Game& GetGame() const;
+	const Game& getGame() const;
 
 private:
 

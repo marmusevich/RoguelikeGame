@@ -23,13 +23,13 @@ public:
 	 * The main game loop. This loop in turn updates the game, and draws all objects to screen.
 	 * It's also responsible for the game logic timing.
 	 */
-	void Run();
+	void run();
 
 	/**
 	 * Returns true if the game is currently running.
 	 * @return True if the game is running.
 	 */
-	bool IsRunning();
+	bool isRunning();
 
 	/**
 	 * Set current scene.
@@ -43,21 +43,21 @@ public:
 	 * The default view of the window
 	 * TODO: get rid sf types
 	 */
-	const sf::View& GetDefaultView() const;
+	const sf::View& getDefaultView() const;
 
 	/**
 	 * The size of the screen and window.
 	 */
-	sf::Vector2u GetScreenSize() const;
+	sf::Vector2u getScreenSize() const;
 
 	/**
 	* The center of the screen.
 	*/
-	sf::Vector2f GetScreenCenter() const;
+	sf::Vector2f getScreenCenter() const;
 
-	void Pause();
-	void Resume();
-	bool IsPaused() const;
+	void pause();
+	void resume();
+	bool isPaused() const;
 
 
 private:

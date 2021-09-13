@@ -13,7 +13,7 @@ Heart::Heart()
 }
 
 // Returns the amount of health that the heart gives.
-int Heart::GetHealth() const
+int Heart::getHealth() const
 {
 	return m_health;
 }

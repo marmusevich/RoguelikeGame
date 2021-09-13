@@ -19,8 +19,8 @@ m_currentTarget({ 0.f, 0.f })
 	m_speed = Random(151, 200);;
 }
 
-// Overrides the default Update function of Entity.
-void Enemy::Update(float timeDelta)
+// Overrides the default update function of Entity.
+void Enemy::update(float timeDelta)
 {
 	// Move towards current target location.
 	if (!m_targetPositions.empty())
@@ -46,7 +46,7 @@ void Enemy::Update(float timeDelta)
 	}
 
 	// Call Entity update.
-	Entity::Update(timeDelta);
+	Entity::update(timeDelta);
 }
 
 // Recalculates the enemies path finding.

@@ -18,13 +18,13 @@ Item::Item() :
 }
 
 // Gets the name of the item.
-std::string Item::GetItemName() const
+std::string Item::getItemName() const
 {
 	return m_name;
 }
 
 // Sets the item name.
-void Item::SetItemName(std::string name)
+void Item::setItemName(std::string name)
 {
 	// Store new name.
 	m_name = name;
@@ -40,16 +40,16 @@ void Item::SetItemName(std::string name)
 }
 
 // Gets the item type.
-ITEM Item::GetType() const
+ITEM Item::getType() const
 {
 	return m_type;
 }
 
 // Draws the item and its name if it has one.
-void Item::Draw(sf::RenderWindow& window, float timeDelta)
+void Item::draw(sf::RenderWindow& window, float timeDelta)
 {
 	// Draw the object.
-	Object::Draw(window, timeDelta);
+	Object::draw(window, timeDelta);
 
 	// Draw the item name.
 	m_text.setPosition(m_position.x - m_textOffset.x, (m_position.y - 30.f) - m_textOffset.y);

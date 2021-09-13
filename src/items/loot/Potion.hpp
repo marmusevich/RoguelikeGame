@@ -26,31 +26,31 @@ public:
 	 * Gets the attack value of the potion.
 	 * @return The attack value the potion gives.
 	 */
-	int GetAttack() const;
+	int getAttack() const;
 
 	/**
 	 * Gets the defense value of the potion.
 	 * @return The defense value the potion gives.
 	 */
-	int GetDefense() const;
+	int getDefense() const;
 
 	/**
 	 * Gets the strength value of the potion.
 	 * @return The strength value the potion gives.
 	 */
-	int GetStrength() const;
+	int getStrength() const;
 
 	/**
 	 * Gets the dexterity value of the potion.
 	 * @return The dexterity value the potion gives.
 	 */
-	int GetDexterity() const;
+	int getDexterity() const;
 
 	/**
 	 * Gets the stamina value of the potion.
 	 * @return The stamina value the potion gives.
 	 */
-	int GetStamina() const;
+	int getStamina() const;
 
 private:
 	/**

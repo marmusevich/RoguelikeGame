@@ -26,7 +26,7 @@ public:
 	 * Overrides the update event of Enemy.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	void Update(float timeDelta) override;
+	void update(float timeDelta) override;
 
 private:
 

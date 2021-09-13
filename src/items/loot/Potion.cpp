@@ -39,7 +39,7 @@ m_stamina(0)
 	}
 
 	// Load and set sprite.
-	SetSprite(TextureManager::GetTexture(textureIDs.at(m_potionType)), false, 8, 12);
+	setSprite(TextureManager::GetTexture(textureIDs.at(m_potionType)), false, 8, 12);
 
 	// Set the item type.
 	m_type = ITEM::POTION;
@@ -52,31 +52,31 @@ POTION Potion::GetPotionType() const
 }
 
 // Gets the attack value of the potion.
-int Potion::GetAttack() const
+int Potion::getAttack() const
 {
 	return m_attack;
 }
 
 // Gets the defense value of the potion.
-int Potion::GetDefense() const
+int Potion::getDefense() const
 {
 	return m_defense;
 }
 
 // Gets the strength value of the potion.
-int Potion::GetStrength() const
+int Potion::getStrength() const
 {
 	return m_strength;
 }
 
 // Gets the dexterity value of the potion.
-int Potion::GetDexterity() const
+int Potion::getDexterity() const
 {
 	return m_dexterity;
 }
 
 // Gets the stamina value of the potion.
-int Potion::GetStamina() const
+int Potion::getStamina() const
 {
 	return m_stamina;
 }

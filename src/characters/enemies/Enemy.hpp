@@ -13,10 +13,10 @@ public:
 	Enemy();
 
 	/**
-	 * Overrides the default Update function of Entity.
+	 * Overrides the default update function of Entity.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	virtual void Update(float timeDelta) override;
+	virtual void update(float timeDelta) override;
 
 	/**
 	 * Recalculates the enemies path finding.

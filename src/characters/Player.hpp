@@ -22,7 +22,7 @@ public:
 	 * @param timeDelta The time, in MS, since the last game tick.
 	 * @param level A reference to the level object.
 	 */
-	void Update(float timeDelta, Level& level);
+	void update(float timeDelta, Level& level);
 
 	/**
 	 * Gets the player's current traits.

@@ -51,7 +51,7 @@ m_statPoints(0)
 	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_left.png");
 
 	// Set initial sprite.
-	SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
 	m_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
@@ -88,7 +88,7 @@ m_statPoints(0)
 }
 
 // Updates the player object.
-void Player::Update(float timeDelta, Level& level)
+void Player::update(float timeDelta, Level& level)
 {
 	// Calculate movement speed based on the timeDelta since the last update.
 	sf::Vector2f movementSpeed(0.f, 0.f);
@@ -165,29 +165,29 @@ void Player::Update(float timeDelta, Level& level)
 	if ((movementSpeed.x == 0) && (movementSpeed.y == 0))
 	{
 		// the character is still
-		if (IsAnimated())
+		if (isAnimated())
 		{
-			// Update sprite to idle version.
+			// update sprite to idle version.
 			// In our enum we have 4 walking sprites followed by 4 idle sprites.
 			// Given this, we can simply add 4 to a walking sprite to get its idle counterpart.
 			m_currentTextureIndex += 4;
 			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Stop movement animations.
-			SetAnimated(false);
+			setAnimated(false);
 		}
 	}
 	else
 	{
 		// the character is moving
-		if (!IsAnimated())
+		if (!isAnimated())
 		{
-			// Update sprite to walking version.
+			// update sprite to walking version.
 			//m_currentTextureIndex -= 4;
 			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Start movement animations.
-			SetAnimated(true);
+			setAnimated(true);
 		}
 	}
 

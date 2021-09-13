@@ -21,7 +21,7 @@ Gold::Gold(const std::unordered_map<GOLD_TEXTURE_TYPE, int>& textureIDs)
 	}
 
 	// Set the sprite.
-	this->SetSprite(TextureManager::GetTexture(textureIDs.at(type)), false, 8, 12);
+	this->setSprite(TextureManager::GetTexture(textureIDs.at(type)), false, 8, 12);
 
 	// Set the item type.
 	m_type = ITEM::GOLD;

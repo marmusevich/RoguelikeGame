@@ -17,82 +17,82 @@ public:
 	Entity();
 
 	/**
-	 * Override the default Object::Update function.
+	 * Override the default Object::update function.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	virtual void Update(float timeDelta) override;
+	virtual void update(float timeDelta) override;
 
 	/**
 	 * Gets the entities health.
 	 * @return The entities health.
 	 */
-	int GetHealth() const;
+	int getHealth() const;
 
 	/**
 	 * Gets the entities max health.
 	 * @return The entities max health.
 	 */
-	int GetMaxHealth() const;
+	int getMaxHealth() const;
 
 	/**
 	 * Gets the entities attack.
 	 * @return The entities attack.
 	 */
-	int GetAttack() const;
+	int getAttack() const;
 
 	/**
 	 * Gets the entities defense.
 	 * @return The entities defense.
 	 */
-	int GetDefense() const;
+	int getDefense() const;
 
 	/**
 	 * Gets the entities strength.
 	 * @return The entities strength.
 	 */
-	int GetStrength() const;
+	int getStrength() const;
 
 	/**
 	 * Gets the entities dexterity.
 	 * @return The entities dexterity.
 	 */
-	int GetDexterity() const;
+	int getDexterity() const;
 
 	/**
 	 * Gets the entities stamina.
 	 * @return The entities stamina.
 	 */
-	int GetStamina() const;
+	int getStamina() const;
 
 	/**
 	 * Sets the entities attack stat.
 	 * @param attackValue The player's new attack stat value.
 	 */
-	void SetAttack(int attackValue);
+	void setAttack(int attackValue);
 
 	/**
 	 * Sets the entities defense stat.
 	 * @param defenseValue The player's new defense stat value.
 	*/
-	 void SetDefense(int defenseValue);
+	 void setDefense(int defenseValue);
 
 	/**
 	 * Sets the entities strength stat.
 	 * @param strengthValue The player's new strength stat value.
 	 */
-	void SetStrength(int strengthValue);
+	void setStrength(int strengthValue);
 
 	/**
 	 * Sets the entities dexterity stat.
 	 * @param dexterityValue The player's new dexterity stat value.
 	 */
-	void SetDexterity(int dexterityValue);
+	void setDexterity(int dexterityValue);
 
 	/**
 	 * Sets the entities stamina stat.
 	 * @param staminaValue The player's new stamina stat value.
 	 */
-	void SetStamina(int staminaValue);
+	void setStamina(int staminaValue);
 
 	int getCurrentTextureIndex();
 

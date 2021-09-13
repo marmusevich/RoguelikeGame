@@ -5,7 +5,7 @@
 Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target)
 {
 	// Create the sprite.
-	SetSprite(texture, false);
+	setSprite(texture, false);
 
 	// Set the sprite position.
 	m_sprite.setPosition(origin);
@@ -21,13 +21,13 @@ Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f s
 	m_velocity.y /= length;
 }
 
-// Update the projectile.
-void Projectile::Update(float timeDelta)
+// update the projectile.
+void Projectile::update(float timeDelta)
 {
-	// Update rotation.
+	// update rotation.
 	m_sprite.setRotation(m_sprite.getRotation() + (400.f * timeDelta));
 
-	// Update position.
+	// update position.
 	m_sprite.setPosition(m_sprite.getPosition().x + (m_velocity.x * (500 * timeDelta)), m_sprite.getPosition().y + (m_velocity.y * (500 * timeDelta)));
 	m_position = m_sprite.getPosition();
 }

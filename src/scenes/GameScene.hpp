@@ -30,13 +30,13 @@ class GameScene : public Scene
 public:
 	explicit GameScene(const Game& game);
 
-	virtual bool BeforeLoad() override;
+	virtual bool beforeLoad() override;
 
-	virtual void AfterLoad(bool isLoaded) override;
+	virtual void afterLoad(bool isLoaded) override;
 
-	virtual void Update(float timeDelta) override;
+	virtual void update(float timeDelta) override;
 
-	virtual void Draw(sf::RenderWindow& window, float timeDelta) override;
+	virtual void draw(sf::RenderWindow& window, float timeDelta) override;
 
 private:
 
@@ -368,12 +368,8 @@ private:
 	int m_lightTextureID;
 
 
-	//ResourceHolder_NumberAutoIncKey<EResurceType::Font> mFonts;
 	NResursesManagement::ResurceManager mResurceManager;
 	
-
-	//std::unique_ptr< ResourceHolder_NumberAutoIncKey<> >  mFonts;
-
 	//TODO way m_text is class member, maybe prefer local variable
 	//sf::Text text;
 	///Text used by the DrawText() function.

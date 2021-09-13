@@ -19,7 +19,7 @@ public:
 	 * Override of the update function.
 	 * @param timeDelta The time in seconds since the last update.
 	 */
-	void Update(float timeDelta) override;
+	void update(float timeDelta) override;
 
 private:
 	/**

@@ -17,8 +17,8 @@ static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies t
 
 GameScene::GameScene(const Game& game)
 	:tBase(game),
-	m_screenSize(GetGame().GetScreenSize()),
-	m_screenCenter(GetGame().GetScreenCenter()),
+	m_screenSize(getGame().getScreenSize()),
+	m_screenCenter(getGame().getScreenCenter()),
 	m_scoreTotal(0),
 	m_goldTotal(0),
 	m_playerPreviousTile(nullptr),
@@ -28,7 +28,7 @@ GameScene::GameScene(const Game& game)
 	m_killGoal(0),
 	m_goalString(""),
 	m_activeGoal(false),
-	m_level(GetGame().GetScreenSize()),
+	m_level(getGame().getScreenSize()),
 
 	m_potionTextureIDs(),
 	m_goldTextureIDs(),
@@ -39,13 +39,13 @@ GameScene::GameScene(const Game& game)
 
 {
 	// Define the game views.
-	m_views[static_cast<int>(VIEW::MAIN)] = GetGame().GetDefaultView();
+	m_views[static_cast<int>(VIEW::MAIN)] = getGame().getDefaultView();
 	m_views[static_cast<int>(VIEW::MAIN)].zoom(0.5f);
-	m_views[static_cast<int>(VIEW::UI)] = GetGame().GetDefaultView();
+	m_views[static_cast<int>(VIEW::UI)] = getGame().getDefaultView();
 }
 
 
-bool GameScene::BeforeLoad()
+bool GameScene::beforeLoad()
 {
 	// Create the game font.
 	//mResurceManager.mFonts->Load("font", "resources/fonts/ADDSBP__.TTF");
@@ -327,7 +327,7 @@ void GameScene::LoadUI()
 
 
 
-void GameScene::AfterLoad(bool isLoaded)
+void GameScene::afterLoad(bool isLoaded)
 {
 	if (isLoaded)
 	{
@@ -362,10 +362,10 @@ void GameScene::ReSpawnLevel()
 }
 
 // Updates the game.
-void GameScene::Update(float timeDelta)
+void GameScene::update(float timeDelta)
 {
 	// First check if the player is at the exit. If so there's no need to update anything.
-	Tile& playerTile = *m_level.GetTile(m_player.GetPosition());
+	Tile& playerTile = *m_level.GetTile(m_player.getPosition());
 
 	if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)
 	{
@@ -373,11 +373,11 @@ void GameScene::Update(float timeDelta)
 	}
 	else
 	{
-		// Update the player.
-		m_player.Update(timeDelta, m_level);
+		// update the player.
+		m_player.update(timeDelta, m_level);
 
 		// Store the player position as it's used many times.
-		sf::Vector2f playerPosition = m_player.GetPosition();
+		sf::Vector2f playerPosition = m_player.getPosition();
 
 		int playerDirection = m_player.getCurrentTextureIndex() % 4;
 
@@ -398,16 +398,16 @@ void GameScene::Update(float timeDelta)
 			}
 		}
 
-		// Update all items.
+		// update all items.
 		UpdateItems(playerPosition);
 
-		// Update level light.
+		// update level light.
 		UpdateLight(playerPosition, playerDirection);
 
-		// Update all enemies.
+		// update all enemies.
 		UpdateEnemies(playerPosition, timeDelta);
 
-		// Update all projectiles.
+		// update all projectiles.
 		UpdateProjectiles(timeDelta);
 
 		// Find which torch is nearest the player.
@@ -418,19 +418,19 @@ void GameScene::Update(float timeDelta)
 		{
 			// Store the first torch as the current closest.
 			std::shared_ptr<Torch> nearestTorch = torches->front();
-			float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->GetPosition());
+			float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->getPosition());
 
 			for (std::shared_ptr<Torch> torch : *torches)
 			{
 				// Get the distance to the player.
-				float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->GetPosition());
+				float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->getPosition());
 				if (distanceToPlayer < lowestDistanceToPlayer)
 				{
 					lowestDistanceToPlayer = distanceToPlayer;
 					nearestTorch = torch;
 				}
 			}
-			m_fireSound.setPosition(nearestTorch->GetPosition().x, nearestTorch->GetPosition().y, 0.0f);
+			m_fireSound.setPosition(nearestTorch->getPosition().x, nearestTorch->getPosition().y, 0.0f);
 		}
 
 		// Check if the player has moved grid square.
@@ -441,10 +441,10 @@ void GameScene::Update(float timeDelta)
 			// Store the new tile.
 			m_playerPreviousTile = playerCurrentTile;
 
-			// Update path finding for all enemies if within range of the player.
+			// update path finding for all enemies if within range of the player.
 			for (const auto& enemy : m_enemies)
 			{
-				if (DistanceBetweenPoints(enemy->GetPosition(), playerPosition) < 300.f)
+				if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < 300.f)
 				{
 					enemy->UpdatePathfinding(m_level, playerPosition);
 				}
@@ -474,7 +474,7 @@ void GameScene::Update(float timeDelta)
 
 
 // Draw the current game scene.
-void GameScene::Draw(sf::RenderWindow& window, float timeDelta)
+void GameScene::draw(sf::RenderWindow& window, float timeDelta)
 {
 	// Clear the screen.
 	window.clear(sf::Color(3, 3, 3, 225));		// Gray
@@ -483,28 +483,28 @@ void GameScene::Draw(sf::RenderWindow& window, float timeDelta)
 	window.setView(m_views[static_cast<int>(VIEW::MAIN)]);
 
 	// Draw the level.
-	m_level.Draw(window, timeDelta);
+	m_level.draw(window, timeDelta);
 
 	// Draw all objects.
 	for (const auto& item : m_items)
 	{
-		item->Draw(window, timeDelta);
+		item->draw(window, timeDelta);
 	}
 
 	// Draw all enemies.
 	for (const auto& enemy : m_enemies)
 	{
-		enemy->Draw(window, timeDelta);
+		enemy->draw(window, timeDelta);
 	}
 
 	// Draw all projectiles
 	for (const auto& proj : m_playerProjectiles)
 	{
-		window.draw(proj->GetSprite());
+		window.draw(proj->getSprite());
 	}
 
 	// Draw the player.
-	m_player.Draw(window, timeDelta);
+	m_player.draw(window, timeDelta);
 
 	// Draw level light.
 	for (const sf::Sprite& sprite : m_lightGrid)
@@ -529,11 +529,11 @@ void GameScene::Draw(sf::RenderWindow& window, float timeDelta)
 	}
 
 	// Draw player stats.
-	DrawString(window, std::to_string(m_player.GetAttack()), sf::Vector2f(m_screenCenter.x - 210.f, m_screenSize.y - 30.f), 25);
-	DrawString(window, std::to_string(m_player.GetDefense()), sf::Vector2f(m_screenCenter.x - 90.f, m_screenSize.y - 30.f), 25);
-	DrawString(window, std::to_string(m_player.GetStrength()), sf::Vector2f(m_screenCenter.x + 30.f, m_screenSize.y - 30.f), 25);
-	DrawString(window, std::to_string(m_player.GetDexterity()), sf::Vector2f(m_screenCenter.x + 150.f, m_screenSize.y - 30.f), 25);
-	DrawString(window, std::to_string(m_player.GetStamina()), sf::Vector2f(m_screenCenter.x + 270.f, m_screenSize.y - 30.f), 25);
+	DrawString(window, std::to_string(m_player.getAttack()), sf::Vector2f(m_screenCenter.x - 210.f, m_screenSize.y - 30.f), 25);
+	DrawString(window, std::to_string(m_player.getDefense()), sf::Vector2f(m_screenCenter.x - 90.f, m_screenSize.y - 30.f), 25);
+	DrawString(window, std::to_string(m_player.getStrength()), sf::Vector2f(m_screenCenter.x + 30.f, m_screenSize.y - 30.f), 25);
+	DrawString(window, std::to_string(m_player.getDexterity()), sf::Vector2f(m_screenCenter.x + 150.f, m_screenSize.y - 30.f), 25);
+	DrawString(window, std::to_string(m_player.getStamina()), sf::Vector2f(m_screenCenter.x + 270.f, m_screenSize.y - 30.f), 25);
 	DrawString(window, ToStringFormated("%.6i", m_scoreTotal), sf::Vector2f(m_screenCenter.x - 120.f, 40.f), 40);
 	DrawString(window, ToStringFormated("%.5i", m_goldTotal), sf::Vector2f(m_screenCenter.x + 220.f, 40.f), 40);
 
@@ -548,14 +548,14 @@ void GameScene::Draw(sf::RenderWindow& window, float timeDelta)
 	DrawString(window, ToStringFormated("Room %d", m_level.GetRoomNumber()), sf::Vector2f(70.f, m_screenSize.y - 30.f), 25);
 
 	// Draw health and mana bars.
-	m_healthBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player.GetMaxHealth()) * m_player.GetHealth()), 8));
+	m_healthBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player.getMaxHealth()) * m_player.getHealth()), 8));
 	window.draw(*m_healthBarSprite);
 
 	m_manaBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player.GetMaxMana()) * m_player.GetMana()), 8));
 	window.draw(*m_manaBarSprite);
 
 
-	DrawString(window, ToStringFormated("is paused %s", (GetGame().IsPaused() == true ? "true" : "false")), m_screenCenter, 25);
+	DrawString(window, ToStringFormated("is paused %s", (getGame().isPaused() == true ? "true" : "false")), m_screenCenter, 25);
 
 
 }
@@ -575,8 +575,8 @@ void GameScene::ConstructLightGrid()
 	sf::IntRect levelArea;
 
 	// Define the bounds of the level.
-	levelArea.left = static_cast<int>(m_level.GetPosition().x);
-	levelArea.top = static_cast<int>(m_level.GetPosition().y);
+	levelArea.left = static_cast<int>(m_level.getPosition().x);
+	levelArea.top = static_cast<int>(m_level.getPosition().y);
 	levelArea.width = m_level.GetSize().x * m_level.GetTileSize();
 	levelArea.height = m_level.GetSize().y * m_level.GetTileSize();
 
@@ -626,7 +626,7 @@ void GameScene::GenerateLevel()
 	}
 
 	// Moves the player to the start.
-	m_player.SetPosition(m_level.SpawnLocation());
+	m_player.setPosition(m_level.SpawnLocation());
 }
 
 // Populate the level with items.
@@ -730,11 +730,11 @@ void GameScene::UpdateLight(sf::Vector2f playerPosition, int direction)
 		// If there are torches.
 		if (!torches->empty())
 		{
-			// Update the light surrounding each torch.
+			// update the light surrounding each torch.
 			for (std::shared_ptr<Torch> torch : *torches)
 			{
 				// If the light tile is within range of the torch.
-				distance = DistanceBetweenPoints(sprite.getPosition(), torch->GetPosition());
+				distance = DistanceBetweenPoints(sprite.getPosition(), torch->getPosition());
 				if (distance < 50.f)
 					//if (distance < 100.f)
 				{
@@ -758,7 +758,7 @@ void GameScene::UpdateLight(sf::Vector2f playerPosition, int direction)
 // Updates all items in the level.
 void GameScene::UpdateItems(sf::Vector2f playerPosition)
 {
-	// Update all items.
+	// update all items.
 	auto itemIterator = m_items.begin();
 	while (itemIterator != m_items.end())
 	{
@@ -766,10 +766,10 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 		Item& item = **itemIterator;
 
 		// Check if the player is within pickup range of the item.
-		if (DistanceBetweenPoints(item.GetPosition(), playerPosition) < 40.f)
+		if (DistanceBetweenPoints(item.getPosition(), playerPosition) < 40.f)
 		{
 			// Check what type of object it was.
-			switch (item.GetType())
+			switch (item.getType())
 			{
 			case ITEM::GOLD:
 			{
@@ -827,23 +827,23 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 				switch (potionType)
 				{
 				case POTION::ATTACK:
-					m_player.SetAttack(m_player.GetAttack() + potion.GetAttack());
+					m_player.setAttack(m_player.getAttack() + potion.getAttack());
 					break;
 
 				case POTION::DEFENSE:
-					m_player.SetDefense(m_player.GetDefense() + potion.GetDefense());
+					m_player.setDefense(m_player.getDefense() + potion.getDefense());
 					break;
 
 				case POTION::STRENGTH:
-					m_player.SetStrength(m_player.GetStrength() + potion.GetStrength());
+					m_player.setStrength(m_player.getStrength() + potion.getStrength());
 					break;
 
 				case POTION::DEXTERITY:
-					m_player.SetDexterity(m_player.GetDexterity() + potion.GetDexterity());
+					m_player.setDexterity(m_player.getDexterity() + potion.getDexterity());
 					break;
 
 				case POTION::STAMINA:
-					m_player.SetStamina(m_player.GetStamina() + potion.GetStamina());
+					m_player.setStamina(m_player.getStamina() + potion.getStamina());
 					break;
 				}
 			}
@@ -853,7 +853,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 				// Cast to heart and get health.
 				Heart& heart = dynamic_cast<Heart&>(item);
 
-				m_player.SetHealth(m_player.GetHealth() + heart.GetHealth());
+				m_player.SetHealth(m_player.getHealth() + heart.getHealth());
 			}
 
 			// Finally, delete the object.
@@ -871,7 +871,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
 	// Store player tile.
-	Tile* playerTile = m_level.GetTile(m_player.GetPosition());
+	Tile* playerTile = m_level.GetTile(m_player.getPosition());
 
 	auto enemyIterator = m_enemies.begin();
 	while (enemyIterator != m_enemies.end())
@@ -883,7 +883,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 		Enemy& enemy = **enemyIterator;
 
 		// Get the tile that the enemy is on.
-		Tile* enemyTile = m_level.GetTile(enemy.GetPosition());
+		Tile* enemyTile = m_level.GetTile(enemy.getPosition());
 
 		// Check for collisions with projectiles.
 		auto projectilesIterator = m_playerProjectiles.begin();
@@ -893,7 +893,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 			Projectile& projectile = **projectilesIterator;
 
 			// If the enemy and projectile occupy the same tile they have collided.
-			if (enemyTile == m_level.GetTile(projectile.GetPosition()))
+			if (enemyTile == m_level.GetTile(projectile.getPosition()))
 			{
 				// Delete the projectile.
 				projectilesIterator = m_playerProjectiles.erase(projectilesIterator);
@@ -905,7 +905,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 				if (enemy.IsDead())
 				{
 					// Get the enemy position.
-					sf::Vector2f position = enemy.GetPosition();
+					sf::Vector2f position = enemy.getPosition();
 
 					// Spawn loot. gold or gem
 					for (int i = 0; i < 5; i++)
@@ -930,7 +930,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 					}
 
 					// Play enemy kill sound.
-					PlaySound(m_enemyDieSound, enemy.GetPosition());
+					PlaySound(m_enemyDieSound, enemy.getPosition());
 
 					// Delete enemy.
 					enemyIterator = m_enemies.erase(enemyIterator);
@@ -956,7 +956,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 		// If the enemy was not deleted, update it and increment the iterator.
 		if (!enemyWasDeleted)
 		{
-			enemy.Update(timeDelta);
+			enemy.update(timeDelta);
 			++enemyIterator;
 		}
 
@@ -982,7 +982,7 @@ void GameScene::UpdateProjectiles(float timeDelta)
 		Projectile& projectile = **projectileIterator;
 
 		// Get the tile that the projectile is on.
-		TILE projectileTileType = m_level.GetTile(projectile.GetPosition())->type;
+		TILE projectileTileType = m_level.GetTile(projectile.getPosition())->type;
 
 		// If the tile the projectile is on is not floor, delete it.
 		if ((projectileTileType != TILE::FLOOR) && (projectileTileType != TILE::FLOOR_ALT))
@@ -991,8 +991,8 @@ void GameScene::UpdateProjectiles(float timeDelta)
 		}
 		else
 		{
-			// Update the projectile and move to the next one.
-			projectile.Update(timeDelta);
+			// update the projectile and move to the next one.
+			projectile.update(timeDelta);
 			++projectileIterator;
 		}
 	}
@@ -1040,22 +1040,22 @@ void GameScene::SpawnItem(ITEM itemType, sf::Vector2f position)
 
 	case ITEM::GEM:
 		item = std::make_unique<Gem>();
-		item->SetSprite(TextureManager::GetTexture(m_gemTextureID), false, 8, 12);
+		item->setSprite(TextureManager::GetTexture(m_gemTextureID), false, 8, 12);
 		break;
 
 	case ITEM::KEY:
 		item = std::make_unique<Key>();
-		item->SetSprite(TextureManager::GetTexture(m_keyTextureID), false, 8, 12);
+		item->setSprite(TextureManager::GetTexture(m_keyTextureID), false, 8, 12);
 		break;
 
 	case ITEM::HEART:
 		item = std::make_unique<Heart>();
-		item->SetSprite(TextureManager::GetTexture(m_heartTextureID), false, 8, 12);
+		item->setSprite(TextureManager::GetTexture(m_heartTextureID), false, 8, 12);
 		break;
 	}
 
 	// Set the item position.
-	item->SetPosition(spawnLocation);
+	item->setPosition(spawnLocation);
 
 	// Add the item to the list of all items.
 	m_items.push_back(std::move(item));
@@ -1088,7 +1088,7 @@ void GameScene::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 	}
 
 	// Set spawn location.
-	enemy->SetPosition(spawnLocation);
+	enemy->setPosition(spawnLocation);
 
 	// Add to list of all enemies.
 	m_enemies.push_back(std::move(enemy));

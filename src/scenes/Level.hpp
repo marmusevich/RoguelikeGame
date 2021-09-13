@@ -65,7 +65,7 @@ public:
 	 * @param window The render window to draw the level to.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	void Draw(sf::RenderWindow &window, float timeDelta);
+	void draw(sf::RenderWindow &window, float timeDelta);
 
 	/**
 	 * Gets the index of the given tile.
@@ -94,7 +94,7 @@ public:
 	 * Gets the position of the level grid relative to the window.
 	 * @return The position of the top-left of the level grid.
 	 */
-	sf::Vector2f GetPosition() const;
+	sf::Vector2f getPosition() const;
 
 	/**
 	 * Gets a vector of all torches in the level.

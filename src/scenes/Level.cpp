@@ -57,7 +57,7 @@ bool Level::IsSolid(int i, int j)
 }
 
 // Returns the position of the level relative to the application window.
-sf::Vector2f Level::GetPosition() const
+sf::Vector2f Level::getPosition() const
 {
 	return sf::Vector2f(static_cast<float>(m_origin.x), static_cast<float>(m_origin.y));
 }
@@ -489,8 +489,8 @@ void Level::SpawnTorches(int torchCount)
 				if (std::find(usedTiles.begin(), usedTiles.end(), tile) == usedTiles.end())
 				{
 					std::shared_ptr<Torch> torch = std::make_shared<Torch>();
-    				torch->SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::TORCH)]), false, 5, 12);
-					torch->SetPosition(GetActualTileLocation(columnIndex, rowIndex));
+    				torch->setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::TORCH)]), false, 5, 12);
+					torch->setPosition(GetActualTileLocation(columnIndex, rowIndex));
 					m_torches.push_back(torch);
 					tileFound = true;
 				}
@@ -526,7 +526,7 @@ std::vector<std::shared_ptr<Torch>>* Level::GetTorches()
 }
 
 // Draws the level grid to the given render window.
-void Level::Draw(sf::RenderWindow& window, float timeDelta)
+void Level::draw(sf::RenderWindow& window, float timeDelta)
 {
 	// Draw the level tiles.
 	for (int i = 0; i < GRID_WIDTH; i++)
@@ -540,6 +540,6 @@ void Level::Draw(sf::RenderWindow& window, float timeDelta)
 	// Draw all torches.
 	for (auto& torch : m_torches)
 	{
-		torch->Draw(window, timeDelta);
+		torch->draw(window, timeDelta);
 	}
 }

@@ -21,17 +21,17 @@ m_isPaused(false)
 	RandomSeedByTime();
 }
 
-const sf::View& Game::GetDefaultView() const
+const sf::View& Game::getDefaultView() const
 {
 	return m_window.getDefaultView();
 }
 
-sf::Vector2u Game::GetScreenSize() const
+sf::Vector2u Game::getScreenSize() const
 {
 	return m_window.getSize();
 }
 
-sf::Vector2f Game::GetScreenCenter() const
+sf::Vector2f Game::getScreenCenter() const
 {
 	return { m_window.getSize().x / 2.f, m_window.getSize().y / 2.f };
 }
@@ -43,12 +43,12 @@ bool Game::setScene(std::shared_ptr<Scene> scene)
 
 	if (isOk)
 	{
-		isOk = m_curScene->BeforeLoad();
+		isOk = m_curScene->beforeLoad();
 		if (isOk)
 		{
-			isOk = m_curScene->LoadResurce();
+			isOk = m_curScene->loadResurce();
 		}
-		m_curScene->AfterLoad(isOk);
+		m_curScene->afterLoad(isOk);
 	}
 	if (!isOk)
 	{
@@ -58,30 +58,30 @@ bool Game::setScene(std::shared_ptr<Scene> scene)
 	return isOk;
 }
 
-bool Game::IsRunning()
+bool Game::isRunning()
 {
 	return m_isRunning;
 }
 
-void Game::Pause()
+void Game::pause()
 {
 	m_isPaused = true;
 }
 
-void Game::Resume()
+void Game::resume()
 {
 	m_isPaused = false;
 }
 
-bool Game::IsPaused() const
+bool Game::isPaused() const
 {
 	return m_isPaused;
 }
 
 
-void Game::Run()
+void Game::run()
 {
-	Resume();
+	resume();
 
 	float currentTime = m_timestepClock.restart().asSeconds();
 	float timeDelta = 0.f;
@@ -103,12 +103,12 @@ void Game::Run()
 
 			if (event.type == sf::Event::LostFocus || event.type == sf::Event::MouseLeft)
 			{
-				Pause();
+				pause();
 			}
 
 			if (event.type == sf::Event::GainedFocus || event.type == sf::Event::MouseEntered)
 			{
-				Resume();
+				resume();
 			}
 		}
 
@@ -127,14 +127,14 @@ void Game::Run()
 
 		if (m_curScene)
 		{
-			if(!IsPaused())
+			if(!isPaused())
 			{
-				// Update all items in the level.
-				m_curScene->Update(frameTime);
+				// update all items in the level.
+				m_curScene->update(frameTime);
 			}
 
 			// Draw all items in the level.
-			m_curScene->Draw(m_window, frameTime);
+			m_curScene->draw(m_window, frameTime);
 		}
 
 		// Present the back-buffer to the screen.
