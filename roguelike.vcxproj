@@ -171,6 +171,8 @@
     <ClCompile Include="src\scenes\Level.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utils\NonCopyable.hpp" />
+    <ClInclude Include="src\utils\NonMoveable.hpp" />
     <ClInclude Include="src\utils\Util.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

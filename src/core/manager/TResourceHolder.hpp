@@ -1,23 +1,23 @@
 #ifndef SCR_CORE_MANAGER_RESOURCEHOLDER_HPP
 #define SCR_CORE_MANAGER_RESOURCEHOLDER_HPP
 
+#include "core/manager/ResurceType.hpp"
+#include "core/manager/ResurceTraits.hpp"
+#include "utils/NonCopyable.hpp"
+#include "utils/NonMoveable.hpp"
+
 #include <unordered_map>
 #include <string>
 #include <memory>
 #include <stdexcept>
 
-#include "core/manager/ResurceType.hpp"
-#include "core/manager/ResurceTraits.hpp"
-
 namespace NResursesManagement
 {
-
 /**
- TODO make no copy and move
-*/
-
+ * .
+ */
 template <EResurceType TYPE, typename RESTYPE  = typename TResurceTraits<TYPE>::TResource >
-class TResourceHolder
+class TResourceHolder : NonCopyable, NonMoveable
 {
 private:
 	using tMap = std::unordered_map<std::string, std::unique_ptr<RESTYPE>>;

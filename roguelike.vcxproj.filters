@@ -152,6 +152,12 @@
     <ClInclude Include="src\core\manager\ResurceType.hpp">
       <Filter>Core\Manager Classes</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\NonCopyable.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\NonMoveable.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

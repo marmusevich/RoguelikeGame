@@ -2,11 +2,11 @@
 #define SCR_CORE_MANAGER_RESURCEMANAGER_HPP
 
 #include "core/manager/ResurceType.hpp"
+#include "core/manager/TResourceHolder.hpp"
+#include "utils/NonCopyable.hpp"
+#include "utils/NonMoveable.hpp"
 
 #include <memory>
-
-
-#include "core/manager/TResourceHolder.hpp"
 
 namespace NResursesManagement
 {
@@ -22,10 +22,9 @@ namespace NResursesManagement
 
 /**
  * Pimp idiom for resurses.
- * TODO disable copy and move,
  *  see note by ~ResurceManager()  
  */
-class ResurceManager
+class ResurceManager : NonCopyable, NonMoveable
 {
 public:
 	ResurceManager();
@@ -45,7 +44,6 @@ public:
 	 * https://stackoverflow.com/questions/9954518/stdunique-ptr-with-an-incomplete-type-wont-compile
 	 */
 	~ResurceManager();
-
 };
 
 } // namespace NResursesManagement
