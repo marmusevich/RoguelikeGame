@@ -1,0 +1,17 @@
+<?xml version=\"1.0\"?>
+
+<resurces>
+	<\Texture file_name = "" id = "">
+	<Texture file_name = "" id = "">
+		<!-- when needed point some area in image, if it not whole imege. like sprite sheets -->
+		<\rec x= 0 y = 0 w = 10 h = 10>
+
+		<!-- todo how are present anim sprites -->
+	<\Texture>
+	
+	<\Texture file_name = "" id = "">
+	<\Font file_name = "" id = "">
+	<\Image file_name = "" id = "">
+	<\Shader file_name = "" id = "">
+	<\Sound file_name = "" id = "">
+<\resurces>
