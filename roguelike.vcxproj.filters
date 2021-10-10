@@ -167,6 +167,9 @@
     <ClInclude Include="src\core\resurcrLoader\private\cXmlResurceLoader.hpp">
       <Filter>Core\resurcrLoader\private</Filter>
     </ClInclude>
+    <ClInclude Include="deliveries\tinyxml2\tinyxml2.h">
+      <Filter>delivery_to_move_other_prj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -205,6 +208,9 @@
     <Filter Include="Core\resurcrLoader\private">
       <UniqueIdentifier>{31b15990-af6e-461a-929c-17c49fcb16a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="delivery_to_move_other_prj">
+      <UniqueIdentifier>{f6adbbd1-0490-4bda-ba13-cbf4aa4c5b1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\Util.cpp">
@@ -218,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="src\core\resurcrLoader\private\cResurceLoaderBuilder.cpp">
       <Filter>Core\resurcrLoader\private</Filter>
+    </ClCompile>
+    <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp">
+      <Filter>delivery_to_move_other_prj</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\src;$(ProjectDir)\deliveries\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\src;$(ProjectDir)\deliveries;$(ProjectDir)\deliveries\SFML\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>src\PCH.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
@@ -82,7 +82,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\src;$(ProjectDir)\deliveries\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\src;$(ProjectDir)\deliveries;$(ProjectDir)\deliveries\SFML\include</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>src\PCH.hpp</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
@@ -105,11 +105,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="src\core\manager\ResurceManager.cpp" />
     <ClCompile Include="src\core\resurcrLoader\private\cResurceLoaderBuilder.cpp" />
     <ClCompile Include="src\core\resurcrLoader\private\cXmlResurceLoader.cpp" />
     <ClCompile Include="src\utils\Util.cpp" />
     <ClCompile Include="src\utils\MathUtils.cpp" />
+    <ClInclude Include="deliveries\tinyxml2\tinyxml2.h" />
     <ClInclude Include="src\core\manager\ResurceManager.hpp" />
     <ClInclude Include="src\core\manager\ResurceTraits.hpp" />
     <ClInclude Include="src\core\manager\ResurceType.hpp" />

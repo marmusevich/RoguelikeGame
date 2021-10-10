@@ -2,31 +2,29 @@
 
 #include "core/resurcrLoader/private/cXmlResurceLoader.hpp"
 
-#include <memory>
-
-
 namespace NResurceLoader
 {
 
-const iResurceLoader* getXmlLoaderFromFile(const std::string& fileName)
+std::shared_ptr<iResurceLoader> getXmlLoaderFromFile(const std::string& fileName)
 {
-	std::unique_ptr<cXmlResurceLoader> reader;
-	if (reader->setFile(fileName))
+	auto loader = std::make_shared<cXmlResurceLoader>();
+	
+	if (loader->setFile(fileName))
 	{
-		return reader.release();
+		return loader;
 	}
 	return nullptr;
-
 }
-const iResurceLoader* getXmlLoaderFromString(const std::string& xml)
+
+std::shared_ptr<iResurceLoader> getXmlLoaderFromString(const std::string& xml)
 {
-	std::unique_ptr<cXmlResurceLoader> reader;
-	if (reader->setxmlString(xml))
+	auto loader = std::make_shared<cXmlResurceLoader>();
+
+	if (loader->setxmlString(xml))
 	{
-		return reader.release();
+		return loader;
 	}
 	return nullptr;
-
 }
 
 } // namespace NResurceLoader

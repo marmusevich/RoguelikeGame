@@ -3,7 +3,7 @@
 
 #include "core/resurcrLoader/iResurceLoader.hpp"
 
-#include <deliveries/tinyxml2/tinyxml2.h>
+#include <tinyxml2/tinyxml2.h>
 
 #include <string>
 
@@ -19,6 +19,10 @@ public:
 	bool setxmlString(const std::string& xml);
 
 	virtual bool addResurce(NResursesManagement::ResurceManager& resurceManager) override;
+
+private:
+	tinyxml2::XMLDocument mDoc;
+	tinyxml2::XMLError mStatus;
 };
 
 } // namespace NResurceLoader

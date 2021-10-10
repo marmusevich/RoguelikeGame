@@ -11,6 +11,10 @@
 #include <sstream>
 
 
+
+#include "core/resurcrLoader/cResurceLoaderBuilder.hpp" // test for
+
+
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
 static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies that can be spawned each room.
 
@@ -51,7 +55,16 @@ bool GameScene::beforeLoad()
 	//mResurceManager.mFonts->Load("font", "resources/fonts/ADDSBP__.TTF");
 	//m_text.setFont(mResurceManager.mFonts->Get("font") );
 	//or 
-	m_text.setFont(mResurceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF"));
+	//m_text.setFont(mResurceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF"));
+
+
+	std::shared_ptr<NResurceLoader::iResurceLoader> resurceLoader{ NResurceLoader::getXmlLoaderFromFile("resources/resurces.xml ") };
+	resurceLoader->addResurce(mResurceManager);
+
+	m_text.setFont(mResurceManager.mFonts->get("font"));
+
+
+
 
 
 

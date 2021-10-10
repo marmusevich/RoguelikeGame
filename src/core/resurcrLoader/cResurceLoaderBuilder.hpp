@@ -4,11 +4,15 @@
 #include "core/resurcrLoader/iResurceLoader.hpp"
 
 #include <string>
+#include <memory>
+
 
 namespace NResurceLoader
 {
-	static const iResurceLoader* getXmlLoaderFromFile(const std::string& fileName);
-	static const iResurceLoader* getXmlLoaderFromString(const std::string& xml);
+	std::shared_ptr<iResurceLoader> getXmlLoaderFromFile(const std::string& fileName);
+	std::shared_ptr<iResurceLoader> getXmlLoaderFromString(const std::string& xml);
+
+	//same for JSON if needed
 
 } // namespace NResurceLoader
 #endif // SCR_CORE_RESURCRLOADER_CRESURCELOADERBUILDER_HPP
