@@ -1,6 +1,6 @@
-#include "core/resurcrLoader/private/cXmlResurceLoader.hpp"
+#include "core/resourceLoader/private/cXmlResourceLoader.hpp"
 
-namespace NResurceLoader
+namespace NResourceLoader
 {
 	namespace NXMLToken
 	{
@@ -11,26 +11,20 @@ namespace NResurceLoader
 		const char* FONT = "font";
 		const char* SHADER = "shader";
 		const char* SOUND = "sound";
-		const char* RECTANGLE = "rectangle";
 		
 		//xml atributes
 		const char* FILE_NAME = "file_name";
 		const char* ID = "id";
-		const char* RECTANGLE_X = "x";
-		const char* RECTANGLE_Y = "y";
-		const char* RECTANGLE_W = "w";
-		const char* RECTANGLE_H = "h";
-
 	}
 
-cXmlResurceLoader::cXmlResurceLoader()
+cXmlResourceLoader::cXmlResourceLoader()
 : mDoc()
 , mStatus(tinyxml2::XMLError::XML_ERROR_PARSING)
 {
 
 }
 	
-bool cXmlResurceLoader::setFile(const std::string& fileName)
+bool cXmlResourceLoader::setFile(const std::string& fileName)
 {
 	mDoc.ClearError();
 	mDoc.Clear();
@@ -41,13 +35,13 @@ bool cXmlResurceLoader::setFile(const std::string& fileName)
 	if (!ret)
 	{
 		//LOG
-		throw std::runtime_error("cXmlResurceLoader::setFile - Can't parse file '" + fileName + "' with error #" 
+		throw std::runtime_error("cXmlResourceLoader::setFile - Can't parse file '" + fileName + "' with error #" 
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
 	return ret;
 }
 
-bool cXmlResurceLoader::setxmlString(const std::string& xml)
+bool cXmlResourceLoader::setxmlString(const std::string& xml)
 {
 	mDoc.ClearError();
 	mDoc.Clear();
@@ -57,13 +51,13 @@ bool cXmlResurceLoader::setxmlString(const std::string& xml)
 	if (!ret)
 	{
 		//LOG
-		throw std::runtime_error("cXmlResurceLoader::setFile - Can't parse string with error #"
+		throw std::runtime_error("cXmlResourceLoader::setFile - Can't parse string with error #"
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
 	return ret;
 }
 	
-bool cXmlResurceLoader::addResurce(NResursesManagement::ResurceManager& resurceManager)
+bool cXmlResourceLoader::addResource(NResurceManagement::ResourceManager& resourceManager)
 {
 	if (mStatus != tinyxml2::XMLError::XML_SUCCESS)
 	{
@@ -73,12 +67,12 @@ bool cXmlResurceLoader::addResurce(NResursesManagement::ResurceManager& resurceM
 
 	//parse and add ress here
 
-	resurceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF");
+	resourceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF");
 
 
 
 	return false;
 }
 	
-} // namespace NResurceLoader
+} // namespace NResourceLoader
 

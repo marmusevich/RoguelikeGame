@@ -106,18 +106,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="src\core\manager\ResurceManager.cpp" />
-    <ClCompile Include="src\core\resurcrLoader\private\cResurceLoaderBuilder.cpp" />
-    <ClCompile Include="src\core\resurcrLoader\private\cXmlResurceLoader.cpp" />
+    <ClCompile Include="src\core\manager\private\ResourceManager.cpp" />
+    <ClInclude Include="src\core\manager\private\TResourceHolder.hpp" />
+    <ClCompile Include="src\core\resourceLoader\private\cResourceLoaderBuilder.cpp" />
+    <ClCompile Include="src\core\resourceLoader\private\cXmlResourceLoader.cpp" />
     <ClCompile Include="src\utils\Util.cpp" />
     <ClCompile Include="src\utils\MathUtils.cpp" />
     <ClInclude Include="deliveries\tinyxml2\tinyxml2.h" />
-    <ClInclude Include="src\core\manager\ResurceManager.hpp" />
-    <ClInclude Include="src\core\manager\ResurceTraits.hpp" />
-    <ClInclude Include="src\core\manager\ResurceType.hpp" />
-    <ClInclude Include="src\core\resurcrLoader\cResurceLoaderBuilder.hpp" />
-    <ClInclude Include="src\core\resurcrLoader\iResurceLoader.hpp" />
-    <ClInclude Include="src\core\resurcrLoader\private\cXmlResurceLoader.hpp" />
+    <ClInclude Include="src\core\manager\ResourceManager.hpp" />
+    <ClInclude Include="src\core\manager\private\ResourceTraits.hpp" />
+    <ClInclude Include="src\core\manager\ResourceType.hpp" />
+    <ClInclude Include="src\core\resourceLoader\cResourceLoaderBuilder.hpp" />
+    <ClInclude Include="src\core\resourceLoader\iResourceLoader.hpp" />
+    <ClInclude Include="src\core\resourceLoader\private\cXmlResourceLoader.hpp" />
     <ClInclude Include="src\Enums.hpp" />
     <ClCompile Include="src\main.cpp" />
     <ClInclude Include="src\PCH.hpp" />
@@ -169,7 +170,6 @@
     <ClInclude Include="src\core\manager\SoundBufferManager.hpp" />
     <ClInclude Include="src\core\manager\TextureManager.hpp" />
     <ClCompile Include="src\core\manager\TextureManager.cpp" />
-    <ClInclude Include="src\core\manager\TResourceHolder.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\scenes\GameScene.hpp" />

@@ -1,8 +1,8 @@
 #ifndef SCR_CORE_MANAGER_RESOURCEHOLDER_HPP
 #define SCR_CORE_MANAGER_RESOURCEHOLDER_HPP
 
-#include "core/manager/ResurceType.hpp"
-#include "core/manager/ResurceTraits.hpp"
+#include "core/manager/ResourceType.hpp"
+#include "core/manager/private/ResourceTraits.hpp"
 #include "utils/NonCopyable.hpp"
 #include "utils/NonMoveable.hpp"
 
@@ -11,12 +11,12 @@
 #include <memory>
 #include <stdexcept>
 
-namespace NResursesManagement
+namespace NResurceManagement
 {
 /**
  * .
  */
-template <EResurceType TYPE, typename RESTYPE  = typename TResurceTraits<TYPE>::TResource >
+template <EResourceType TYPE, typename RESTYPE  = typename TResourceTraits<TYPE>::TResource >
 class TResourceHolder : NonCopyable, NonMoveable
 {
 private:
@@ -49,21 +49,21 @@ private:
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 TResourceHolder<TYPE, RESTYPE>::TResourceHolder()
 : mResourceMap()
 {
 
 }
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 template <typename... Targs>
 const RESTYPE& TResourceHolder<TYPE, RESTYPE>::loadFromFile(const std::string& key, const std::string& filename, Targs&... args)
 {
 	auto it = mResourceMap.find(key);
 	if (it == mResourceMap.end())
 	{
-		// At this point the resurce doesn't exists, so we'll create and add it.
+		// At this point the Resource doesn't exists, so we'll create and add it.
 		std::unique_ptr<RESTYPE> resource = std::make_unique<RESTYPE>();
 		if (resource->loadFromFile(filename, args...))
 		{
@@ -85,7 +85,7 @@ const RESTYPE& TResourceHolder<TYPE, RESTYPE>::loadFromFile(const std::string& k
 	return *(it->second);
 }
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 bool TResourceHolder<TYPE, RESTYPE>::acquire(const std::string& key, RESTYPE* res)
 {
 	bool ret = res != nullptr;
@@ -103,13 +103,13 @@ bool TResourceHolder<TYPE, RESTYPE>::acquire(const std::string& key, RESTYPE* re
 	return ret;
 }
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 bool TResourceHolder<TYPE, RESTYPE>::isPresent(const std::string& key) const
 {
 	return !(mResourceMap.find(key) == mResourceMap.end());
 }
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 const RESTYPE& TResourceHolder<TYPE, RESTYPE>::get(const std::string& key) const
 {
 	auto it = mResourceMap.find(key);
@@ -121,7 +121,7 @@ const RESTYPE& TResourceHolder<TYPE, RESTYPE>::get(const std::string& key) const
 	return *(it->second);
 }
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 void TResourceHolder<TYPE, RESTYPE>::remove(const std::string& key)
 {
 	auto it = mResourceMap.find(key);
@@ -133,18 +133,18 @@ void TResourceHolder<TYPE, RESTYPE>::remove(const std::string& key)
 	//throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Remove - Can't delete with id  " + std::to_string(id));
 }
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 void TResourceHolder<TYPE, RESTYPE>::clear()
 {
 	mResourceMap.clear();
 }
 
 
-template <EResurceType TYPE, typename RESTYPE>
+template <EResourceType TYPE, typename RESTYPE>
 std::size_t TResourceHolder<TYPE, RESTYPE>::getCount() const
 {
 	return mResourceMap.size();
 }
 
-} // namespace NResursesManagement
+} // namespace NResurceManagement
 #endif // SCR_CORE_MANAGER_RESOURCEHOLDER_HPP

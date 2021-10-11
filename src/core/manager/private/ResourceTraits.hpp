@@ -1,48 +1,48 @@
 #ifndef SCR_CORE_MANAGER_RESOURCETRAITS_HPP
 #define SCR_CORE_MANAGER_RESOURCETRAITS_HPP
 
-#include "core/manager/ResurceType.hpp"
+#include "core/manager/ResourceType.hpp"
 
 //TODO hide
-//for TResurceTraits
+//for TResourceTraits
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Shader.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
-namespace NResursesManagement
+namespace NResurceManagement
 {
 
-//traits enum ResurceType --> sf resurce
-template <EResurceType TYPE>
-struct TResurceTraits;
+//traits enum ResourceType --> sf Resource
+template <EResourceType TYPE>
+struct TResourceTraits;
 
 template<>
-struct TResurceTraits<EResurceType::Texture>
+struct TResourceTraits<EResourceType::Texture>
 {
 	typedef sf::Texture TResource;
 };
 template<>
-struct TResurceTraits<EResurceType::Font>
+struct TResourceTraits<EResourceType::Font>
 {
 	typedef sf::Font TResource;
 };
 template<>
-struct TResurceTraits<EResurceType::Image>
+struct TResourceTraits<EResourceType::Image>
 {
 	typedef sf::Image TResource;
 };
 template<>
-struct TResurceTraits<EResurceType::Shader>
+struct TResourceTraits<EResourceType::Shader>
 {
 	typedef sf::Shader TResource;
 };
 template<>
-struct TResurceTraits<EResurceType::Sound>
+struct TResourceTraits<EResourceType::Sound>
 {
 	typedef sf::SoundBuffer TResource;
 };
 
-} // namespace NResursesManagement
+} // namespace NResurceManagement
 #endif // RESOURCETRAITS_HPP

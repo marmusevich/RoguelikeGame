@@ -21,7 +21,7 @@
 
 //TODO
 //move to core/Scene
-#include "core/manager/ResurceManager.hpp"
+#include "core/manager/ResourceManager.hpp"
 
 
 class GameScene : public Scene
@@ -368,7 +368,7 @@ private:
 	int m_lightTextureID;
 
 
-	NResursesManagement::ResurceManager mResurceManager;
+	NResurceManagement::ResourceManager mResourceManager;
 	
 	//TODO way m_text is class member, maybe prefer local variable
 	//sf::Text text;

@@ -1,14 +1,14 @@
-#ifndef SCR_CORE_MANAGER_RESURCEMANAGER_HPP
-#define SCR_CORE_MANAGER_RESURCEMANAGER_HPP
+#ifndef SCR_CORE_MANAGER_ResourceMANAGER_HPP
+#define SCR_CORE_MANAGER_ResourceMANAGER_HPP
 
-#include "core/manager/ResurceType.hpp"
-#include "core/manager/TResourceHolder.hpp"
+#include "core/manager/ResourceType.hpp"
+#include "core/manager/private/TResourceHolder.hpp"
 #include "utils/NonCopyable.hpp"
 #include "utils/NonMoveable.hpp"
 
 #include <memory>
 
-namespace NResursesManagement
+namespace NResurceManagement
 {
 
 
@@ -22,20 +22,20 @@ namespace NResursesManagement
 
 /**
  * Pimp idiom for resurses.
- *  see note by ~ResurceManager()  
+ *  see note by ~ResourceManager()  
  */
-class ResurceManager : NonCopyable, NonMoveable
+class ResourceManager : NonCopyable, NonMoveable
 {
 public:
-	ResurceManager();
+	ResourceManager();
 
 	//loadResuse(xml or jml file)
 
-	std::unique_ptr<TResourceHolder<EResurceType::Texture>> mTexture;
-	std::unique_ptr<TResourceHolder<EResurceType::Font>> mFonts;
-	std::unique_ptr<TResourceHolder<EResurceType::Image>> mImage;
-	std::unique_ptr<TResourceHolder<EResurceType::Shader>> mShader;
-	std::unique_ptr<TResourceHolder<EResurceType::Sound>> mSound;
+	std::unique_ptr<TResourceHolder<EResourceType::Texture>> mTexture;
+	std::unique_ptr<TResourceHolder<EResourceType::Font>> mFonts;
+	std::unique_ptr<TResourceHolder<EResourceType::Image>> mImage;
+	std::unique_ptr<TResourceHolder<EResourceType::Shader>> mShader;
+	std::unique_ptr<TResourceHolder<EResourceType::Sound>> mSound;
 
 	/**
 	 * prevent 'uncomplete type error' in unique_ptr
@@ -43,8 +43,8 @@ public:
 	 * https://stackoverflow.com/questions/28786387/c-pimpl-idiom-incomplete-type-using-stdunique-ptr
 	 * https://stackoverflow.com/questions/9954518/stdunique-ptr-with-an-incomplete-type-wont-compile
 	 */
-	~ResurceManager();
+	~ResourceManager();
 };
 
-} // namespace NResursesManagement
-#endif // SCR_CORE_MANAGER_RESURCEMANAGER_HPP
+} // namespace NResurceManagement
+#endif // SCR_CORE_MANAGER_ResourceMANAGER_HPP

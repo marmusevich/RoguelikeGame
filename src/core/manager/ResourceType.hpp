@@ -1,7 +1,7 @@
 #ifndef SCR_CORE_MANAGER_RESOURCETIPE_HPP
 #define SCR_CORE_MANAGER_RESOURCETIPE_HPP
 
-namespace NResursesManagement
+namespace NResurceManagement
 {
 
 
@@ -9,7 +9,7 @@ namespace NResursesManagement
 /**
  * .
  */
-enum class EResurceType : unsigned char
+enum class EResourceType : unsigned char
 {
 	Texture, /** sf::Texture */
 	Font,    /** sf::Font */
@@ -19,5 +19,5 @@ enum class EResurceType : unsigned char
 	// Music, no need?
 };
 
-} // namespace NResursesManagement
+} // namespace NResurceManagement
 #endif // SCR_CORE_MANAGER_RESOURCETIPE_HPP

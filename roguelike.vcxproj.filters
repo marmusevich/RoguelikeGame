@@ -120,20 +120,17 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClInclude Include="src\core\manager\SoundBufferManager.hpp">
-      <Filter>Core\Manager Classes</Filter>
+      <Filter>Core\Manager Classes\__old</Filter>
     </ClInclude>
     <ClInclude Include="src\core\manager\TextureManager.hpp">
-      <Filter>Core\Manager Classes</Filter>
+      <Filter>Core\Manager Classes\__old</Filter>
     </ClInclude>
     <ClCompile Include="src\core\manager\SoundBufferManager.cpp">
-      <Filter>Core\Manager Classes</Filter>
+      <Filter>Core\Manager Classes\__old</Filter>
     </ClCompile>
     <ClCompile Include="src\core\manager\TextureManager.cpp">
-      <Filter>Core\Manager Classes</Filter>
+      <Filter>Core\Manager Classes\__old</Filter>
     </ClCompile>
-    <ClInclude Include="src\core\manager\TResourceHolder.hpp">
-      <Filter>Core\Manager Classes</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\Util.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -143,13 +140,13 @@
     <ClInclude Include="src\utils\MathUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\manager\ResurceManager.hpp">
+    <ClInclude Include="src\core\manager\ResourceManager.hpp">
       <Filter>Core\Manager Classes</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\manager\ResurceTraits.hpp">
-      <Filter>Core\Manager Classes</Filter>
+    <ClInclude Include="src\core\manager\private\ResourceTraits.hpp">
+      <Filter>Core\Manager Classes\private</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\manager\ResurceType.hpp">
+    <ClInclude Include="src\core\manager\ResourceType.hpp">
       <Filter>Core\Manager Classes</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\NonCopyable.hpp">
@@ -158,17 +155,20 @@
     <ClInclude Include="src\utils\NonMoveable.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resurcrLoader\iResurceLoader.hpp">
-      <Filter>Core\resurcrLoader</Filter>
+    <ClInclude Include="src\core\resourceLoader\iResourceLoader.hpp">
+      <Filter>Core\resourceLoader</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resurcrLoader\cResurceLoaderBuilder.hpp">
-      <Filter>Core\resurcrLoader</Filter>
+    <ClInclude Include="src\core\resourceLoader\cResourceLoaderBuilder.hpp">
+      <Filter>Core\resourceLoader</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resurcrLoader\private\cXmlResurceLoader.hpp">
-      <Filter>Core\resurcrLoader\private</Filter>
+    <ClInclude Include="src\core\resourceLoader\private\cXmlResourceLoader.hpp">
+      <Filter>Core\resourceLoader\private</Filter>
     </ClInclude>
     <ClInclude Include="deliveries\tinyxml2\tinyxml2.h">
       <Filter>delivery_to_move_other_prj</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\manager\private\TResourceHolder.hpp">
+      <Filter>Core\Manager Classes\private</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -202,10 +202,16 @@
     <Filter Include="Core\Manager Classes">
       <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743913}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\resurcrLoader">
+    <Filter Include="Core\Manager Classes\private">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Manager Classes\__old">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\resourceLoader">
       <UniqueIdentifier>{2e104d97-efc9-46b9-9948-504ec426952e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\resurcrLoader\private">
+    <Filter Include="Core\resourceLoader\private">
       <UniqueIdentifier>{31b15990-af6e-461a-929c-17c49fcb16a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="delivery_to_move_other_prj">
@@ -216,17 +222,17 @@
     <ClCompile Include="src\utils\Util.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\manager\ResurceManager.cpp">
-      <Filter>Core\Manager Classes</Filter>
+    <ClCompile Include="src\core\resourceLoader\private\cXmlResourceLoader.cpp">
+      <Filter>Core\resourceLoader\private</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\resurcrLoader\private\cXmlResurceLoader.cpp">
-      <Filter>Core\resurcrLoader\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\resurcrLoader\private\cResurceLoaderBuilder.cpp">
-      <Filter>Core\resurcrLoader\private</Filter>
+    <ClCompile Include="src\core\resourceLoader\private\cResourceLoaderBuilder.cpp">
+      <Filter>Core\resourceLoader\private</Filter>
     </ClCompile>
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp">
       <Filter>delivery_to_move_other_prj</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\manager\private\ResourceManager.cpp">
+      <Filter>Core\Manager Classes\private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

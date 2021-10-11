@@ -5,17 +5,6 @@
 	<Font file_name = "resources/fonts/ADDSBP__.TTF" id = "font"/>
 
 <!-- 
-	<Texture file_name = "" id = "">
- -->	
-	
-		<!-- when needed point some area in image, if it not whole imege. like sprite sheets -->
-<!-- 	
-	<Rectangle x = 0 y = 0 w  = 10 h = 10 />
- -->
-		<!-- todo how are present anim sprites ? -->
-	
-<!-- 	
-	</Texture>
 	
 	<Texture file_name = "" id = "" />
 	
