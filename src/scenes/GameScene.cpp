@@ -59,13 +59,13 @@ bool GameScene::beforeLoad()
 
 
     std::shared_ptr<NResourceLoader::iResourceLoader> resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/resources.xml ") };
-    bool ret = resourceLoader != nullptr;
+    bool ret = resourceLoader != nullptr && resourceLoader->addResource(mResourceManager);
     if (ret)
     {
-        resourceLoader->addResource(mResourceManager);
-
 
         m_text.setFont(mResourceManager.mFonts->get("font"));
+
+
     }
 
 

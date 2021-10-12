@@ -2,20 +2,6 @@
 
 namespace NResourceLoader
 {
-	namespace NXMLToken
-	{
-		//xml elements
-		const char* ROOT = "resurces";
-		const char* TEXTURE = "texture";
-		const char* IMAGE = "image";
-		const char* FONT = "font";
-		const char* SHADER = "shader";
-		const char* SOUND = "sound";
-		
-		//xml atributes
-		const char* FILE_NAME = "file_name";
-		const char* ID = "id";
-	}
 
 cXmlResourceLoader::cXmlResourceLoader()
 : mDoc()
@@ -57,21 +43,59 @@ bool cXmlResourceLoader::setxmlString(const std::string& xml)
 	return ret;
 }
 	
+namespace
+{
+
+namespace NXMLToken
+{
+	//xml elements
+	const char* ROOT = "Resurces";
+	const char* TEXTURE = "Texture";
+	const char* IMAGE = "Image";
+	const char* FONT = "Font";
+	const char* SHADER = "Shader";
+	const char* SOUND = "Sound";
+
+	//xml atributes
+	const char* FILE_NAME = "file_name";
+	const char* ID = "id";
+}
+
+template <typename TResourceHolder>
+bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementName, TResourceHolder& holder)
+{
+	bool ret = true;
+
+	for (auto element = root->FirstChildElement(elementName); ret && element != nullptr; element = element->NextSiblingElement(elementName))
+	{
+		const auto fn = element->Attribute(NXMLToken::FILE_NAME);
+		const auto id = element->Attribute(NXMLToken::ID);
+
+		ret = fn != nullptr && id != nullptr;
+		if (ret)
+		{
+			static_cast<void>( holder->loadFromFile(id, fn) ); // ignore result
+		}
+	}
+	return ret;
+}
+}
+
 bool cXmlResourceLoader::addResource(NResurceManagement::ResourceManager& resourceManager)
 {
 	if (mStatus != tinyxml2::XMLError::XML_SUCCESS)
 	{
 		return false;
 	}
-
-
-	//parse and add ress here
-
-	resourceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF");
-
-
-
-	return false;
+	
+	auto root = mDoc.FirstChildElement(NXMLToken::ROOT);
+	bool ret = root != nullptr;
+	ret = ret && addResourcefromNode(root, NXMLToken::FONT, resourceManager.mFonts);
+	ret = ret && addResourcefromNode(root, NXMLToken::TEXTURE, resourceManager.mTexture);
+	ret = ret && addResourcefromNode(root, NXMLToken::IMAGE, resourceManager.mImage);
+	ret = ret && addResourcefromNode(root, NXMLToken::SOUND, resourceManager.mSound);
+	//ret = ret && addResourcefromNode(root, NXMLToken::SHADER, resourceManager.mShader);
+	return ret;
 }
 	
 } // namespace NResourceLoader

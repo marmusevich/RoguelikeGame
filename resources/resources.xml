@@ -1,16 +1,14 @@
-<?xml version=\"1.0\"?>
-
+<!-- <?xml version="1.0"?> -->
 <Resurces>
+   <Font file_name = "resources/fonts/ADDSBP__.TTF" id = "font"/>
 
-	<Font file_name = "resources/fonts/ADDSBP__.TTF" id = "font"/>
+   <Texture file_name = "resources/tiles/spr_tile_wall_entrance.png" id = "spr_tile_wall_entrance" />
+   <Texture file_name = "resources/tiles/spr_tile_door_locked.png" id = "spr_tile_door_locked" />
+   <Texture file_name = "resources/tiles/spr_tile_door_unlocked.png" id = "spr_tile_door_unlocked" />
+   <Texture file_name = "resources/spr_torch.png" id = "spr_torch" />
 
-<!-- 
-	
-	<Texture file_name = "" id = "" />
-	
-	
-	<Image file_name = "" id = "" />
-	<Shader file_name = "" id = "" />
-	<Sound file_name = "" id = "" />
- -->	
+   <Sound file_name = "resources/sounds/snd_fire.wav" id = "snd_fire" />
+
+<!--	<Image file_name = "" id = "" />  -->
+<!--	<Shader file_name = "" id = "" />  -->
 </Resurces>

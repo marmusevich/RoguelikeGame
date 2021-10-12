@@ -120,16 +120,16 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClInclude Include="src\core\manager\SoundBufferManager.hpp">
-      <Filter>Core\Manager Classes\__old</Filter>
+      <Filter>Core\Manager Classes\__old to be remove</Filter>
     </ClInclude>
     <ClInclude Include="src\core\manager\TextureManager.hpp">
-      <Filter>Core\Manager Classes\__old</Filter>
+      <Filter>Core\Manager Classes\__old to be remove</Filter>
     </ClInclude>
     <ClCompile Include="src\core\manager\SoundBufferManager.cpp">
-      <Filter>Core\Manager Classes\__old</Filter>
+      <Filter>Core\Manager Classes\__old to be remove</Filter>
     </ClCompile>
     <ClCompile Include="src\core\manager\TextureManager.cpp">
-      <Filter>Core\Manager Classes\__old</Filter>
+      <Filter>Core\Manager Classes\__old to be remove</Filter>
     </ClCompile>
     <ClInclude Include="src\utils\Util.hpp">
       <Filter>Utils</Filter>
@@ -156,13 +156,13 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\core\resourceLoader\iResourceLoader.hpp">
-      <Filter>Core\resourceLoader</Filter>
+      <Filter>Core\Resource Loader</Filter>
     </ClInclude>
     <ClInclude Include="src\core\resourceLoader\cResourceLoaderBuilder.hpp">
-      <Filter>Core\resourceLoader</Filter>
+      <Filter>Core\Resource Loader</Filter>
     </ClInclude>
     <ClInclude Include="src\core\resourceLoader\private\cXmlResourceLoader.hpp">
-      <Filter>Core\resourceLoader\private</Filter>
+      <Filter>Core\Resource Loader\private</Filter>
     </ClInclude>
     <ClInclude Include="deliveries\tinyxml2\tinyxml2.h">
       <Filter>delivery_to_move_other_prj</Filter>
@@ -205,17 +205,17 @@
     <Filter Include="Core\Manager Classes\private">
       <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743914}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Manager Classes\__old">
-      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743915}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\resourceLoader">
-      <UniqueIdentifier>{2e104d97-efc9-46b9-9948-504ec426952e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\resourceLoader\private">
-      <UniqueIdentifier>{31b15990-af6e-461a-929c-17c49fcb16a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="delivery_to_move_other_prj">
       <UniqueIdentifier>{f6adbbd1-0490-4bda-ba13-cbf4aa4c5b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Manager Classes\__old to be remove">
+      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource Loader">
+      <UniqueIdentifier>{2e104d97-efc9-46b9-9948-504ec426952e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource Loader\private">
+      <UniqueIdentifier>{31b15990-af6e-461a-929c-17c49fcb16a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -223,10 +223,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\core\resourceLoader\private\cXmlResourceLoader.cpp">
-      <Filter>Core\resourceLoader\private</Filter>
+      <Filter>Core\Resource Loader\private</Filter>
     </ClCompile>
     <ClCompile Include="src\core\resourceLoader\private\cResourceLoaderBuilder.cpp">
-      <Filter>Core\resourceLoader\private</Filter>
+      <Filter>Core\Resource Loader\private</Filter>
     </ClCompile>
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp">
       <Filter>delivery_to_move_other_prj</Filter>

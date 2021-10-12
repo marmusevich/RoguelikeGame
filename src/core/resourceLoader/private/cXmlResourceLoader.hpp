@@ -25,5 +25,7 @@ private:
 	tinyxml2::XMLError mStatus;
 };
 
+void NewFunction(tinyxml2::XMLElement* root);
+
 } // namespace NResourceLoader
 #endif // SCR_CORE_RESOURCELOADER_PRIVATE_CXMLRESOURCELOADER_HPP
