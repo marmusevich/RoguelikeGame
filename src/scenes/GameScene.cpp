@@ -62,11 +62,7 @@ bool GameScene::beforeLoad()
     bool ret = resourceLoader != nullptr && resourceLoader->addResource(mResourceManager);
     if (ret)
     {
-
-        //m_text.setFont(mResourceManager.mFonts->get("font"));
-
         m_text.setFont(mResourceManager.get<NResurceManagement::EResourceType::Font>("font"));
-
     }
 
 
