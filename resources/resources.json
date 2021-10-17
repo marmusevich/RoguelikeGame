@@ -1,0 +1,30 @@
+{
+	"Fonts" : [ 
+		{"file_name" : "resources/fonts/ADDSBP__.TTF", "id" : "font" }
+	],
+
+	"Textures" : [
+		{ "file_name" : "resources/tiles/spr_tile_wall_entrance.png", "id" : "spr_tile_wall_entrance" },
+		{ "file_name" : "resources/tiles/spr_tile_door_locked.png", "id" : "spr_tile_door_locked" },
+		{ "file_name" : "resources/tiles/spr_tile_door_unlocked.png", "id" : "spr_tile_door_unlocked" },
+		{ "file_name" : "resources/spr_torch.png", "id" : "spr_torch" }
+	],
+
+	"Sounds" : [
+		{ "file_name" : "resources/sounds/snd_fire.wav", "id" : "snd_fire" }
+	],
+	
+	
+	
+	{"comment" : "or we pick next ?"},
+	[ 
+		{ "type" : "Fonts", "file_name" : "resources/fonts/ADDSBP__.TTF", "id" : "font" }
+
+		{ "type" : "Textures", "file_name" : "resources/tiles/spr_tile_wall_entrance.png", "id" : "spr_tile_wall_entrance" },
+		{ "type" : "Textures", "file_name" : "resources/tiles/spr_tile_door_locked.png", "id" : "spr_tile_door_locked" },
+		{ "type" : "Textures", "file_name" : "resources/tiles/spr_tile_door_unlocked.png", "id" : "spr_tile_door_unlocked" },
+		{ "type" : "Textures", "file_name" : "resources/spr_torch.png", "id" : "spr_torch" }
+
+		{ "type" : "Sounds", "file_name" : "resources/sounds/snd_fire.wav", "id" : "snd_fire" }
+	]
+}

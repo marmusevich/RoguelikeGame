@@ -16,7 +16,7 @@ public:
 	cXmlResourceLoader();
 
 	bool setFile(const std::string& fileName);
-	bool setxmlString(const std::string& xml);
+	bool setString(const std::string& xml);
 
 	virtual bool addResource(NResurceManagement::ResourceManager& resourceManager) override;
 

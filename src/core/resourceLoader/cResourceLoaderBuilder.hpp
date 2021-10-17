@@ -14,7 +14,10 @@ namespace NResourceLoader
 	/** create resource loader XML from string */
 	std::shared_ptr<iResourceLoader> getXmlLoaderFromString(const std::string& xml);
 
-	//same for JSON if needed
+	/** create resource loader JSON from file */
+	std::shared_ptr<iResourceLoader> getJsonLoaderFromFile(const std::string& fileName);
+	/** create resource loader JSON from string */
+	std::shared_ptr<iResourceLoader> getJsonLoaderFromString(const std::string& json);
 
 } // namespace NResourceLoader
 #endif // SCR_CORE_RESOURCRLOADER_CRESOURCELOADERBUILDER_HPP

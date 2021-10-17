@@ -27,7 +27,7 @@ bool cXmlResourceLoader::setFile(const std::string& fileName)
 	return ret;
 }
 
-bool cXmlResourceLoader::setxmlString(const std::string& xml)
+bool cXmlResourceLoader::setString(const std::string& xml)
 {
 	mDoc.ClearError();
 	mDoc.Clear();
@@ -37,7 +37,7 @@ bool cXmlResourceLoader::setxmlString(const std::string& xml)
 	if (!ret)
 	{
 		//LOG
-		throw std::runtime_error("cXmlResourceLoader::setFile - Can't parse string with error #"
+		throw std::runtime_error("cXmlResourceLoader::setString - Can't parse string with error #"
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
 	return ret;
