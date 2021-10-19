@@ -170,9 +170,6 @@
     <ClInclude Include="src\core\manager\private\TResourceHolder.hpp">
       <Filter>Core\Manager Classes\private</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resourceLoader\private\cJsonResourceLoader.hpp">
-      <Filter>Core\Resource Loader\private</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -236,9 +233,6 @@
     </ClCompile>
     <ClCompile Include="src\core\manager\private\ResourceManager.cpp">
       <Filter>Core\Manager Classes\private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\resourceLoader\private\cJsonResourceLoader.cpp">
-      <Filter>Core\Resource Loader\private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -108,7 +108,6 @@
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="src\core\manager\private\ResourceManager.cpp" />
     <ClInclude Include="src\core\manager\private\TResourceHolder.hpp" />
-    <ClCompile Include="src\core\resourceLoader\private\cJsonResourceLoader.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\cResourceLoaderBuilder.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\cXmlResourceLoader.cpp" />
     <ClCompile Include="src\utils\Util.cpp" />
@@ -119,7 +118,6 @@
     <ClInclude Include="src\core\manager\ResourceType.hpp" />
     <ClInclude Include="src\core\resourceLoader\cResourceLoaderBuilder.hpp" />
     <ClInclude Include="src\core\resourceLoader\iResourceLoader.hpp" />
-    <ClInclude Include="src\core\resourceLoader\private\cJsonResourceLoader.hpp" />
     <ClInclude Include="src\core\resourceLoader\private\cXmlResourceLoader.hpp" />
     <ClInclude Include="src\Enums.hpp" />
     <ClCompile Include="src\main.cpp" />

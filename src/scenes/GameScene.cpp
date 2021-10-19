@@ -57,22 +57,12 @@ bool GameScene::beforeLoad()
     //or 
     //m_text.setFont(mResourceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF"));
 
-
     std::shared_ptr<NResourceLoader::iResourceLoader> resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/resources.xml") };
     bool ret = resourceLoader != nullptr && resourceLoader->addResource(mResourceManager);
     if (ret)
     {
         m_text.setFont(mResourceManager.get<NResurceManagement::EResourceType::Font>("font"));
     }
-
-    //std::shared_ptr<NResourceLoader::iResourceLoader> resourceLoader{ NResourceLoader::getJsonLoaderFromFile("resources/resources.json") };
-    //bool ret = resourceLoader != nullptr && resourceLoader->addResource(mResourceManager);
-    //if (ret)
-    //{
-    //    m_text.setFont(mResourceManager.get<NResurceManagement::EResourceType::Font>("font"));
-    //}
-
-
 
 
 
