@@ -1,13 +1,20 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Enums.hpp"
-
 #include <memory>
 
 #include <SFML/Graphics.hpp>
 
 class Scene;
+
+
+// Game states.
+enum class eGAME_STATE
+{
+	MAIN_MENU,
+	PLAYING,
+	GAME_OVER
+};
 
 class Game
 {
@@ -70,7 +77,7 @@ private:
 /**
  * The game state.
  */
-GAME_STATE m_gameState;
+ eGAME_STATE m_gameState;
 
 /**
  * A bool that tracks the running state of the game. It's used in the main loop.

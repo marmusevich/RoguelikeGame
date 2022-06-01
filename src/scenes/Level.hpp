@@ -2,8 +2,38 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "Enums.hpp"
 #include "items/environment/Torch.hpp"
+
+
+// Tiles.
+enum class eTILE 
+{
+	WALL_SINGLE,
+	WALL_TOP_END,
+	WALL_SIDE_RIGHT_END,
+	WALL_BOTTOM_LEFT,
+	WALL_BOTTOM_END,
+	WALL_SIDE,
+	WALL_TOP_LEFT,
+	WALL_SIDE_LEFT_T,
+	WALL_SIDE_LEFT_END,
+	WALL_BOTTOM_RIGHT,
+	WALL_TOP,
+	WALL_BOTTOM_T,
+	WALL_TOP_RIGHT,
+	WALL_SIDE_RIGHT_T,
+	WALL_TOP_T,
+	WALL_INTERSECTION,
+	WALL_DOOR_LOCKED,
+	WALL_DOOR_UNLOCKED,
+	WALL_ENTRANCE,
+	FLOOR,
+	FLOOR_ALT,
+	EMPTY,
+	TORCH,
+	COUNT
+};
+
 
 // Constants for the game grid size.
 static int const GRID_WIDTH = 19;
@@ -14,7 +44,7 @@ static int const TILE_SIZE = 50;
 
 // The level tile type.
 struct Tile {
-	TILE type;							// The type of tile this is.
+	eTILE type;							// The type of tile this is.
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
 	sf::Sprite sprite;					// The tile sprite.
@@ -49,7 +79,7 @@ public:
 	 * @param rowIndex The tile's row index.
 	 * @param index The new index of the tile.
 	 */
-	void SetTile(int columnIndex, int rowIndex, TILE tileType);
+	void SetTile(int columnIndex, int rowIndex, eTILE tileType);
 
 	/**
 	 * Draws the level grid to the provided render window.
@@ -64,7 +94,7 @@ public:
 	 * @param rowIndex The row index of the tile to check.
 	 * @return The index of the given tile.
 	 */
-	TILE GetTileType(int columnIndex, int rowIndex) const;
+	eTILE GetTileType(int columnIndex, int rowIndex) const;
 
 	/**
 	 * Gets the tile at the given position.
@@ -194,7 +224,7 @@ public:
 	* @param textureID 
 	* @param tileType The type of tile that is being added.
 	*/
-	void AddTile(int textureID, TILE tileType);
+	void AddTile(int textureID, eTILE tileType);
 
 private:
 
@@ -264,7 +294,7 @@ private:
 	/**
 	 * An array containing all texture IDs of the level tiles.
 	 */
-	int m_textureIDs[static_cast<int>(TILE::COUNT)];
+	int m_textureIDs[static_cast<int>(eTILE::COUNT)];
 
 	/**
 	 * The spawn location for the current level.

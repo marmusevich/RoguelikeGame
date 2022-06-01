@@ -3,6 +3,15 @@
 
 #include "characters/enemies/Enemy.hpp"
 
+// Enemy humanoid types.
+enum class eHUMANOID 
+{
+	GOBLIN,
+	SKELETON,
+	COUNT
+};
+
+
 class Humanoid : public Enemy
 {
 public:
@@ -30,6 +39,6 @@ private:
 	/**
 	 * An array of modified textures.
 	 */
-	sf::Texture m_textures_old[static_cast<int>(ANIMATION_STATE::COUNT)];
+	sf::Texture m_textures_old[static_cast<int>(eANIMATION_STATE::COUNT)];
 };
 #endif

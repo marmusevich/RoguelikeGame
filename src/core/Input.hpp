@@ -8,7 +8,7 @@ public:
 	/**
 	 * An enum denoting all possible input keys.
 	 */
-	enum class KEY
+	enum class eKEY
 	{
 		KEY_LEFT,
 		KEY_RIGHT,
@@ -23,6 +23,6 @@ public:
 	 * @param keycode The key to check.
 	 * @return True if the given key is currently pressed.
 	 */
-	static bool IsKeyPressed(KEY keycode);
+	static bool IsKeyPressed(eKEY keycode);
 };
 #endif

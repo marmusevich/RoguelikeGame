@@ -9,5 +9,5 @@ Key::Key()
 	setItemName("Key");
 
 	// Set item type.
-	m_type = ITEM::KEY;
+	m_type = eITEM::KEY;
 }

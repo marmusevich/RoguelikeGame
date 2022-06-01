@@ -3,6 +3,8 @@
 
 #include <SFML\Graphics.hpp>
 
+#include "core/manager/ResourceManager.hpp"
+
 //fwd
 class Game;
 

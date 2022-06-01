@@ -9,7 +9,7 @@ Heart::Heart()
 	m_health = Random(10, 20);
 
 	// Set item type.
-	m_type = ITEM::HEART;
+	m_type = eITEM::HEART;
 }
 
 // Returns the amount of health that the heart gives.

@@ -8,7 +8,7 @@
 Game::Game(sf::RenderWindow* window, const unsigned int FPS)
 	:
 m_window(*window),
-m_gameState(GAME_STATE::PLAYING),
+m_gameState(eGAME_STATE::PLAYING),
 m_isRunning(true),
 m_timestepClock(),
 m_curScene(nullptr),
@@ -93,7 +93,7 @@ void Game::run()
 		sf::Event event;
 		if (m_window.pollEvent(event))
 		{
-			if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
+			if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::eKEY::KEY_ESC)))
 			{
 				m_isRunning = false;
 				m_window.close();

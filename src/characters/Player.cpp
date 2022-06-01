@@ -13,46 +13,46 @@ m_canTakeDamage(true),
 m_statPoints(0)
 {
 	// Generate a random class.
-	m_class = Random(PLAYER_CLASS::COUNT);
+	m_class = Random(ePLAYER_CLASS::COUNT);
 	std::string className;
 
 	// Set class-specific variables.
 	switch (m_class)
 	{
-	case PLAYER_CLASS::WARRIOR:
+	case ePLAYER_CLASS::WARRIOR:
 		m_strength += Random(5, 10);
 		className = "warrior";
 		break;
 
-	case PLAYER_CLASS::MAGE:
+	case ePLAYER_CLASS::MAGE:
 		m_defense = Random(5, 10);
 		className = "mage";
 		break;
 
-	case PLAYER_CLASS::ARCHER:
+	case ePLAYER_CLASS::ARCHER:
 		m_dexterity = Random(5, 10);
 		className = "archer";
 		break;
 
-	case PLAYER_CLASS::THIEF:
+	case ePLAYER_CLASS::THIEF:
 		m_stamina = Random(5, 10);
 		className = "thief";
 		break;
 	}
 
 	// Load textures.
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_up.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_down.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_right.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_left.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_up.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_down.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_right.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_left.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_up.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_down.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_right.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_left.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_up.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_down.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_right.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_left.png");
 
 	// Set initial sprite.
-	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
-	m_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
+	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	m_currentTextureIndex = static_cast<int>(eANIMATION_STATE::WALK_UP);
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
 	// Create the player's aim sprite.
@@ -95,40 +95,40 @@ void Player::update(float timeDelta, Level& level)
 	sf::Vector2f previousPosition = m_position;
 
 	// Calculate where the current movement will put us.
-	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(m_currentTextureIndex);
+	eANIMATION_STATE animState = static_cast<eANIMATION_STATE>(m_currentTextureIndex);
 
-	if (Input::IsKeyPressed(Input::KEY::KEY_LEFT))
+	if (Input::IsKeyPressed(Input::eKEY::KEY_LEFT))
 	{
 		// Set movement speed.
 		movementSpeed.x = -m_speed * timeDelta;
 
 		// Chose animation state.
-		animState = ANIMATION_STATE::WALK_LEFT;
+		animState = eANIMATION_STATE::WALK_LEFT;
 	}
-	else if (Input::IsKeyPressed(Input::KEY::KEY_RIGHT))
+	else if (Input::IsKeyPressed(Input::eKEY::KEY_RIGHT))
 	{
 		// Set movement speed.
 		movementSpeed.x = m_speed * timeDelta;
 
 		// Chose animation state.
-		animState = ANIMATION_STATE::WALK_RIGHT;
+		animState = eANIMATION_STATE::WALK_RIGHT;
 	}
 
-	if (Input::IsKeyPressed(Input::KEY::KEY_UP))
+	if (Input::IsKeyPressed(Input::eKEY::KEY_UP))
 	{
 		// Set movement speed.
 		movementSpeed.y = -m_speed * timeDelta;
 
 		// Chose animation state.
-		animState = ANIMATION_STATE::WALK_UP;
+		animState = eANIMATION_STATE::WALK_UP;
 	}
-	else if (Input::IsKeyPressed(Input::KEY::KEY_DOWN))
+	else if (Input::IsKeyPressed(Input::eKEY::KEY_DOWN))
 	{
 		// Set movement speed.
 		movementSpeed.y = m_speed * timeDelta;
 
 		// Chose animation state.
-		animState = ANIMATION_STATE::WALK_DOWN;
+		animState = eANIMATION_STATE::WALK_DOWN;
 	}
 
 	// Calculate horizontal movement.
@@ -198,7 +198,7 @@ void Player::update(float timeDelta, Level& level)
 	// Check if shooting.
 	if ((m_attackDelta += timeDelta) > 0.25f)
 	{
-		if (Input::IsKeyPressed(Input::KEY::KEY_ATTACK))
+		if (Input::IsKeyPressed(Input::eKEY::KEY_ATTACK))
 		{
 			// Mark player as attacking.
 			m_isAttacking = true;
@@ -228,7 +228,7 @@ void Player::update(float timeDelta, Level& level)
 }
 
 // Returns the player's class.
-PLAYER_CLASS Player::GetClass() const
+ePLAYER_CLASS Player::GetClass() const
 {
 	return m_class;
 }

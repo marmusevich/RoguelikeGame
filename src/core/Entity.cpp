@@ -1,12 +1,11 @@
 //#include "PCH.hpp"
-#include "Enums.hpp"
 #include "core/Entity.hpp"
 #include "core/manager/TextureManager.hpp"
 
 
 // Default constructor.
 Entity::Entity() :
-m_currentTextureIndex(static_cast<int>(ANIMATION_STATE::WALK_DOWN)),
+m_currentTextureIndex(static_cast<int>(eANIMATION_STATE::WALK_DOWN)),
 m_health(0),
 m_maxHealth(0),
 m_mana(0),
@@ -25,7 +24,7 @@ m_velocity({0.f, 0.f})
 void Entity::update(float timeDelta)
 {
 	// Choose animation state.
-	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(m_currentTextureIndex);
+	eANIMATION_STATE animState = static_cast<eANIMATION_STATE>(m_currentTextureIndex);
 
 	if ((m_velocity.x != 0) || (m_velocity.y != 0))
 	{
@@ -33,22 +32,22 @@ void Entity::update(float timeDelta)
 		{
 			if (m_velocity.x <= 0)
 			{
-				animState = ANIMATION_STATE::WALK_LEFT;
+				animState = eANIMATION_STATE::WALK_LEFT;
 			}
 			else
 			{
-				animState = ANIMATION_STATE::WALK_RIGHT;
+				animState = eANIMATION_STATE::WALK_RIGHT;
 			}
 		}
 		else
 		{
 			if (m_velocity.y <= 0)
 			{
-				animState = ANIMATION_STATE::WALK_UP;
+				animState = eANIMATION_STATE::WALK_UP;
 			}
 			else
 			{
-				animState = ANIMATION_STATE::WALK_DOWN;
+				animState = eANIMATION_STATE::WALK_DOWN;
 			}
 		}
 	}

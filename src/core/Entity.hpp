@@ -3,7 +3,21 @@
 
 #include "core/Object.hpp"
 
-#include "Enums.hpp"
+
+
+// Animation states.
+enum class eANIMATION_STATE
+{
+	WALK_UP,
+	WALK_DOWN,
+	WALK_RIGHT,
+	WALK_LEFT,
+	IDLE_UP,
+	IDLE_DOWN,
+	IDLE_RIGHT,
+	IDLE_LEFT,
+	COUNT
+};
 
 
 
@@ -100,7 +114,7 @@ protected:
 	/**
 	 * A vector of all texture IDs.
 	 */
-	int m_textureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
+	int m_textureIDs[static_cast<int>(eANIMATION_STATE::COUNT)];
 
 	/**
 	 * The index of the current texture.

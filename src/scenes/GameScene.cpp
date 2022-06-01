@@ -43,9 +43,9 @@ GameScene::GameScene(const Game& game)
 
 {
     // Define the game views.
-    m_views[static_cast<int>(VIEW::MAIN)] = getGame().getDefaultView();
-    m_views[static_cast<int>(VIEW::MAIN)].zoom(0.5f);
-    m_views[static_cast<int>(VIEW::UI)] = getGame().getDefaultView();
+    m_views[static_cast<int>(eVIEW::MAIN)] = getGame().getDefaultView();
+    m_views[static_cast<int>(eVIEW::MAIN)].zoom(0.5f);
+    m_views[static_cast<int>(eVIEW::UI)] = getGame().getDefaultView();
 }
 
 
@@ -70,29 +70,29 @@ bool GameScene::beforeLoad()
     // Load the correct projectile texture.
     switch (m_player.GetClass())
     {
-    case PLAYER_CLASS::ARCHER:
+    case ePLAYER_CLASS::ARCHER:
         m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_arrow.png");
         break;
-    case PLAYER_CLASS::MAGE:
+    case ePLAYER_CLASS::MAGE:
         m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_magic_ball.png");
         break;
-    case PLAYER_CLASS::THIEF:
+    case ePLAYER_CLASS::THIEF:
         m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_dagger.png");
         break;
-    case PLAYER_CLASS::WARRIOR:
+    case ePLAYER_CLASS::WARRIOR:
         m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_sword.png");
         break;
     }
 
-    m_potionTextureIDs[POTION::ATTACK] = TextureManager::AddTexture("resources/loot/potions/spr_potion_attack.png");
-    m_potionTextureIDs[POTION::DEFENSE] = TextureManager::AddTexture("resources/loot/potions/spr_potion_defense.png");
-    m_potionTextureIDs[POTION::STRENGTH] = TextureManager::AddTexture("resources/loot/potions/spr_potion_strength.png");
-    m_potionTextureIDs[POTION::DEXTERITY] = TextureManager::AddTexture("resources/loot/potions/spr_potion_dexterity.png");
-    m_potionTextureIDs[POTION::STAMINA] = TextureManager::AddTexture("resources/loot/potions/spr_potion_stamina.png");
+    m_potionTextureIDs[ePOTION::ATTACK] = TextureManager::AddTexture("resources/loot/potions/spr_potion_attack.png");
+    m_potionTextureIDs[ePOTION::DEFENSE] = TextureManager::AddTexture("resources/loot/potions/spr_potion_defense.png");
+    m_potionTextureIDs[ePOTION::STRENGTH] = TextureManager::AddTexture("resources/loot/potions/spr_potion_strength.png");
+    m_potionTextureIDs[ePOTION::DEXTERITY] = TextureManager::AddTexture("resources/loot/potions/spr_potion_dexterity.png");
+    m_potionTextureIDs[ePOTION::STAMINA] = TextureManager::AddTexture("resources/loot/potions/spr_potion_stamina.png");
 
-    m_goldTextureIDs[GOLD_TEXTURE_TYPE::SMALL] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png");
-    m_goldTextureIDs[GOLD_TEXTURE_TYPE::LARGE] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png");
-    m_goldTextureIDs[GOLD_TEXTURE_TYPE::MEDIUM] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png");
+    m_goldTextureIDs[eGOLD_TEXTURE_TYPE::SMALL] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png");
+    m_goldTextureIDs[eGOLD_TEXTURE_TYPE::LARGE] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png");
+    m_goldTextureIDs[eGOLD_TEXTURE_TYPE::MEDIUM] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png");
 
 
     m_gemTextureID = TextureManager::AddTexture("resources/loot/gem/spr_pickup_gem.png");
@@ -103,34 +103,34 @@ bool GameScene::beforeLoad()
 
 
     // Add the new tile type to level.
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_floor_alt.png"), TILE::FLOOR_ALT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_floor.png"), TILE::FLOOR);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_floor_alt.png"), eTILE::FLOOR_ALT);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_floor.png"), eTILE::FLOOR);
 
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top.png"), TILE::WALL_TOP);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_left.png"), TILE::WALL_TOP_LEFT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_right.png"), TILE::WALL_TOP_RIGHT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_t.png"), TILE::WALL_TOP_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_end.png"), TILE::WALL_TOP_END);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top.png"), eTILE::WALL_TOP);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_left.png"), eTILE::WALL_TOP_LEFT);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_right.png"), eTILE::WALL_TOP_RIGHT);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_t.png"), eTILE::WALL_TOP_T);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_end.png"), eTILE::WALL_TOP_END);
 
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_left.png"), TILE::WALL_BOTTOM_LEFT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_right.png"), TILE::WALL_BOTTOM_RIGHT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_t.png"), TILE::WALL_BOTTOM_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_end.png"), TILE::WALL_BOTTOM_END);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_left.png"), eTILE::WALL_BOTTOM_LEFT);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_right.png"), eTILE::WALL_BOTTOM_RIGHT);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_t.png"), eTILE::WALL_BOTTOM_T);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_end.png"), eTILE::WALL_BOTTOM_END);
 
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side.png"), TILE::WALL_SIDE);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_left_t.png"), TILE::WALL_SIDE_LEFT_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_left_end.png"), TILE::WALL_SIDE_LEFT_END);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_right_t.png"), TILE::WALL_SIDE_RIGHT_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_right_end.png"), TILE::WALL_SIDE_RIGHT_END);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side.png"), eTILE::WALL_SIDE);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_left_t.png"), eTILE::WALL_SIDE_LEFT_T);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_left_end.png"), eTILE::WALL_SIDE_LEFT_END);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_right_t.png"), eTILE::WALL_SIDE_RIGHT_T);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_right_end.png"), eTILE::WALL_SIDE_RIGHT_END);
 
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_intersection.png"), TILE::WALL_INTERSECTION);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_single.png"), TILE::WALL_SINGLE);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_intersection.png"), eTILE::WALL_INTERSECTION);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_single.png"), eTILE::WALL_SINGLE);
 
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_entrance.png"), TILE::WALL_ENTRANCE);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_door_locked.png"), TILE::WALL_DOOR_LOCKED);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_door_unlocked.png"), TILE::WALL_DOOR_UNLOCKED);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_entrance.png"), eTILE::WALL_ENTRANCE);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_door_locked.png"), eTILE::WALL_DOOR_LOCKED);
+    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_door_unlocked.png"), eTILE::WALL_DOOR_UNLOCKED);
 
-    m_level.AddTile(TextureManager::AddTexture("resources/spr_torch.png"), TILE::TORCH);
+    m_level.AddTile(TextureManager::AddTexture("resources/spr_torch.png"), eTILE::TORCH);
 
 
     //--------------------------------------------------------
@@ -174,7 +174,7 @@ bool GameScene::beforeLoad()
 
 
     // Setup the main game music.
-    const int trackIndex = Random(static_cast<int>(MUSIC_TRACK::COUNT));
+    const int trackIndex = Random(static_cast<int>(eMUSIC_TRACK::COUNT));
     // Load the music track.
     m_music.openFromFile("resources/music/msc_main_track_" + std::to_string(trackIndex) + ".wav");
 
@@ -194,10 +194,10 @@ bool GameScene::beforeLoad()
 void GameScene::LoadUI()
 {
     // Initialize the player ui texture and sprite.
-    m_playerUiTextureIDs[static_cast<int>(PLAYER_CLASS::WARRIOR)] = TextureManager::AddTexture("resources/ui/spr_warrior_ui.png");
-    m_playerUiTextureIDs[static_cast<int>(PLAYER_CLASS::MAGE)] = TextureManager::AddTexture("resources/ui/spr_mage_ui.png");
-    m_playerUiTextureIDs[static_cast<int>(PLAYER_CLASS::ARCHER)] = TextureManager::AddTexture("resources/ui/spr_archer_ui.png");
-    m_playerUiTextureIDs[static_cast<int>(PLAYER_CLASS::THIEF)] = TextureManager::AddTexture("resources/ui/spr_thief_ui.png");
+    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::WARRIOR)] = TextureManager::AddTexture("resources/ui/spr_warrior_ui.png");
+    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::MAGE)] = TextureManager::AddTexture("resources/ui/spr_mage_ui.png");
+    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::ARCHER)] = TextureManager::AddTexture("resources/ui/spr_archer_ui.png");
+    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::THIEF)] = TextureManager::AddTexture("resources/ui/spr_thief_ui.png");
 
     // Bar outlines.
     sf::Texture& barOutlineTexture = TextureManager::GetTexture(TextureManager::AddTexture("resources/ui/spr_bar_outline.png"));
@@ -352,7 +352,7 @@ void GameScene::afterLoad(bool isLoaded)
         ConstructLightGrid();
 
         // Change a selection of random tiles to the cracked tile sprite.
-        SpawnRandomTiles(TILE::FLOOR_ALT, 15);
+        SpawnRandomTiles(eTILE::FLOOR_ALT, 15);
 
     }
 }
@@ -379,7 +379,7 @@ void GameScene::update(float timeDelta)
     // First check if the player is at the exit. If so there's no need to update anything.
     Tile& playerTile = *m_level.GetTile(m_player.getPosition());
 
-    if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)
+    if (playerTile.type == eTILE::WALL_DOOR_UNLOCKED)
     {
         ReSpawnLevel();
     }
@@ -480,7 +480,7 @@ void GameScene::update(float timeDelta)
         }
 
         // Center the view.
-        m_views[static_cast<int>(VIEW::MAIN)].setCenter(playerPosition);
+        m_views[static_cast<int>(eVIEW::MAIN)].setCenter(playerPosition);
     }
 }
 
@@ -492,7 +492,7 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
     window.clear(sf::Color(3, 3, 3, 225));		// Gray
 
     // Set the main game view.
-    window.setView(m_views[static_cast<int>(VIEW::MAIN)]);
+    window.setView(m_views[static_cast<int>(eVIEW::MAIN)]);
 
     // Draw the level.
     m_level.draw(window, timeDelta);
@@ -529,7 +529,7 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
 
 
     // Switch to UI view.
-    window.setView(m_views[static_cast<int>(VIEW::UI)]);
+    window.setView(m_views[static_cast<int>(eVIEW::UI)]);
 
     // Draw player aim.
     window.draw(m_player.GetAimSprite());
@@ -626,7 +626,7 @@ void GameScene::GenerateLevel()
     m_level.GenerateLevel();
 
     // Add a key to the level.
-    SpawnItem(ITEM::KEY);
+    SpawnItem(eITEM::KEY);
 
     // Populate the level with items.
     PopulateLevel();
@@ -650,7 +650,7 @@ void GameScene::PopulateLevel()
         if (Random())
         {
             //only gem or gold
-            SpawnItem(Random(ITEM::GOLD));
+            SpawnItem(Random(eITEM::GOLD));
         }
     }
 
@@ -659,7 +659,7 @@ void GameScene::PopulateLevel()
     {
         if (Random())
         {
-            SpawnEnemy(Random(ENEMY::COUNT));
+            SpawnEnemy(Random(eENEMY::COUNT));
         }
     }
 }
@@ -783,7 +783,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
             // Check what type of object it was.
             switch (item.getType())
             {
-            case ITEM::GOLD:
+            case eITEM::GOLD:
             {
                 // Get the amount of gold.
                 int goldValue = dynamic_cast<Gold&>(item).GetGoldValue();
@@ -800,7 +800,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
             }
             break;
 
-            case ITEM::GEM:
+            case eITEM::GEM:
             {
                 // Get the score of the gem.
                 int scoreValue = dynamic_cast<Gem&>(item).GetScoreValue();
@@ -817,7 +817,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
             }
             break;
 
-            case ITEM::KEY:
+            case eITEM::KEY:
             {
                 // Unlock the door.
                 m_level.UnlockDoor();
@@ -830,38 +830,38 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
             }
             break;
 
-            case ITEM::POTION:
+            case eITEM::POTION:
             {
                 // Cast to position and get type.
                 Potion& potion = dynamic_cast<Potion&>(item);
-                POTION potionType = potion.GetPotionType();
+                ePOTION potionType = potion.GetPotionType();
 
                 switch (potionType)
                 {
-                case POTION::ATTACK:
+                case ePOTION::ATTACK:
                     m_player.setAttack(m_player.getAttack() + potion.getAttack());
                     break;
 
-                case POTION::DEFENSE:
+                case ePOTION::DEFENSE:
                     m_player.setDefense(m_player.getDefense() + potion.getDefense());
                     break;
 
-                case POTION::STRENGTH:
+                case ePOTION::STRENGTH:
                     m_player.setStrength(m_player.getStrength() + potion.getStrength());
                     break;
 
-                case POTION::DEXTERITY:
+                case ePOTION::DEXTERITY:
                     m_player.setDexterity(m_player.getDexterity() + potion.getDexterity());
                     break;
 
-                case POTION::STAMINA:
+                case ePOTION::STAMINA:
                     m_player.setStamina(m_player.getStamina() + potion.getStamina());
                     break;
                 }
             }
             break;
 
-            case ITEM::HEART:
+            case eITEM::HEART:
                 // Cast to heart and get health.
                 Heart& heart = dynamic_cast<Heart&>(item);
 
@@ -924,21 +924,21 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
                     {
                         position.x += Random(-15, 15);
                         position.y += Random(-15, 15);
-                        SpawnItem(Random(ITEM::GOLD), position);	// Generates a number 0 - 2
+                        SpawnItem(Random(eITEM::GOLD), position);	// Generates a number 0 - 2
                     }
 
                     if (Random(4) == 0)			// 1 in 5 change of spawning health.
                     {
                         position.x += Random(-15, 15);
                         position.y += Random(-15, 15);
-                        SpawnItem(ITEM::HEART, position);
+                        SpawnItem(eITEM::HEART, position);
                     }
                     // 1 in 5 change of spawning potion.
                     else if (Random(4) == 1)
                     {
                         position.x += Random(-15, 15);
                         position.y += Random(-15, 15);
-                        SpawnItem(ITEM::POTION, position);
+                        SpawnItem(eITEM::POTION, position);
                     }
 
                     // Play enemy kill sound.
@@ -994,10 +994,10 @@ void GameScene::UpdateProjectiles(float timeDelta)
         Projectile& projectile = **projectileIterator;
 
         // Get the tile that the projectile is on.
-        TILE projectileTileType = m_level.GetTile(projectile.getPosition())->type;
+        eTILE projectileTileType = m_level.GetTile(projectile.getPosition())->type;
 
         // If the tile the projectile is on is not floor, delete it.
-        if ((projectileTileType != TILE::FLOOR) && (projectileTileType != TILE::FLOOR_ALT))
+        if ((projectileTileType != eTILE::FLOOR) && (projectileTileType != eTILE::FLOOR_ALT))
         {
             projectileIterator = m_playerProjectiles.erase(projectileIterator);
         }
@@ -1025,7 +1025,7 @@ void GameScene::DrawString(sf::RenderWindow& window, std::string text, sf::Vecto
 }
 
 // Spawns a given object type at a random location within the map. Has the option to explicitly set a spawn location.
-void GameScene::SpawnItem(ITEM itemType, sf::Vector2f position)
+void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
 {
     std::unique_ptr<Item> item;
 
@@ -1042,25 +1042,25 @@ void GameScene::SpawnItem(ITEM itemType, sf::Vector2f position)
     // Check which type of object is being spawned.
     switch (itemType)
     {
-    case ITEM::POTION:
+    case eITEM::POTION:
         item = std::make_unique<Potion>(m_potionTextureIDs);
         break;
 
-    case ITEM::GOLD:
+    case eITEM::GOLD:
         item = std::make_unique<Gold>(m_goldTextureIDs);
         break;
 
-    case ITEM::GEM:
+    case eITEM::GEM:
         item = std::make_unique<Gem>();
         item->setSprite(TextureManager::GetTexture(m_gemTextureID), false, 8, 12);
         break;
 
-    case ITEM::KEY:
+    case eITEM::KEY:
         item = std::make_unique<Key>();
         item->setSprite(TextureManager::GetTexture(m_keyTextureID), false, 8, 12);
         break;
 
-    case ITEM::HEART:
+    case eITEM::HEART:
         item = std::make_unique<Heart>();
         item->setSprite(TextureManager::GetTexture(m_heartTextureID), false, 8, 12);
         break;
@@ -1074,7 +1074,7 @@ void GameScene::SpawnItem(ITEM itemType, sf::Vector2f position)
 }
 
 // Spawns a given number of enemies in the level.
-void GameScene::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
+void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
 {
     // Spawn location of enemy(s).
     sf::Vector2f spawnLocation;
@@ -1090,11 +1090,11 @@ void GameScene::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 
     switch (enemyType)
     {
-    case ENEMY::SLIME:
+    case eENEMY::SLIME:
         enemy = std::make_unique<Slime>();
         break;
 
-    case ENEMY::HUMANOID:
+    case eENEMY::HUMANOID:
         enemy = std::make_unique<Humanoid>();
         break;
     }
@@ -1107,7 +1107,7 @@ void GameScene::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 }
 
 // Spawns a given number of a given tile randomly in the level.
-void GameScene::SpawnRandomTiles(TILE tileType, int count)
+void GameScene::SpawnRandomTiles(eTILE tileType, int count)
 {
     // Declare the variables we need.
     int rowIndex(0), columnIndex(0), tileIndex(0);

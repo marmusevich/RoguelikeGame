@@ -4,7 +4,7 @@
 #include "utils/MathUtils.hpp"
 
 // Default constructor.
-Potion::Potion(const std::unordered_map<POTION, int>& textureIDs) :
+Potion::Potion(const std::unordered_map<ePOTION, int>& textureIDs) :
 m_attack(0),
 m_defense(0),
 m_strength(0),
@@ -12,28 +12,28 @@ m_dexterity(0),
 m_stamina(0)
 {
 	// Set the potion type.
-	m_potionType = Random(POTION::COUNT);
+	m_potionType = Random(ePOTION::COUNT);
 
 	// Set stat modifiers, sprite file path, and item name.
 	switch (m_potionType)
 	{
-	case POTION::ATTACK:
+	case ePOTION::ATTACK:
 		m_dexterity = Random(5, 15);
 		break;
 
-	case POTION::DEFENSE:
+	case ePOTION::DEFENSE:
 		m_dexterity = Random(5, 15);
 		break;
 
-	case POTION::STRENGTH:
+	case ePOTION::STRENGTH:
 		m_strength = Random(5, 15);
 		break;
 
-	case POTION::DEXTERITY:
+	case ePOTION::DEXTERITY:
 		m_dexterity = Random(5, 15);
 		break;
 
-	case POTION::STAMINA:
+	case ePOTION::STAMINA:
 		m_stamina = Random(5, 15);
 		break;
 	}
@@ -42,11 +42,11 @@ m_stamina(0)
 	setSprite(TextureManager::GetTexture(textureIDs.at(m_potionType)), false, 8, 12);
 
 	// Set the item type.
-	m_type = ITEM::POTION;
+	m_type = eITEM::POTION;
 }
 
 // Gets the potion type.
-POTION Potion::GetPotionType() const
+ePOTION Potion::GetPotionType() const
 {
 	return m_potionType;
 }

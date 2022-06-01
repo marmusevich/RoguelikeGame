@@ -1,12 +1,32 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Enums.hpp"
-
 #include "core/Entity.hpp"
 #include "core/Input.hpp"
 #include "scenes/Level.hpp"
 #include "items/bullet/Projectile.hpp"
+
+// Player classes.
+enum class ePLAYER_CLASS 
+{
+	WARRIOR,
+	MAGE,
+	ARCHER,
+	THIEF,
+	COUNT
+};
+
+// Player traits.
+enum class PLAYER_TRAIT 
+{
+	ATTACK,
+	DEFENSE,
+	STRENGTH,
+	DEXTERITY,
+	STAMINA,
+	COUNT
+};
+
 
 class Player : public Entity
 {
@@ -68,7 +88,7 @@ public:
 	 * Gets the player's class.
 	 * @return The player's class.
 	 */
-	PLAYER_CLASS GetClass() const;
+	ePLAYER_CLASS GetClass() const;
 
 	/**
 	 * Gets the player's aim sprite.
@@ -119,7 +139,7 @@ private:
 	/**
 	 * The player's class.
 	 */
-	PLAYER_CLASS m_class;
+	ePLAYER_CLASS m_class;
 
 	/**
 	 * The sprite for the player's aim cross hair.

@@ -3,9 +3,20 @@
 #define POTION_H
 
 #include "core/Item.hpp"
-#include "Enums.hpp"
 
 #include <unordered_map>
+
+
+// Potions.
+enum class ePOTION 
+{
+	ATTACK,
+	DEFENSE,
+	STRENGTH,
+	DEXTERITY,
+	STAMINA,
+	COUNT
+};
 
 
 class Potion : public Item
@@ -14,13 +25,13 @@ public:
 	/**
 	* constructor.
 	*/
-	explicit Potion(const std::unordered_map<POTION, int>& textureIDs);
+	explicit Potion(const std::unordered_map<ePOTION, int>& textureIDs);
 
 	/**
 	 * Gets the potion type.
 	 * @return The potion type.
 	 */
-	POTION GetPotionType() const;
+	ePOTION GetPotionType() const;
 
 	/**
 	 * Gets the attack value of the potion.
@@ -56,7 +67,7 @@ private:
 	/**
 	 * The potion type.
 	 */
-	POTION m_potionType;
+	ePOTION m_potionType;
 
 	/**
 	 * The attack value of the potion.

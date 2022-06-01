@@ -10,7 +10,7 @@ Gem::Gem()
 	m_scoreValue = Random(100);
 
 	// Set the item type.
-	m_type = ITEM::GEM;
+	m_type = eITEM::GEM;
 }
 
 // Gets the amount of score this pickup gives.

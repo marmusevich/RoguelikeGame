@@ -8,36 +8,36 @@
 Humanoid::Humanoid()
 {
 	// Generate a humanoid type. (Skeleton or Goblin)
-	HUMANOID humanoidType = Random(HUMANOID::COUNT);
+	eHUMANOID humanoidType = Random(eHUMANOID::COUNT);
 	std::string enemyName;
 
 	// Set enemy specific variables.
 	switch (humanoidType)
 	{
-	case HUMANOID::GOBLIN:
+	case eHUMANOID::GOBLIN:
 		enemyName = "goblin";
 		break;
 
-	case HUMANOID::SKELETON:
+	case eHUMANOID::SKELETON:
 		enemyName = "skeleton";
 		break;
 	}
 
 	// Load textures.
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_up.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_down.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_right.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_left.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_up.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_down.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_right.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_left.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_up.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_down.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_right.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_left.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_up.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_down.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_right.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_left.png");
 
 	// Set initial sprite.
-	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
 
 	// Copy textures.
-	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
+	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 	{
 		m_textures_old[i] = TextureManager::GetTexture(m_textureIDs[i]);
 	}
@@ -50,13 +50,13 @@ Humanoid::Humanoid()
 void Humanoid::GenerateArmor()
 {
 	// Create arrays of textures for our armor, and the final versions.
-	const int textureCount = static_cast<int>(ANIMATION_STATE::COUNT);
+	const int textureCount = static_cast<int>(eANIMATION_STATE::COUNT);
 	sf::RenderTexture armorTextures[textureCount];
 	sf::RenderTexture finalTextures[textureCount];
 	sf::Image renderImage;
 
 	// Setup all render textures.
-	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
+	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 	{
 		sf::Vector2u textureSize = m_textures_old[i].getSize();
 
@@ -75,16 +75,16 @@ void Humanoid::GenerateArmor()
 	if (hasHelmet == 0)
 	{
 		// Load the default helmet textures.
-		int defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
+		int defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::COUNT)];
 
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_front.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_front.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_side.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_side.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_front.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_front.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_side.png");
-		defaultHelmetTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_side.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_front.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_front.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_side.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_walk_side.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_front.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_front.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_side.png");
+		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/armor/helmet/spr_helmet_idle_side.png");
 
 		// Generate random number to determine tier.
 		sf::Color tierColor;
@@ -105,7 +105,7 @@ void Humanoid::GenerateArmor()
 		}
 
 		// Render helmet to armor texture.
-		for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
+		for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 		{
 			// Load the default helmet texture and set its color.
 			sf::Sprite tempSprite;
@@ -125,16 +125,16 @@ void Humanoid::GenerateArmor()
 	if (hasTorso == 0)
 	{
 		// Load the default torso textures.
-		int defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
+		int defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::COUNT)];
 
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_front.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_front.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_side.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_side.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_front.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_front.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_side.png");
-		defaultTorsoTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_side.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_front.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_front.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_side.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_walk_side.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_front.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_front.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_side.png");
+		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/armor/torso/spr_torso_idle_side.png");
 
 		// Generate random number to determine tier.
 		sf::Color tierColor;
@@ -155,7 +155,7 @@ void Humanoid::GenerateArmor()
 		}
 
 		// Render torso to armor texture.
-		for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
+		for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 		{
 			sf::Sprite tempSprite;
 			tempSprite.setTexture(TextureManager::GetTexture(defaultTorsoTextureIDs[i]));
@@ -174,16 +174,16 @@ void Humanoid::GenerateArmor()
 	if (hasLegs == 0)
 	{
 		// Load the default legs textures.
-		int defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
+		int defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::COUNT)];
 
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_front.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_front.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_side.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_side.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_front.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_front.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_side.png");
-		defaultLegsTextureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_side.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_front.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_front.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_side.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_walk_side.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_front.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_front.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_side.png");
+		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/armor/legs/spr_legs_idle_side.png");
 
 		// Generate random number to determine tier.
 		sf::Color tierColor;
@@ -204,7 +204,7 @@ void Humanoid::GenerateArmor()
 		}
 
 		// Render legs to armor texture.
-		for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
+		for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 		{
 			sf::Sprite tempSprite;
 			tempSprite.setTexture(TextureManager::GetTexture(defaultLegsTextureIDs[i]));
@@ -220,7 +220,7 @@ void Humanoid::GenerateArmor()
 	}
 
 	// Create the final textures.
-	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
+	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 	{
 		sf::Sprite baseSprite, armorSprite;
 

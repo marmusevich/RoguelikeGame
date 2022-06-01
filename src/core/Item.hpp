@@ -3,8 +3,17 @@
 
 
 #include "core/Object.hpp"
-#include "Enums.hpp"
 
+// Spawnable items.
+enum class eITEM 
+{
+	GEM,
+	GOLD,
+	HEART,
+	POTION,
+	KEY,
+	COUNT
+};
 
 class Item : public Object
 {
@@ -31,7 +40,7 @@ public:
 	 * Gets the item type.
 	 * @return The item type.
 	 */
-	ITEM getType() const;
+	eITEM getType() const;
 
 protected:
 	/**
@@ -49,7 +58,7 @@ public:
 	/**
 	 * The type of item.
 	 */
-	ITEM m_type;
+	eITEM m_type;
 
 	/**
 	 * A text object storing the name of the item.

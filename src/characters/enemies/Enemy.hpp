@@ -4,6 +4,15 @@
 #include "core/Entity.hpp"
 #include "scenes/Level.hpp"
 
+// Enemy types.
+enum class eENEMY 
+{
+	SLIME,
+	HUMANOID,
+	COUNT
+};
+
+
 class Enemy : public Entity
 {
 public:

@@ -19,9 +19,27 @@
 
 #include <unordered_map>
 
-//TODO
-//move to core/Scene
-#include "core/manager/ResourceManager.hpp"
+
+// 
+// Views - 2D camera that defines what region is shown on screen.
+enum class eVIEW
+{
+	MAIN,
+	UI,
+	COUNT
+};
+
+// Music tracks.
+enum class eMUSIC_TRACK
+{
+	ALT_1,
+	ALT_2,
+	ALT_3,
+	ALT_4,
+	COUNT
+};
+
+
 
 
 class GameScene : public Scene
@@ -58,7 +76,7 @@ private:
 	 * @param newTileIndex The index of the tiles you want to create.
 	 * @param count The number of tiles to create.
 	 */
-	void SpawnRandomTiles(TILE tileType, int count);
+	void SpawnRandomTiles(eTILE tileType, int count);
 
 	/**
 	 * Loads all sprites needed for the UI.
@@ -84,7 +102,7 @@ private:
 	 * @param itemType The type of the item to spawn.
 	 * @param position The position to spawn the item at.
 	 */
-	void SpawnItem(ITEM itemType, sf::Vector2f position = { -1.f, -1.f });
+	void SpawnItem(eITEM itemType, sf::Vector2f position = { -1.f, -1.f });
 
 	/**
 	* Spawns a given enemy within the level.
@@ -92,7 +110,7 @@ private:
 	* @param enemyType The type of the enemy to spawn.
 	* @param position The position to spawn the enemy at.
 	*/
-	void SpawnEnemy(ENEMY enemyType, sf::Vector2f position = { -1.f, -1.f });
+	void SpawnEnemy(eENEMY enemyType, sf::Vector2f position = { -1.f, -1.f });
 
 	/**
 	 * Constructs the grid of sprites that are used to draw the game light system.
@@ -138,7 +156,7 @@ private:
 	/**
 	 * An array of the different views the game needs.
 	 */
-	sf::View m_views[static_cast<int>(VIEW::COUNT)];
+	sf::View m_views[static_cast<int>(eVIEW::COUNT)];
 
 	/**
 	 * A vector that holds all items within the level.
@@ -358,10 +376,10 @@ private:
 	/**
 	 * An array of texture for the player in the UI.
 	 */
-	int m_playerUiTextureIDs[static_cast<int>(PLAYER_CLASS::COUNT)];
+	int m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::COUNT)];
 
-	std::unordered_map<POTION, int> m_potionTextureIDs;
-	std::unordered_map<GOLD_TEXTURE_TYPE, int> m_goldTextureIDs;
+	std::unordered_map<ePOTION, int> m_potionTextureIDs;
+	std::unordered_map<eGOLD_TEXTURE_TYPE, int> m_goldTextureIDs;
 	int m_gemTextureID;
 	int m_keyTextureID;
 	int m_heartTextureID;

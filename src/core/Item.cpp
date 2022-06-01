@@ -40,7 +40,7 @@ void Item::setItemName(std::string name)
 }
 
 // Gets the item type.
-ITEM Item::getType() const
+eITEM Item::getType() const
 {
 	return m_type;
 }
