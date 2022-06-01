@@ -169,6 +169,21 @@
     <ClInclude Include="src\core\manager\private\TResourceHolder.hpp">
       <Filter>Core\Manager Classes\private</Filter>
     </ClInclude>
+    <ClCompile Include="src\core\drawable\private\CAnimateSprite.cpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\drawable\private\CDirectedDrawableCreater.cpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\drawable\private\CDrawableCreaterBuilder.cpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\drawable\private\CSingleSprite.cpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\drawable\private\CXmlDrawableCreater.cpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -216,6 +231,12 @@
     <Filter Include="Core\Resource Loader\private">
       <UniqueIdentifier>{31b15990-af6e-461a-929c-17c49fcb16a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Drawable">
+      <UniqueIdentifier>{5cf8d0a3-ce9f-4531-a5a5-5f17b1a10d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Drawable\private">
+      <UniqueIdentifier>{a4d7d94c-1003-4430-8851-980c4caa4889}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\Util.cpp">
@@ -233,5 +254,28 @@
     <ClCompile Include="src\core\manager\private\ResourceManager.cpp">
       <Filter>Core\Manager Classes\private</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\drawable\CDrawableCreaterBuilder.hpp">
+      <Filter>Core\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\drawable\IDrawable.hpp">
+      <Filter>Core\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\drawable\IDrawableCreater.hpp">
+      <Filter>Core\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\drawable\private\CAnimateSprite.hpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\drawable\private\CDirectedDrawableCreater.hpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\drawable\private\CSingleSprite.hpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\drawable\private\CXmlDrawableCreater.hpp">
+      <Filter>Core\Drawable\private</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

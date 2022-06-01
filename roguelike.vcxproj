@@ -106,7 +106,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="src\core\drawable\private\CAnimateSprite.cpp" />
+    <ClCompile Include="src\core\drawable\private\CDirectedDrawableCreater.cpp" />
+    <ClCompile Include="src\core\drawable\private\CDrawableCreaterBuilder.cpp" />
+    <ClCompile Include="src\core\drawable\private\CSingleSprite.cpp" />
+    <ClCompile Include="src\core\drawable\private\CXmlDrawableCreater.cpp" />
     <ClCompile Include="src\core\manager\private\ResourceManager.cpp" />
+    <ClInclude Include="src\core\drawable\CDrawableCreaterBuilder.hpp" />
+    <ClInclude Include="src\core\drawable\IDrawable.hpp" />
+    <ClInclude Include="src\core\drawable\IDrawableCreater.hpp" />
+    <ClInclude Include="src\core\drawable\private\CAnimateSprite.hpp" />
+    <ClInclude Include="src\core\drawable\private\CDirectedDrawableCreater.hpp" />
+    <ClInclude Include="src\core\drawable\private\CSingleSprite.hpp" />
+    <ClInclude Include="src\core\drawable\private\CXmlDrawableCreater.hpp" />
     <ClInclude Include="src\core\manager\private\TResourceHolder.hpp" />
     <ClCompile Include="src\core\resourceLoader\private\cResourceLoaderBuilder.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\cXmlResourceLoader.cpp" />
