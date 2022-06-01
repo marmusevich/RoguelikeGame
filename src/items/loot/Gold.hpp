@@ -20,15 +20,6 @@ public:
 	int GetGoldValue() const;
 
 private:
-	enum class eGOLD_TEXTURE_TYPE
-	{
-		SMALL,
-		LARGE,
-		MEDIUM,
-		COUNT
-	};
-
-
 
 	/**
 	 * The value of this gold pickup.

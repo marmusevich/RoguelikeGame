@@ -6,27 +6,22 @@
 
 Gold::Gold()
 {
-	std::unordered_map<eGOLD_TEXTURE_TYPE, int> textureIDs;
-	textureIDs[eGOLD_TEXTURE_TYPE::SMALL] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png");
-	textureIDs[eGOLD_TEXTURE_TYPE::LARGE] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png");
-	textureIDs[eGOLD_TEXTURE_TYPE::MEDIUM] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png");
-
 	// Randomly generate the value of the pickup.
 	this->goldValue = Random(5, 25);
 
 	// Choose a sprite based on the gold value.
-	eGOLD_TEXTURE_TYPE type = eGOLD_TEXTURE_TYPE::MEDIUM;
 	if (this->goldValue < 9)
 	{
-		type = eGOLD_TEXTURE_TYPE::SMALL;
+		this->setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png")), false, 8, 12);
 	}
 	else if (this->goldValue >= 16)
 	{
-		type = eGOLD_TEXTURE_TYPE::LARGE;
+		this->setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png")), false, 8, 12);
 	}
-
-	// Set the sprite.
-	this->setSprite(TextureManager::GetTexture(textureIDs.at(type)), false, 8, 12);
+	else
+	{
+		this->setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png")), false, 8, 12);
+	}
 
 	// Set the item type.
 	m_type = eITEM::GOLD;

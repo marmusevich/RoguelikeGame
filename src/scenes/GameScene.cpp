@@ -277,7 +277,7 @@ void GameScene::LoadUI()
         m_staminaStatSprite->setPosition(sf::Vector2f(m_screenCenter.x + 210.f, m_screenSize.y - 30.f));
         m_uiSprites.push_back(m_staminaStatSprite);
 
-        // Set player traits
+        // Highlight player traits
         int traitCount = m_player.GetTraitCount();
 
         for (int i = 0; i < traitCount; ++i)

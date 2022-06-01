@@ -11,15 +11,6 @@ m_strength(0),
 m_dexterity(0),
 m_stamina(0)
 {
-
-	std::unordered_map<ePOTION, int> textureIDs;
-	textureIDs[ePOTION::ATTACK] = TextureManager::AddTexture("resources/loot/potions/spr_potion_attack.png");
-	textureIDs[ePOTION::DEFENSE] = TextureManager::AddTexture("resources/loot/potions/spr_potion_defense.png");
-	textureIDs[ePOTION::STRENGTH] = TextureManager::AddTexture("resources/loot/potions/spr_potion_strength.png");
-	textureIDs[ePOTION::DEXTERITY] = TextureManager::AddTexture("resources/loot/potions/spr_potion_dexterity.png");
-	textureIDs[ePOTION::STAMINA] = TextureManager::AddTexture("resources/loot/potions/spr_potion_stamina.png");
-
-
 	// Set the potion type.
 	m_potionType = Random(ePOTION::COUNT);
 
@@ -28,27 +19,29 @@ m_stamina(0)
 	{
 	case ePOTION::ATTACK:
 		m_dexterity = Random(5, 15);
+		setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/potions/spr_potion_attack.png")), false, 8, 12);
 		break;
 
 	case ePOTION::DEFENSE:
 		m_dexterity = Random(5, 15);
+		setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/potions/spr_potion_defense.png")), false, 8, 12);
 		break;
 
 	case ePOTION::STRENGTH:
 		m_strength = Random(5, 15);
+		setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/potions/spr_potion_strength.png")), false, 8, 12);
 		break;
 
 	case ePOTION::DEXTERITY:
 		m_dexterity = Random(5, 15);
+		setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/potions/spr_potion_dexterity.png")), false, 8, 12);
 		break;
 
 	case ePOTION::STAMINA:
 		m_stamina = Random(5, 15);
+		setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/potions/spr_potion_stamina.png")), false, 8, 12);
 		break;
 	}
-
-	// Load and set sprite.
-	setSprite(TextureManager::GetTexture(textureIDs.at(m_potionType)), false, 8, 12);
 
 	// Set the item type.
 	m_type = eITEM::POTION;
