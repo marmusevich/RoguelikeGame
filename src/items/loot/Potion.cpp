@@ -54,12 +54,6 @@ m_stamina(0)
 	m_type = eITEM::POTION;
 }
 
-// Gets the potion type.
-ePOTION Potion::GetPotionType() const
-{
-	return m_potionType;
-}
-
 // Gets the attack value of the potion.
 int Potion::getAttack() const
 {

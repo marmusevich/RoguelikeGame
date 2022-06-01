@@ -819,32 +819,14 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 
             case eITEM::POTION:
             {
+                // apply potion - move to other place
                 // Cast to position and get type.
                 Potion& potion = dynamic_cast<Potion&>(item);
-                ePOTION potionType = potion.GetPotionType();
-
-                switch (potionType)
-                {
-                case ePOTION::ATTACK:
-                    m_player.setAttack(m_player.getAttack() + potion.getAttack());
-                    break;
-
-                case ePOTION::DEFENSE:
-                    m_player.setDefense(m_player.getDefense() + potion.getDefense());
-                    break;
-
-                case ePOTION::STRENGTH:
-                    m_player.setStrength(m_player.getStrength() + potion.getStrength());
-                    break;
-
-                case ePOTION::DEXTERITY:
-                    m_player.setDexterity(m_player.getDexterity() + potion.getDexterity());
-                    break;
-
-                case ePOTION::STAMINA:
-                    m_player.setStamina(m_player.getStamina() + potion.getStamina());
-                    break;
-                }
+                m_player.setAttack(m_player.getAttack() + potion.getAttack());
+                m_player.setDefense(m_player.getDefense() + potion.getDefense());
+                m_player.setStrength(m_player.getStrength() + potion.getStrength());
+                m_player.setDexterity(m_player.getDexterity() + potion.getDexterity());
+                m_player.setStamina(m_player.getStamina() + potion.getStamina());
             }
             break;
 

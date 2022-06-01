@@ -7,31 +7,25 @@
 #include <unordered_map>
 
 
-// Potions.
-enum class ePOTION 
-{
-	ATTACK,
-	DEFENSE,
-	STRENGTH,
-	DEXTERITY,
-	STAMINA,
-	COUNT
-};
-
-
 class Potion : public Item
 {
+private:
+	// Potions.
+	enum class ePOTION
+	{
+		ATTACK,
+		DEFENSE,
+		STRENGTH,
+		DEXTERITY,
+		STAMINA,
+		COUNT
+	};
+
 public:
 	/**
 	* constructor.
 	*/
 	explicit Potion();
-
-	/**
-	 * Gets the potion type.
-	 * @return The potion type.
-	 */
-	ePOTION GetPotionType() const;
 
 	/**
 	 * Gets the attack value of the potion.
@@ -64,6 +58,7 @@ public:
 	int getStamina() const;
 
 private:
+
 	/**
 	 * The potion type.
 	 */
