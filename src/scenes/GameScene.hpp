@@ -378,8 +378,6 @@ private:
 	 */
 	int m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::COUNT)];
 
-	std::unordered_map<ePOTION, int> m_potionTextureIDs;
-	std::unordered_map<eGOLD_TEXTURE_TYPE, int> m_goldTextureIDs;
 	int m_gemTextureID;
 	int m_keyTextureID;
 	int m_heartTextureID;

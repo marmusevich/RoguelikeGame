@@ -5,22 +5,13 @@
 
 #include <unordered_map>
 
-enum class eGOLD_TEXTURE_TYPE 
-{
-	SMALL,
-	LARGE,
-	MEDIUM,
-	COUNT
-};
-
-
 class Gold : public Item
 {
 public:
 	/**
 	 * constructor.
 	 */
-	explicit Gold(const std::unordered_map<eGOLD_TEXTURE_TYPE, int>& textureIDs);
+	explicit Gold();
 
 	/**
 	 * Gets the amount of gold this pickup has.
@@ -29,6 +20,16 @@ public:
 	int GetGoldValue() const;
 
 private:
+	enum class eGOLD_TEXTURE_TYPE
+	{
+		SMALL,
+		LARGE,
+		MEDIUM,
+		COUNT
+	};
+
+
+
 	/**
 	 * The value of this gold pickup.
 	 */

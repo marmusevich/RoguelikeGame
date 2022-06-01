@@ -4,8 +4,13 @@
 #include "utils/MathUtils.hpp"
 
 
-Gold::Gold(const std::unordered_map<eGOLD_TEXTURE_TYPE, int>& textureIDs)
+Gold::Gold()
 {
+	std::unordered_map<eGOLD_TEXTURE_TYPE, int> textureIDs;
+	textureIDs[eGOLD_TEXTURE_TYPE::SMALL] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png");
+	textureIDs[eGOLD_TEXTURE_TYPE::LARGE] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png");
+	textureIDs[eGOLD_TEXTURE_TYPE::MEDIUM] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png");
+
 	// Randomly generate the value of the pickup.
 	this->goldValue = Random(5, 25);
 

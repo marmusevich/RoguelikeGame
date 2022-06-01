@@ -34,8 +34,6 @@ GameScene::GameScene(const Game& game)
     m_activeGoal(false),
     m_level(getGame().getScreenSize()),
 
-    m_potionTextureIDs(),
-    m_goldTextureIDs(),
     m_gemTextureID(-1),
     m_keyTextureID(-1),
     m_heartTextureID(-1),
@@ -83,17 +81,6 @@ bool GameScene::beforeLoad()
         m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_sword.png");
         break;
     }
-
-    m_potionTextureIDs[ePOTION::ATTACK] = TextureManager::AddTexture("resources/loot/potions/spr_potion_attack.png");
-    m_potionTextureIDs[ePOTION::DEFENSE] = TextureManager::AddTexture("resources/loot/potions/spr_potion_defense.png");
-    m_potionTextureIDs[ePOTION::STRENGTH] = TextureManager::AddTexture("resources/loot/potions/spr_potion_strength.png");
-    m_potionTextureIDs[ePOTION::DEXTERITY] = TextureManager::AddTexture("resources/loot/potions/spr_potion_dexterity.png");
-    m_potionTextureIDs[ePOTION::STAMINA] = TextureManager::AddTexture("resources/loot/potions/spr_potion_stamina.png");
-
-    m_goldTextureIDs[eGOLD_TEXTURE_TYPE::SMALL] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png");
-    m_goldTextureIDs[eGOLD_TEXTURE_TYPE::LARGE] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png");
-    m_goldTextureIDs[eGOLD_TEXTURE_TYPE::MEDIUM] = TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png");
-
 
     m_gemTextureID = TextureManager::AddTexture("resources/loot/gem/spr_pickup_gem.png");
     m_keyTextureID = TextureManager::AddTexture("resources/loot/key/spr_pickup_key.png");
@@ -1043,11 +1030,11 @@ void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
     switch (itemType)
     {
     case eITEM::POTION:
-        item = std::make_unique<Potion>(m_potionTextureIDs);
+        item = std::make_unique<Potion>();
         break;
 
     case eITEM::GOLD:
-        item = std::make_unique<Gold>(m_goldTextureIDs);
+        item = std::make_unique<Gold>();
         break;
 
     case eITEM::GEM:

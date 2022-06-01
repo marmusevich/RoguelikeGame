@@ -4,13 +4,22 @@
 #include "utils/MathUtils.hpp"
 
 // Default constructor.
-Potion::Potion(const std::unordered_map<ePOTION, int>& textureIDs) :
+Potion::Potion() :
 m_attack(0),
 m_defense(0),
 m_strength(0),
 m_dexterity(0),
 m_stamina(0)
 {
+
+	std::unordered_map<ePOTION, int> textureIDs;
+	textureIDs[ePOTION::ATTACK] = TextureManager::AddTexture("resources/loot/potions/spr_potion_attack.png");
+	textureIDs[ePOTION::DEFENSE] = TextureManager::AddTexture("resources/loot/potions/spr_potion_defense.png");
+	textureIDs[ePOTION::STRENGTH] = TextureManager::AddTexture("resources/loot/potions/spr_potion_strength.png");
+	textureIDs[ePOTION::DEXTERITY] = TextureManager::AddTexture("resources/loot/potions/spr_potion_dexterity.png");
+	textureIDs[ePOTION::STAMINA] = TextureManager::AddTexture("resources/loot/potions/spr_potion_stamina.png");
+
+
 	// Set the potion type.
 	m_potionType = Random(ePOTION::COUNT);
 

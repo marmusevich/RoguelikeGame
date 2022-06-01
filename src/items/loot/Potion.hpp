@@ -25,7 +25,7 @@ public:
 	/**
 	* constructor.
 	*/
-	explicit Potion(const std::unordered_map<ePOTION, int>& textureIDs);
+	explicit Potion();
 
 	/**
 	 * Gets the potion type.

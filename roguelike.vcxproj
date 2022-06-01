@@ -119,7 +119,6 @@
     <ClInclude Include="src\core\resourceLoader\cResourceLoaderBuilder.hpp" />
     <ClInclude Include="src\core\resourceLoader\iResourceLoader.hpp" />
     <ClInclude Include="src\core\resourceLoader\private\cXmlResourceLoader.hpp" />
-    <ClInclude Include="src\Enums.hpp" />
     <ClCompile Include="src\main.cpp" />
     <ClInclude Include="src\PCH.hpp" />
     <ClCompile Include="src\PCH.cpp" />
