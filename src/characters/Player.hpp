@@ -6,15 +6,6 @@
 #include "scenes/Level.hpp"
 #include "items/bullet/Projectile.hpp"
 
-// Player classes.
-enum class ePLAYER_CLASS 
-{
-	WARRIOR,
-	MAGE,
-	ARCHER,
-	THIEF,
-	COUNT
-};
 
 // Player traits.
 enum class PLAYER_TRAIT 
@@ -85,12 +76,6 @@ public:
 	void SetRandomTraits();
 
 	/**
-	 * Gets the player's class.
-	 * @return The player's class.
-	 */
-	ePLAYER_CLASS GetClass() const;
-
-	/**
 	 * Gets the player's aim sprite.
 	 * return The player's aim sprite.
 	 */
@@ -114,6 +99,11 @@ public:
 	 */
 	void Damage(int damage);
 
+
+	int getUiTextureID();
+	int getProjectileTextureID();
+
+
 private:
 
 	/**
@@ -125,6 +115,17 @@ private:
 	bool CausesCollision(sf::Vector2f movement, Level& level);
 
 private:
+	// Player classes.
+	enum class ePLAYER_CLASS
+	{
+		WARRIOR,
+		MAGE,
+		ARCHER,
+		THIEF,
+		COUNT
+	};
+
+
 
 	/**
 	 * The number of traits that the player can have.
@@ -175,5 +176,17 @@ private:
 	* The number of stat points the entities has to distribute.
 	*/
 	int m_statPoints;
+
+	/**
+	 * The ui texture and sprite
+	 */
+	int m_uiTextureID;
+
+	/**
+	 * The ID of the player's projectile texture.
+	 */
+	int m_projectileTextureID;
+
+
 };
 #endif

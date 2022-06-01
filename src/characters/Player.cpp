@@ -10,7 +10,9 @@ m_damageDelta(0.f),
 m_manaDelta(0.f),
 m_isAttacking(false),
 m_canTakeDamage(true),
-m_statPoints(0)
+m_statPoints(0),
+m_uiTextureID(-1),
+m_projectileTextureID(-1)
 {
 	// Generate a random class.
 	m_class = Random(ePLAYER_CLASS::COUNT);
@@ -49,6 +51,27 @@ m_statPoints(0)
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_down.png");
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_right.png");
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_left.png");
+
+	// Load the correct projectile texture.
+	switch (m_class)
+	{
+	case ePLAYER_CLASS::ARCHER:
+		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_arrow.png");
+		break;
+	case ePLAYER_CLASS::MAGE:
+		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_magic_ball.png");
+		break;
+	case ePLAYER_CLASS::THIEF:
+		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_dagger.png");
+		break;
+	case ePLAYER_CLASS::WARRIOR:
+		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_sword.png");
+		break;
+	}
+
+
+	// Initialize the player ui texture and sprite.
+    m_uiTextureID = TextureManager::AddTexture("resources/ui/spr_" + className + "_ui.png");
 
 	// Set initial sprite.
 	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
@@ -227,12 +250,6 @@ void Player::update(float timeDelta, Level& level)
 	}
 }
 
-// Returns the player's class.
-ePLAYER_CLASS Player::GetClass() const
-{
-	return m_class;
-}
-
 // Chooses random traits for the character.
 void Player::SetRandomTraits()
 {
@@ -380,4 +397,14 @@ void Player::SetHealth(int healthValue)
 	{
 		m_health = m_maxHealth;
 	}
+}
+
+int Player::getUiTextureID()
+{
+	return m_uiTextureID;
+}
+
+int Player::getProjectileTextureID()
+{
+	return m_projectileTextureID;
 }

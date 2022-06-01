@@ -26,7 +26,6 @@ GameScene::GameScene(const Game& game)
     m_scoreTotal(0),
     m_goldTotal(0),
     m_playerPreviousTile(nullptr),
-    m_projectileTextureID(0),
     m_goldGoal(0),
     m_gemGoal(0),
     m_killGoal(0),
@@ -63,24 +62,6 @@ bool GameScene::beforeLoad()
     }
 
 
-
-
-    // Load the correct projectile texture.
-    switch (m_player.GetClass())
-    {
-    case ePLAYER_CLASS::ARCHER:
-        m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_arrow.png");
-        break;
-    case ePLAYER_CLASS::MAGE:
-        m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_magic_ball.png");
-        break;
-    case ePLAYER_CLASS::THIEF:
-        m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_dagger.png");
-        break;
-    case ePLAYER_CLASS::WARRIOR:
-        m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_sword.png");
-        break;
-    }
 
     m_gemTextureID = TextureManager::AddTexture("resources/loot/gem/spr_pickup_gem.png");
     m_keyTextureID = TextureManager::AddTexture("resources/loot/key/spr_pickup_key.png");
@@ -180,12 +161,6 @@ bool GameScene::beforeLoad()
 // Loads and prepares all UI assets.
 void GameScene::LoadUI()
 {
-    // Initialize the player ui texture and sprite.
-    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::WARRIOR)] = TextureManager::AddTexture("resources/ui/spr_warrior_ui.png");
-    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::MAGE)] = TextureManager::AddTexture("resources/ui/spr_mage_ui.png");
-    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::ARCHER)] = TextureManager::AddTexture("resources/ui/spr_archer_ui.png");
-    m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::THIEF)] = TextureManager::AddTexture("resources/ui/spr_thief_ui.png");
-
     // Bar outlines.
     sf::Texture& barOutlineTexture = TextureManager::GetTexture(TextureManager::AddTexture("resources/ui/spr_bar_outline.png"));
     sf::Vector2f barOutlineTextureOrigin = { barOutlineTexture.getSize().x / 2.f, barOutlineTexture.getSize().y / 2.f };
@@ -217,7 +192,7 @@ void GameScene::LoadUI()
     m_manaBarSprite->setOrigin(sf::Vector2f(barTextureOrigin.x, barTextureOrigin.y));
 
     m_playerUiSprite = std::make_shared<sf::Sprite>();
-    m_playerUiSprite->setTexture(TextureManager::GetTexture(m_playerUiTextureIDs[static_cast<int>(m_player.GetClass())]));
+    m_playerUiSprite->setTexture(TextureManager::GetTexture(m_player.getUiTextureID()));
     m_playerUiSprite->setPosition(sf::Vector2f(45.f, 45.f));
     m_playerUiSprite->setOrigin(sf::Vector2f(30.f, 30.f));
     m_uiSprites.push_back(m_playerUiSprite);
@@ -389,7 +364,7 @@ void GameScene::update(float timeDelta)
             if (m_player.GetMana() >= 2)
             {
                 sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
-                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(TextureManager::GetTexture(m_projectileTextureID), playerPosition, m_screenCenter, target);
+                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(TextureManager::GetTexture(m_player.getProjectileTextureID()), playerPosition, m_screenCenter, target);
                 m_playerProjectiles.push_back(std::move(proj));
 
                 // Reduce player mana.

@@ -284,11 +284,6 @@ private:
 	std::vector<std::unique_ptr<Projectile>> m_playerProjectiles;
 
 	/**
-	 * The ID of the player's projectile texture.
-	 */
-	int m_projectileTextureID;
-
-	/**
 	 * The value of gold remaining for the current goal.
 	 */
 	int m_goldGoal;
@@ -373,10 +368,6 @@ private:
 	 */
 	sf::Music m_music;
 
-	/**
-	 * An array of texture for the player in the UI.
-	 */
-	int m_playerUiTextureIDs[static_cast<int>(ePLAYER_CLASS::COUNT)];
 
 	int m_gemTextureID;
 	int m_keyTextureID;
