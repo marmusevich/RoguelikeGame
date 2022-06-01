@@ -229,19 +229,9 @@ private:
 	std::shared_ptr<sf::Sprite> m_attackStatSprite;
 
 	/**
-	 * The texture IDs for the attack stat textures.
-	 */
-	int m_attackStatTextureIDs[2];
-
-	/**
 	* The sprite for the players defense stat.
 	*/
 	std::shared_ptr<sf::Sprite> m_defenseStatSprite;
-
-	/**
-	* The texture IDs for the defense stat textures.
-	*/
-	int m_defenseStatTextureIDs[2];
 
 	/**
 	* The sprite for the players strength stat.
@@ -249,29 +239,14 @@ private:
 	std::shared_ptr<sf::Sprite> m_strengthStatSprite;
 
 	/**
-	* The texture IDs for the strength stat textures.
-	*/
-	int m_strengthStatTextureIDs[2];
-
-	/**
 	* The sprite for the players dexterity stat.
 	*/
 	std::shared_ptr<sf::Sprite> m_dexterityStatSprite;
 
 	/**
-	* The texture IDs for the dexterity stat textures.
-	*/
-	int m_dexterityStatTextureIDs[2];
-
-	/**
 	* The sprite for the players stamina stat.
 	*/
 	std::shared_ptr<sf::Sprite> m_staminaStatSprite;
-
-	/**
-	* The texture IDs for the stamina stat textures.
-	*/
-	int m_staminaStatTextureIDs[2];
 
 	/**
 	 * The last tile that the player was on.

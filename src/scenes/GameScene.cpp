@@ -218,85 +218,101 @@ void GameScene::LoadUI()
     m_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
     m_uiSprites.push_back(m_keyUiSprite);
 
+
+
     // Load stats.
-    m_attackStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_attack_ui.png");
-    m_attackStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_attack_ui_alt.png");
-
-    m_attackStatSprite = std::make_shared<sf::Sprite>();
-    m_attackStatSprite->setTexture(TextureManager::GetTexture(m_attackStatTextureIDs[0]));
-    m_attackStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
-    m_attackStatSprite->setPosition(sf::Vector2f(m_screenCenter.x - 270.f, m_screenSize.y - 30.f));
-    m_uiSprites.push_back(m_attackStatSprite);
-
-    m_defenseStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_defense_ui.png");
-    m_defenseStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_defense_ui_alt.png");
-
-    m_defenseStatSprite = std::make_shared<sf::Sprite>();
-    m_defenseStatSprite->setTexture(TextureManager::GetTexture(m_defenseStatTextureIDs[0]));
-    m_defenseStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
-    m_defenseStatSprite->setPosition(sf::Vector2f(m_screenCenter.x - 150.f, m_screenSize.y - 30.f));
-    m_uiSprites.push_back(m_defenseStatSprite);
-
-    m_strengthStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_strength_ui.png");
-    m_strengthStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_strength_ui_alt.png");
-
-    m_strengthStatSprite = std::make_shared<sf::Sprite>();
-    m_strengthStatSprite->setTexture(TextureManager::GetTexture(m_strengthStatTextureIDs[0]));
-    m_strengthStatSprite->setOrigin(sf::Vector2f(22.f, 12.f));
-    m_strengthStatSprite->setPosition(sf::Vector2f(m_screenCenter.x - 30.f, m_screenSize.y - 30.f));
-    m_uiSprites.push_back(m_strengthStatSprite);
-
-    m_dexterityStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_dexterity_ui.png");
-    m_dexterityStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_dexterity_ui_alt.png");
-
-    m_dexterityStatSprite = std::make_shared<sf::Sprite>();
-    m_dexterityStatSprite->setTexture(TextureManager::GetTexture(m_dexterityStatTextureIDs[0]));
-    m_dexterityStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
-    m_dexterityStatSprite->setPosition(sf::Vector2f(m_screenCenter.x + 90.f, m_screenSize.y - 30.f));
-    m_uiSprites.push_back(m_dexterityStatSprite);
-
-    m_staminaStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_stamina_ui.png");
-    m_staminaStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_stamina_ui_alt.png");
-
-    m_staminaStatSprite = std::make_shared<sf::Sprite>();
-    m_staminaStatSprite->setTexture(TextureManager::GetTexture(m_staminaStatTextureIDs[0]));
-    m_staminaStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
-    m_staminaStatSprite->setPosition(sf::Vector2f(m_screenCenter.x + 210.f, m_screenSize.y - 30.f));
-    m_uiSprites.push_back(m_staminaStatSprite);
-
-    // Set player traits
-    int traitCount = m_player.GetTraitCount();
-
-    for (int i = 0; i < traitCount; ++i)
     {
-        switch (m_player.GetTraits()[i])
+        //The texture IDs for the attack stat textures.
+        int m_attackStatTextureIDs[2];
+        m_attackStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_attack_ui.png");
+        m_attackStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_attack_ui_alt.png");
+
+        m_attackStatSprite = std::make_shared<sf::Sprite>();
+        m_attackStatSprite->setTexture(TextureManager::GetTexture(m_attackStatTextureIDs[0]));
+        m_attackStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
+        m_attackStatSprite->setPosition(sf::Vector2f(m_screenCenter.x - 270.f, m_screenSize.y - 30.f));
+        m_uiSprites.push_back(m_attackStatSprite);
+
+        //The texture IDs for the defense stat textures.
+        int m_defenseStatTextureIDs[2];
+        m_defenseStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_defense_ui.png");
+        m_defenseStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_defense_ui_alt.png");
+
+        m_defenseStatSprite = std::make_shared<sf::Sprite>();
+        m_defenseStatSprite->setTexture(TextureManager::GetTexture(m_defenseStatTextureIDs[0]));
+        m_defenseStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
+        m_defenseStatSprite->setPosition(sf::Vector2f(m_screenCenter.x - 150.f, m_screenSize.y - 30.f));
+        m_uiSprites.push_back(m_defenseStatSprite);
+
+        //The texture IDs for the strength stat textures.
+        int m_strengthStatTextureIDs[2];
+        m_strengthStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_strength_ui.png");
+        m_strengthStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_strength_ui_alt.png");
+
+        m_strengthStatSprite = std::make_shared<sf::Sprite>();
+        m_strengthStatSprite->setTexture(TextureManager::GetTexture(m_strengthStatTextureIDs[0]));
+        m_strengthStatSprite->setOrigin(sf::Vector2f(22.f, 12.f));
+        m_strengthStatSprite->setPosition(sf::Vector2f(m_screenCenter.x - 30.f, m_screenSize.y - 30.f));
+        m_uiSprites.push_back(m_strengthStatSprite);
+
+        //The texture IDs for the dexterity stat textures.
+        int m_dexterityStatTextureIDs[2];
+        m_dexterityStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_dexterity_ui.png");
+        m_dexterityStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_dexterity_ui_alt.png");
+
+        m_dexterityStatSprite = std::make_shared<sf::Sprite>();
+        m_dexterityStatSprite->setTexture(TextureManager::GetTexture(m_dexterityStatTextureIDs[0]));
+        m_dexterityStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
+        m_dexterityStatSprite->setPosition(sf::Vector2f(m_screenCenter.x + 90.f, m_screenSize.y - 30.f));
+        m_uiSprites.push_back(m_dexterityStatSprite);
+
+        //The texture IDs for the stamina stat textures.
+        int m_staminaStatTextureIDs[2];
+        m_staminaStatTextureIDs[0] = TextureManager::AddTexture("resources/ui/spr_stamina_ui.png");
+        m_staminaStatTextureIDs[1] = TextureManager::AddTexture("resources/ui/spr_stamina_ui_alt.png");
+
+        m_staminaStatSprite = std::make_shared<sf::Sprite>();
+        m_staminaStatSprite->setTexture(TextureManager::GetTexture(m_staminaStatTextureIDs[0]));
+        m_staminaStatSprite->setOrigin(sf::Vector2f(16.f, 16.f));
+        m_staminaStatSprite->setPosition(sf::Vector2f(m_screenCenter.x + 210.f, m_screenSize.y - 30.f));
+        m_uiSprites.push_back(m_staminaStatSprite);
+
+        // Set player traits
+        int traitCount = m_player.GetTraitCount();
+
+        for (int i = 0; i < traitCount; ++i)
         {
-        case PLAYER_TRAIT::ATTACK:
-            m_attackStatSprite->setTexture(TextureManager::GetTexture(m_attackStatTextureIDs[1]));
-            m_attackStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
-            break;
+            switch (m_player.GetTraits()[i])
+            {
+            case PLAYER_TRAIT::ATTACK:
+                m_attackStatSprite->setTexture(TextureManager::GetTexture(m_attackStatTextureIDs[1]));
+                m_attackStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
+                break;
 
-        case PLAYER_TRAIT::DEFENSE:
-            m_defenseStatSprite->setTexture(TextureManager::GetTexture(m_defenseStatTextureIDs[1]));
-            m_defenseStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
-            break;
+            case PLAYER_TRAIT::DEFENSE:
+                m_defenseStatSprite->setTexture(TextureManager::GetTexture(m_defenseStatTextureIDs[1]));
+                m_defenseStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
+                break;
 
-        case PLAYER_TRAIT::STRENGTH:
-            m_strengthStatSprite->setTexture(TextureManager::GetTexture(m_strengthStatTextureIDs[1]));
-            m_strengthStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
-            break;
+            case PLAYER_TRAIT::STRENGTH:
+                m_strengthStatSprite->setTexture(TextureManager::GetTexture(m_strengthStatTextureIDs[1]));
+                m_strengthStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
+                break;
 
-        case PLAYER_TRAIT::DEXTERITY:
-            m_dexterityStatSprite->setTexture(TextureManager::GetTexture(m_dexterityStatTextureIDs[1]));
-            m_dexterityStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
-            break;
+            case PLAYER_TRAIT::DEXTERITY:
+                m_dexterityStatSprite->setTexture(TextureManager::GetTexture(m_dexterityStatTextureIDs[1]));
+                m_dexterityStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
+                break;
 
-        case PLAYER_TRAIT::STAMINA:
-            m_staminaStatSprite->setTexture(TextureManager::GetTexture(m_staminaStatTextureIDs[1]));
-            m_staminaStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
-            break;
+            case PLAYER_TRAIT::STAMINA:
+                m_staminaStatSprite->setTexture(TextureManager::GetTexture(m_staminaStatTextureIDs[1]));
+                m_staminaStatSprite->setScale(sf::Vector2f(1.2f, 1.2f));
+                break;
+            }
         }
-    }
+    }// Load stats.
+
+
 }
 
 
