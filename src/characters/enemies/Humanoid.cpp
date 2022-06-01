@@ -7,8 +7,17 @@
 // Default constructor.
 Humanoid::Humanoid()
 {
+	// Enemy humanoid types.
+	enum class eHUMANOID
+	{
+		GOBLIN,
+		SKELETON,
+		COUNT
+	};
+
+
 	// Generate a humanoid type. (Skeleton or Goblin)
-	eHUMANOID humanoidType = Random(eHUMANOID::COUNT);
+	const eHUMANOID humanoidType = Random(eHUMANOID::COUNT);
 	std::string enemyName;
 
 	// Set enemy specific variables.

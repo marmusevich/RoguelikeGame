@@ -9,18 +9,6 @@
 
 class Potion : public Item
 {
-private:
-	// Potions.
-	enum class ePOTION
-	{
-		ATTACK,
-		DEFENSE,
-		STRENGTH,
-		DEXTERITY,
-		STAMINA,
-		COUNT
-	};
-
 public:
 	/**
 	* constructor.
@@ -58,12 +46,6 @@ public:
 	int getStamina() const;
 
 private:
-
-	/**
-	 * The potion type.
-	 */
-	ePOTION m_potionType;
-
 	/**
 	 * The attack value of the potion.
 	 */

@@ -11,8 +11,20 @@ m_strength(0),
 m_dexterity(0),
 m_stamina(0)
 {
+	// Potions.
+	enum class ePOTION
+	{
+		ATTACK,
+		DEFENSE,
+		STRENGTH,
+		DEXTERITY,
+		STAMINA,
+		COUNT
+	};
+
+
 	// Set the potion type.
-	m_potionType = Random(ePOTION::COUNT);
+	const ePOTION m_potionType = Random(ePOTION::COUNT);
 
 	// Set stat modifiers, sprite file path, and item name.
 	switch (m_potionType)
