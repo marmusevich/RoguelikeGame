@@ -3,14 +3,6 @@
 
 #include "characters/enemies/Enemy.hpp"
 
-// Enemy humanoid types.
-enum class eHUMANOID 
-{
-	GOBLIN,
-	SKELETON,
-	COUNT
-};
-
 
 class Humanoid : public Enemy
 {
@@ -28,6 +20,16 @@ public:
 	void update(float timeDelta) override;
 
 private:
+	// Enemy humanoid types.
+	enum class eHUMANOID
+	{
+		GOBLIN,
+		SKELETON,
+		COUNT
+	};
+
+
+
 
 	/**
 	 * Generates random armor for the humanoid.
