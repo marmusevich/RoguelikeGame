@@ -1,7 +1,7 @@
 #ifndef SCR_CORE_RESOURCELOADER_PRIVATE_CXMLRESOURCELOADER_HPP
 #define SCR_CORE_RESOURCELOADER_PRIVATE_CXMLRESOURCELOADER_HPP
 
-#include "core/resourceLoader/iResourceLoader.hpp"
+#include "core/resourceLoader/IResourceLoader.hpp"
 
 #include <tinyxml2/tinyxml2.h>
 
@@ -10,10 +10,10 @@
 namespace NResourceLoader
 {
 	
-class cXmlResourceLoader : public iResourceLoader
+class CXmlResourceLoader : public IResourceLoader
 {
 public:
-	cXmlResourceLoader();
+	CXmlResourceLoader();
 
 	bool setFile(const std::string& fileName);
 	bool setString(const std::string& xml);

@@ -11,7 +11,7 @@ namespace NResourceLoader
 * One string in config present one resource in memory
 * (even do the if a resource file is texture atlas, it presents as one resource. Split to sprites will do in other mechanism).
 */
-class iResourceLoader
+class IResourceLoader
 {
 public:
 	/**
@@ -20,7 +20,7 @@ public:
 	* \return true if success	 
 	*/
 	virtual bool addResource(NResurceManagement::ResourceManager&) = 0;
-	virtual ~iResourceLoader() = default;
+	virtual ~IResourceLoader() = default;
 };
 
 } // namespace NResourceLoader

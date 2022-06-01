@@ -154,13 +154,13 @@
     <ClInclude Include="src\utils\NonMoveable.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resourceLoader\iResourceLoader.hpp">
+    <ClInclude Include="src\core\resourceLoader\IResourceLoader.hpp">
       <Filter>Core\Resource Loader</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resourceLoader\cResourceLoaderBuilder.hpp">
+    <ClInclude Include="src\core\resourceLoader\CResourceLoaderBuilder.hpp">
       <Filter>Core\Resource Loader</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\resourceLoader\private\cXmlResourceLoader.hpp">
+    <ClInclude Include="src\core\resourceLoader\private\CXmlResourceLoader.hpp">
       <Filter>Core\Resource Loader\private</Filter>
     </ClInclude>
     <ClInclude Include="deliveries\tinyxml2\tinyxml2.h">
@@ -242,10 +242,10 @@
     <ClCompile Include="src\utils\Util.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\resourceLoader\private\cXmlResourceLoader.cpp">
+    <ClCompile Include="src\core\resourceLoader\private\CXmlResourceLoader.cpp">
       <Filter>Core\Resource Loader\private</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\resourceLoader\private\cResourceLoaderBuilder.cpp">
+    <ClCompile Include="src\core\resourceLoader\private\CResourceLoaderBuilder.cpp">
       <Filter>Core\Resource Loader\private</Filter>
     </ClCompile>
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp">

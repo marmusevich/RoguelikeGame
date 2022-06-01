@@ -1,16 +1,16 @@
-#include "core/resourceLoader/private/cXmlResourceLoader.hpp"
+#include "core/resourceLoader/private/CXmlResourceLoader.hpp"
 
 namespace NResourceLoader
 {
 
-cXmlResourceLoader::cXmlResourceLoader()
+CXmlResourceLoader::CXmlResourceLoader()
 : mDoc()
 , mStatus(tinyxml2::XMLError::XML_ERROR_PARSING)
 {
 
 }
 	
-bool cXmlResourceLoader::setFile(const std::string& fileName)
+bool CXmlResourceLoader::setFile(const std::string& fileName)
 {
 	mDoc.ClearError();
 	mDoc.Clear();
@@ -21,13 +21,13 @@ bool cXmlResourceLoader::setFile(const std::string& fileName)
 	if (!ret)
 	{
 		//LOG
-		throw std::runtime_error("cXmlResourceLoader::setFile - Can't parse file '" + fileName + "' with error #" 
+		throw std::runtime_error("CXmlResourceLoader::setFile - Can't parse file '" + fileName + "' with error #" 
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
 	return ret;
 }
 
-bool cXmlResourceLoader::setString(const std::string& xml)
+bool CXmlResourceLoader::setString(const std::string& xml)
 {
 	mDoc.ClearError();
 	mDoc.Clear();
@@ -37,7 +37,7 @@ bool cXmlResourceLoader::setString(const std::string& xml)
 	if (!ret)
 	{
 		//LOG
-		throw std::runtime_error("cXmlResourceLoader::setString - Can't parse string with error #"
+		throw std::runtime_error("CXmlResourceLoader::setString - Can't parse string with error #"
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
 	return ret;
@@ -81,7 +81,7 @@ bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementNa
 }
 }
 
-bool cXmlResourceLoader::addResource(NResurceManagement::ResourceManager& resourceManager)
+bool CXmlResourceLoader::addResource(NResurceManagement::ResourceManager& resourceManager)
 {
 	if (mStatus != tinyxml2::XMLError::XML_SUCCESS)
 	{
