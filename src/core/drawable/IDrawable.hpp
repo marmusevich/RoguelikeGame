@@ -39,5 +39,10 @@ private:
 	  //virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0;
 };
 
+/**
+* shared_ptr OR unic_ptr ???
+*/
+using Ptr = std::shared_ptr<IDrawable>;
+
 } // namespace NDrawable
 #endif // SCR_CORE_DRAWABLE_IDRAWABLE_HPP

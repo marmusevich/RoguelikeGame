@@ -6,10 +6,6 @@
 #include <string>
 #include <memory>
 
-namespace NDrawable
-{
-	using Ptr = std::shared_ptr<IDrawable>;
-}
 
 
 namespace NDrawableCreater
