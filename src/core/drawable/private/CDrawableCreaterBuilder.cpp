@@ -5,19 +5,32 @@
 
 namespace NDrawableCreater
 {
-std::shared_ptr<IDrawableCreater> getDrawableCreaterFromXmlFile(const std::string& fileName)
+
+Ptr getDrawableCreaterFromXmlFile(const std::string& fileName)
 {
+	auto loader = std::make_shared<CXmlDrawableCreater>();
+
+	if (loader->setFile(fileName))
+	{
+		return loader;
+	}
 	return nullptr;
 }
 
-std::shared_ptr<IDrawableCreater> getDrawableCreaterFromXmlString(const std::string& xml)
+Ptr getDrawableCreaterFromXmlString(const std::string& xml)
 {
+	auto loader = std::make_shared<CXmlDrawableCreater>();
+
+	if (loader->setString(xml))
+	{
+		return loader;
+	}
 	return nullptr;
 }
 
-std::shared_ptr<IDrawableCreater> getDirectedDrawableCreater()
+Ptr getDirectedDrawableCreater()
 {
-	return nullptr;
+	return std::make_shared<CDirectedDrawableCreater>();;
 }
 
 } // namespace NDrawableCreater

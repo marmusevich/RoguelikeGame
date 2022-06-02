@@ -6,7 +6,7 @@
 namespace NResourceLoader
 {
 
-std::shared_ptr<IResourceLoader> getXmlLoaderFromFile(const std::string& fileName)
+	Ptr getXmlLoaderFromFile(const std::string& fileName)
 {
 	auto loader = std::make_shared<CXmlResourceLoader>();
 	
@@ -17,7 +17,7 @@ std::shared_ptr<IResourceLoader> getXmlLoaderFromFile(const std::string& fileNam
 	return nullptr;
 }
 
-std::shared_ptr<IResourceLoader> getXmlLoaderFromString(const std::string& xml)
+Ptr getXmlLoaderFromString(const std::string& xml)
 {
 	auto loader = std::make_shared<CXmlResourceLoader>();
 

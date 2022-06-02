@@ -8,12 +8,14 @@
 
 namespace NDrawableCreater
 {
+	using Ptr = std::shared_ptr<IDrawableCreater>;
+
 	/** make a drawable creater from XML file */
-	std::shared_ptr<IDrawableCreater> getDrawableCreaterFromXmlFile(const std::string& fileName);
+	Ptr getDrawableCreaterFromXmlFile(const std::string& fileName);
 	/** make a drawable creater from XML string */
-	std::shared_ptr<IDrawableCreater> getDrawableCreaterFromXmlString(const std::string& xml);
+	Ptr getDrawableCreaterFromXmlString(const std::string& xml);
 	/** make a drawable creater that makes directly */
-	std::shared_ptr<IDrawableCreater> getDirectedDrawableCreater();
+	Ptr getDirectedDrawableCreater();
 
 } // namespace NResourceLoader
 #endif // SCR_CORE_DRAWABLE_CDRAWABLECREATERBUILDER_HPP

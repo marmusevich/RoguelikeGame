@@ -81,7 +81,7 @@ bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementNa
 }
 }
 
-bool CXmlResourceLoader::addResource(NResurceManagement::ResourceManager& resourceManager)
+bool CXmlResourceLoader::addResources(NResurceManagement::ResourceManager& resourceManager)
 {
 	if (mStatus != tinyxml2::XMLError::XML_SUCCESS)
 	{

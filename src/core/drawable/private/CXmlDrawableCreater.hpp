@@ -3,6 +3,10 @@
 
 #include "core/drawable/IDrawableCreater.hpp"
 
+
+#include <string>
+
+
 namespace NDrawableCreater
 {
 
@@ -12,12 +16,17 @@ namespace NDrawableCreater
 class CXmlDrawableCreater : public IDrawableCreater
 {
 public:
+
+	bool setFile(const std::string& fileName);
+	bool setString(const std::string& xml);
+
 	/**
-	* 
-	* \param 
-	* \return 
+	*
+	* \param
+	* \return
 	*/
 	//virtual bool _(_) override;
+
 };
 
 } // namespace NDrawableCreater

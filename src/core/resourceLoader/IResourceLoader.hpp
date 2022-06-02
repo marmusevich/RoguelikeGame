@@ -19,7 +19,8 @@ public:
 	* \param resourceManager - where resource will be stored
 	* \return true if success	 
 	*/
-	virtual bool addResource(NResurceManagement::ResourceManager&) = 0;
+	virtual bool addResources(NResurceManagement::ResourceManager&) = 0;
+
 	virtual ~IResourceLoader() = default;
 };
 

@@ -3,21 +3,35 @@
 
 #include "core/drawable/IDrawable.hpp"
 
+#include <string>
+#include <memory>
+
+namespace NDrawable
+{
+	using Ptr = std::shared_ptr<IDrawable>;
+}
+
+
 namespace NDrawableCreater
 {
 
 /**
-* 
+* creator of object that can paint, i.e. from XML file
 */
 class IDrawableCreater
 {
 public:
+	
+	;
+
 	/**
-	* 
-	* \param 
-	* \return 
+	* get drawable obj - to investigate how return -by name and/or - by type
+	* \param
+	* \return
 	*/
-	//virtual bool _(_) = 0;
+	//virtual NDrawable::Ptr getByName(const std::string& name) const;
+
+
 	virtual ~IDrawableCreater() = default;
 };
 

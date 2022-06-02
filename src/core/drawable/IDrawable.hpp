@@ -7,9 +7,13 @@ namespace NDrawable
 {
 
 /**
-*
+* common object that can paint
+* interface to
+*  - animated sprite
+*  - static (single texture) sprite
+*  - particle
 */
-class IDrawable
+class IDrawable // public sf::Drawable //, public sf::Transformable - is need ?
 {
 public:
 	/**
@@ -18,8 +22,21 @@ public:
 	 * @param tileDelta The time, in MS, since the last draw call.
 	 */
 	virtual void draw(sf::RenderTarget& target, float timeDelta) = 0;
-	
+
 	virtual ~IDrawable() = default;
+
+private:
+
+	// in case if derived from sf::Drawable
+	/**
+	 * Update state
+	 */
+	 // void update(const sf::Time dt) = 0;
+
+	 /**
+	  * Draws the object to the screen at its current position.
+	  */
+	  //virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override = 0;
 };
 
 } // namespace NDrawable

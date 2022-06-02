@@ -18,7 +18,7 @@ public:
 	bool setFile(const std::string& fileName);
 	bool setString(const std::string& xml);
 
-	virtual bool addResource(NResurceManagement::ResourceManager& resourceManager) override;
+	virtual bool addResources(NResurceManagement::ResourceManager& resourceManager) override;
 
 private:
 	tinyxml2::XMLDocument mDoc;
