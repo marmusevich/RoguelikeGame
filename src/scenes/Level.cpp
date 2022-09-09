@@ -5,10 +5,6 @@
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
 
-//old
-#include "core/manager/TextureManager.hpp"
-
-
 
 // Constructor.
 Level::Level(const sf::Vector2u screenSize, const Scene& scene)

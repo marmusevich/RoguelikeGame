@@ -269,8 +269,9 @@ private:
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
 	 */
-//std::array<std::array<int, GRID_HEIGHT>, GRID_WIDTH>
-	Tile m_grid[GRID_WIDTH][GRID_HEIGHT];
+	//std::array<std::array<Tile, GRID_HEIGHT>, GRID_WIDTH> m_grid;   VS  ????
+	std::array<std::array<Tile, GRID_WIDTH>, GRID_HEIGHT> m_grid;
+	//Tile m_grid[GRID_WIDTH][GRID_HEIGHT];
 
 	/**
 	 * A vector off all the sprites in the level.
@@ -296,8 +297,9 @@ private:
 	/**
 	* A 2D array that contains the room layout for the current floor.
 	*/
-//std::array<std::array<int, 3>, 10>
-	int m_roomLayout[3][10];
+	//std::array<std::array<int, 3>, 10> m_roomLayout; VS  ????
+	std::array<std::array<int, 10>, 3> m_roomLayout;
+	//int m_roomLayout[3][10];
 
 	/**
 	 * An array containing all texture IDs of the level tiles.
