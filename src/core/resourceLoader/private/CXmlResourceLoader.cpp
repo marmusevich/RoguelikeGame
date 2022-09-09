@@ -77,26 +77,33 @@ bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementNa
 {
 	namespace fs = std::filesystem;
 
-	bool ret = true;
-
-	for (auto element = root->FirstChildElement(elementName); ret && element != nullptr; element = element->NextSiblingElement(elementName))
+	for (auto element = root->FirstChildElement(elementName); element != nullptr; element = element->NextSiblingElement(elementName))
 	{
 		const auto fileName = element->Attribute(NXMLToken::FILE_NAME);
 		const auto id = element->Attribute(NXMLToken::ID);
-
-		ret = fileName != nullptr && id != nullptr;
-		// todo log? if cant get / parse element
-		if (ret)
+		if (!fileName)
 		{
-			const auto fullFileName = (rootPath / fileName).generic_string();
+			// todo log? if cant get / parse element
+			return false;
+		}
+
+		const auto fullFileName = rootPath / fileName;
+		if(!fs::exists(fullFileName))
+		{
 			//todo log ? if file res is not exist
-			if(fs::exists(fullFileName))
-			{
-				(void)holder->loadFromFile(id, fullFileName); // ignore result
-			}
+			return false;
+		}
+
+		if (!id || id== "")
+		{
+			(void)holder->loadFromFile(fullFileName.stem().string(), fullFileName.generic_string()); // ignore result
+		}
+		else
+		{
+			(void)holder->loadFromFile(std::string{ id }, fullFileName.generic_string()); // ignore result
 		}
 	}
-	return ret;
+	return true;
 }
 }
 

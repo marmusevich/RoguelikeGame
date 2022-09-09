@@ -48,19 +48,14 @@ GameScene::GameScene(const Game& game)
 
 bool GameScene::beforeLoad()
 {
-    // Create the game font.
-    //mResourceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF");
-    //m_text.setFont(mResurceManager.mFonts->Get("font") );
-    //or 
-    //m_text.setFont(mResourceManager.mFonts->loadFromFile("font", "resources/fonts/ADDSBP__.TTF"));
-
     NResourceLoader::Ptr resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/resources.xml") };
     bool ret = resourceLoader != nullptr && resourceLoader->addResources(mResourceManager);
-    if (ret)
+    if (!ret)
     {
-        m_text.setFont(mResourceManager.get<NResurceManagement::EResourceType::Font>("font"));
+        throw std::runtime_error("Doesn't load ressurce!!");
     }
 
+    m_text.setFont(mResourceManager.get<NResurceManagement::EResourceType::Font>("font"));
 
 
     m_gemTextureID = TextureManager::AddTexture("resources/loot/gem/spr_pickup_gem.png");

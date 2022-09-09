@@ -10,7 +10,14 @@
 
 namespace NResourceLoader
 {
-	
+/*
+	<Ressurce_tipe_name file_name = "" id = "" />
+		Ressurce_tipe_name one from {Texture, Image, Font, Shader, Sound}
+		file_name - the path to the resource files is relative to the directory where the 'resource.xml' (THIS)  file is located
+		id - ID ressurce, if not set = file name without extention
+*/
+
+
 class CXmlResourceLoader : public IResourceLoader
 {
 public:
@@ -26,8 +33,6 @@ private:
 	tinyxml2::XMLError mStatus;
 	std::filesystem::path mRootDir;
 };
-
-void NewFunction(tinyxml2::XMLElement* root);
 
 } // namespace NResourceLoader
 #endif // SCR_CORE_RESOURCELOADER_PRIVATE_CXMLRESOURCELOADER_HPP
