@@ -237,6 +237,9 @@
     <Filter Include="Core\Drawable\private">
       <UniqueIdentifier>{a4d7d94c-1003-4430-8851-980c4caa4889}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_resources">
+      <UniqueIdentifier>{f5ba2e7d-1ddd-4000-8890-63ad1a596e01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\Util.cpp">
@@ -277,5 +280,10 @@
     <ClInclude Include="src\core\drawable\private\CXmlDrawableCreater.hpp">
       <Filter>Core\Drawable\private</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="resources\resources.xml">
+      <Filter>_resources</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

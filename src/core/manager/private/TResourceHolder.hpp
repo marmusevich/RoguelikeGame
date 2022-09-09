@@ -67,13 +67,13 @@ const RESTYPE& TResourceHolder<TYPE, RESTYPE>::loadFromFile(const std::string& k
 		std::unique_ptr<RESTYPE> resource = std::make_unique<RESTYPE>();
 		if (resource->loadFromFile(filename, args...))
 		{
-			auto isInserted = mResourceMap.emplace(key, std::move(resource));
-			if (!isInserted.second)
+			auto [it_inserted, isInserted] = mResourceMap.try_emplace(key, std::move(resource));
+			if (!isInserted)
 			{
 				//LOG
 				throw std::runtime_error("ResourceHolder_NumberAutoIncKey::loadFromFile - Can't add resurse from file " + filename);
 			}
-			return *(isInserted.first->second);
+			return *(it_inserted->second);
 		}
 		else
 		{

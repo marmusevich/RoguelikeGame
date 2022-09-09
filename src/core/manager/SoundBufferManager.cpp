@@ -45,4 +45,5 @@ sf::SoundBuffer& SoundBufferManager::GetSoundBuffer(int textureId)
 			return *it->second.second;
 		}
 	}
+    // warning C4715: SoundBufferManager::GetSoundBuffer: значение возвращается не при всех путях выполнения
 }

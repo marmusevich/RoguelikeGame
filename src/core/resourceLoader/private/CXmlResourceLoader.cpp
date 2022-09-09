@@ -6,22 +6,33 @@ namespace NResourceLoader
 CXmlResourceLoader::CXmlResourceLoader()
 : mDoc()
 , mStatus(tinyxml2::XMLError::XML_ERROR_PARSING)
+, mRootDir()
 {
 
 }
 	
-bool CXmlResourceLoader::setFile(const std::string& fileName)
+bool CXmlResourceLoader::setFile(const std::filesystem::path& fileName)
 {
+	namespace fs = std::filesystem;
+	if (fileName.is_relative())
+	{
+		mRootDir = fs::absolute(fs::current_path()) / fileName.parent_path();
+	}
+	else
+	{
+		mRootDir = fileName.parent_path();
+	}
+
 	mDoc.ClearError();
 	mDoc.Clear();
 	mStatus = tinyxml2::XMLError::XML_SUCCESS;
-	mStatus = mDoc.LoadFile(fileName.c_str());
+	mStatus = mDoc.LoadFile(fileName.string().c_str());
 
 	const bool ret = mStatus == tinyxml2::XMLError::XML_SUCCESS;
 	if (!ret)
 	{
 		//LOG
-		throw std::runtime_error("CXmlResourceLoader::setFile - Can't parse file '" + fileName + "' with error #" 
+		throw std::runtime_error("CXmlResourceLoader::setFile - Can't parse file '" + fileName.string() + "' with error #"
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
 	return ret;
@@ -62,19 +73,27 @@ namespace NXMLToken
 }
 
 template <typename TResourceHolder>
-bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementName, TResourceHolder& holder)
+bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementName, const std::filesystem::path& rootPath, TResourceHolder& holder)
 {
+	namespace fs = std::filesystem;
+
 	bool ret = true;
 
 	for (auto element = root->FirstChildElement(elementName); ret && element != nullptr; element = element->NextSiblingElement(elementName))
 	{
-		const auto fn = element->Attribute(NXMLToken::FILE_NAME);
+		const auto fileName = element->Attribute(NXMLToken::FILE_NAME);
 		const auto id = element->Attribute(NXMLToken::ID);
 
-		ret = fn != nullptr && id != nullptr;
+		ret = fileName != nullptr && id != nullptr;
+		// todo log? if cant get / parse element
 		if (ret)
 		{
-			static_cast<void>( holder->loadFromFile(id, fn) ); // ignore result
+			const auto fullFileName = (rootPath / fileName).generic_string();
+			//todo log ? if file res is not exist
+			if(fs::exists(fullFileName))
+			{
+				(void)holder->loadFromFile(id, fullFileName); // ignore result
+			}
 		}
 	}
 	return ret;
@@ -90,10 +109,10 @@ bool CXmlResourceLoader::addResources(NResurceManagement::ResourceManager& resou
 	
 	auto root = mDoc.FirstChildElement(NXMLToken::ROOT);
 	bool ret = root != nullptr;
-	ret = ret && addResourcefromNode(root, NXMLToken::FONT, resourceManager.mFonts);
-	ret = ret && addResourcefromNode(root, NXMLToken::TEXTURE, resourceManager.mTexture);
-	ret = ret && addResourcefromNode(root, NXMLToken::IMAGE, resourceManager.mImage);
-	ret = ret && addResourcefromNode(root, NXMLToken::SOUND, resourceManager.mSound);
+	ret = ret && addResourcefromNode(root, NXMLToken::FONT, mRootDir, resourceManager.mFonts);
+	ret = ret && addResourcefromNode(root, NXMLToken::TEXTURE, mRootDir, resourceManager.mTexture);
+	ret = ret && addResourcefromNode(root, NXMLToken::IMAGE, mRootDir, resourceManager.mImage);
+	ret = ret && addResourcefromNode(root, NXMLToken::SOUND, mRootDir, resourceManager.mSound);
 	//ret = ret && addResourcefromNode(root, NXMLToken::SHADER, resourceManager.mShader);
 	return ret;
 }
