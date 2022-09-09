@@ -1,7 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "core/manager/ResourceManager.hpp"
 
@@ -25,8 +25,6 @@ public :
 	 */
 	virtual void draw(sf::RenderWindow& window, float timeDelta);
 
-
-
 	/** 
 	 * callbeck before load
 	 * return true if can load resurse
@@ -35,7 +33,7 @@ public :
 
 
 	/**
-	 *  invoke from game
+	 * invoke from game
 	 * do load resurse from file, -> resurse.xml
 	 */
 	 // in protected ??? and freands game
@@ -45,23 +43,23 @@ public :
 	//bool UnLoadResurce();
 
 	/** 
-	 *  callback after
+	 * callback after
 	 * isLoaded resurse loaded
 	 */
 	virtual void afterLoad(bool isLoaded);
 
+	virtual const NResurceManagement::ResourceManager& getResourceManager() const;
 
 protected:
 
-	const Game& getGame() const;
+	virtual NResurceManagement::ResourceManager& getResourceManager();
 
+	const Game& getGame() const;
+	
 private:
 
-
-
 	const Game& m_game;
-
-
+	NResurceManagement::ResourceManager mResourceManager;
 };
 
 #endif //SCENE_H

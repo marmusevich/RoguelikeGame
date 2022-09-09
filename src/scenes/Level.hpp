@@ -4,6 +4,12 @@
 
 #include "items/environment/Torch.hpp"
 
+#include <array>
+#include <unordered_map>
+
+//fwd
+class Scene;
+
 
 // Tiles.
 enum class eTILE 
@@ -62,7 +68,7 @@ public:
 	 * A renderWindow is needed in order for the level to calculate its position.
 	 * @param window The game window.
 	 */
-	explicit Level(const sf::Vector2u screenSize);
+	explicit Level(const sf::Vector2u screenSize, const Scene& scene);
 
 	/**
 	 * Returns true if the given tile index is solid.
@@ -224,7 +230,7 @@ public:
 	* @param textureID 
 	* @param tileType The type of tile that is being added.
 	*/
-	void AddTile(int textureID, eTILE tileType);
+	void AddTile(const std::string& textureID, eTILE tileType);
 
 private:
 
@@ -263,6 +269,7 @@ private:
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
 	 */
+//std::array<std::array<int, GRID_HEIGHT>, GRID_WIDTH>
 	Tile m_grid[GRID_WIDTH][GRID_HEIGHT];
 
 	/**
@@ -289,12 +296,14 @@ private:
 	/**
 	* A 2D array that contains the room layout for the current floor.
 	*/
+//std::array<std::array<int, 3>, 10>
 	int m_roomLayout[3][10];
 
 	/**
 	 * An array containing all texture IDs of the level tiles.
 	 */
-	int m_textureIDs[static_cast<int>(eTILE::COUNT)];
+	std::unordered_map<eTILE, std::string> m_textureMatch_WA;
+	const sf::Texture& getTextureByTileTipe_WA(const eTILE tileType);
 
 	/**
 	 * The spawn location for the current level.
@@ -310,5 +319,7 @@ private:
 	 * A vector of all tiles in the level.
 	 */
 	std::vector<std::shared_ptr<Torch>> m_torches;
+
+	const Scene& m_scene;
 };
 #endif

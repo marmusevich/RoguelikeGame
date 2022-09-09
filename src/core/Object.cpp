@@ -16,7 +16,7 @@ m_timeDelta(0)
 }
 
 // Gives the object the given sprite.
-bool Object::setSprite(sf::Texture& texture, bool isSmooth, int frames, int frameSpeed)
+bool Object::setSprite(const sf::Texture& texture, bool isSmooth, int frames, int frameSpeed)
 {
 	// Create a sprite from the loaded texture.
 	m_sprite.setTexture(texture);

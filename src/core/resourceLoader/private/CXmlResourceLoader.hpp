@@ -11,12 +11,11 @@
 namespace NResourceLoader
 {
 /*
-	<Ressurce_tipe_name file_name = "" id = "" />
-		Ressurce_tipe_name one from {Texture, Image, Font, Shader, Sound}
+	<Resource_tipe_name file_name = "" />
+		Resource_tipe_name one from {Texture, Image, Font, Shader, Sound}
 		file_name - the path to the resource files is relative to the directory where the 'resource.xml' (THIS)  file is located
-		id - ID ressurce, if not set = file name without extention
+		id - ID resource, if not set = file name without extension
 */
-
 
 class CXmlResourceLoader : public IResourceLoader
 {

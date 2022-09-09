@@ -349,9 +349,6 @@ private:
 	int m_heartTextureID;
 	int m_lightTextureID;
 
-
-	NResurceManagement::ResourceManager mResourceManager;
-	
 	//TODO way m_text is class member, maybe prefer local variable
 	//sf::Text text;
 	///Text used by the DrawText() function.

@@ -50,7 +50,7 @@ public:
 	 * @param frameSpeed The speed that the animation plays at. Defaults to 1.
 	 * @return true if the operation succeeded.
 	 */
-	bool setSprite(sf::Texture& texture, bool isSmooth, int frames = 1, int frameSpeed = 0);
+	bool setSprite(const sf::Texture& texture, bool isSmooth, int frames = 1, int frameSpeed = 0);
 
 	/**
 	 * Returns a reference the object's sprite.

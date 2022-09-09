@@ -2,13 +2,15 @@
 #include "scenes/GameScene.hpp"
 
 #include "core/Game.hpp"
-#include "core/manager/TextureManager.hpp"
-#include "core/manager/SoundBufferManager.hpp"
 #include "utils/Util.hpp"
 #include "utils/MathUtils.hpp"
 
 #include <algorithm>
 #include <sstream>
+
+//it is old?
+#include "core/manager/TextureManager.hpp"
+#include "core/manager/SoundBufferManager.hpp"
 
 
 
@@ -31,7 +33,7 @@ GameScene::GameScene(const Game& game)
     m_killGoal(0),
     m_goalString(""),
     m_activeGoal(false),
-    m_level(getGame().getScreenSize()),
+    m_level(getGame().getScreenSize(), *this),
 
     m_gemTextureID(-1),
     m_keyTextureID(-1),
@@ -49,13 +51,13 @@ GameScene::GameScene(const Game& game)
 bool GameScene::beforeLoad()
 {
     NResourceLoader::Ptr resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/resources.xml") };
-    bool ret = resourceLoader != nullptr && resourceLoader->addResources(mResourceManager);
+    bool ret = resourceLoader != nullptr && resourceLoader->addResources(getResourceManager());
     if (!ret)
     {
         throw std::runtime_error("Doesn't load ressurce!!");
     }
 
-    m_text.setFont(mResourceManager.get<NResurceManagement::EResourceType::Font>("font"));
+    m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
 
 
     m_gemTextureID = TextureManager::AddTexture("resources/loot/gem/spr_pickup_gem.png");
@@ -66,34 +68,28 @@ bool GameScene::beforeLoad()
 
 
     // Add the new tile type to level.
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_floor_alt.png"), eTILE::FLOOR_ALT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_floor.png"), eTILE::FLOOR);
-
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top.png"), eTILE::WALL_TOP);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_left.png"), eTILE::WALL_TOP_LEFT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_right.png"), eTILE::WALL_TOP_RIGHT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_t.png"), eTILE::WALL_TOP_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_top_end.png"), eTILE::WALL_TOP_END);
-
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_left.png"), eTILE::WALL_BOTTOM_LEFT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_right.png"), eTILE::WALL_BOTTOM_RIGHT);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_t.png"), eTILE::WALL_BOTTOM_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_bottom_end.png"), eTILE::WALL_BOTTOM_END);
-
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side.png"), eTILE::WALL_SIDE);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_left_t.png"), eTILE::WALL_SIDE_LEFT_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_left_end.png"), eTILE::WALL_SIDE_LEFT_END);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_right_t.png"), eTILE::WALL_SIDE_RIGHT_T);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_side_right_end.png"), eTILE::WALL_SIDE_RIGHT_END);
-
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_intersection.png"), eTILE::WALL_INTERSECTION);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_single.png"), eTILE::WALL_SINGLE);
-
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_wall_entrance.png"), eTILE::WALL_ENTRANCE);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_door_locked.png"), eTILE::WALL_DOOR_LOCKED);
-    m_level.AddTile(TextureManager::AddTexture("resources/tiles/spr_tile_door_unlocked.png"), eTILE::WALL_DOOR_UNLOCKED);
-
-    m_level.AddTile(TextureManager::AddTexture("resources/spr_torch.png"), eTILE::TORCH);
+    m_level.AddTile("spr_tile_floor_alt", eTILE::FLOOR_ALT);
+    m_level.AddTile("spr_tile_floor", eTILE::FLOOR);
+    m_level.AddTile("spr_tile_wall_top", eTILE::WALL_TOP);
+    m_level.AddTile("spr_tile_wall_top_left", eTILE::WALL_TOP_LEFT);
+    m_level.AddTile("spr_tile_wall_top_right", eTILE::WALL_TOP_RIGHT);
+    m_level.AddTile("spr_tile_wall_top_t", eTILE::WALL_TOP_T);
+    m_level.AddTile("spr_tile_wall_top_end", eTILE::WALL_TOP_END);
+    m_level.AddTile("spr_tile_wall_bottom_left", eTILE::WALL_BOTTOM_LEFT);
+    m_level.AddTile("spr_tile_wall_bottom_right", eTILE::WALL_BOTTOM_RIGHT);
+    m_level.AddTile("spr_tile_wall_bottom_t", eTILE::WALL_BOTTOM_T);
+    m_level.AddTile("spr_tile_wall_bottom_end", eTILE::WALL_BOTTOM_END);
+    m_level.AddTile("spr_tile_wall_side", eTILE::WALL_SIDE);
+    m_level.AddTile("spr_tile_wall_side_left_t", eTILE::WALL_SIDE_LEFT_T);
+    m_level.AddTile("spr_tile_wall_side_left_end", eTILE::WALL_SIDE_LEFT_END);
+    m_level.AddTile("spr_tile_wall_side_right_t", eTILE::WALL_SIDE_RIGHT_T);
+    m_level.AddTile("spr_tile_wall_side_right_end", eTILE::WALL_SIDE_RIGHT_END);
+    m_level.AddTile("spr_tile_wall_intersection", eTILE::WALL_INTERSECTION);
+    m_level.AddTile("spr_tile_wall_single", eTILE::WALL_SINGLE);
+    m_level.AddTile("spr_tile_wall_entrance", eTILE::WALL_ENTRANCE);
+    m_level.AddTile("spr_tile_door_locked", eTILE::WALL_DOOR_LOCKED);
+    m_level.AddTile("spr_tile_door_unlocked", eTILE::WALL_DOOR_UNLOCKED);
+    m_level.AddTile("spr_torch", eTILE::TORCH);
 
 
     //--------------------------------------------------------

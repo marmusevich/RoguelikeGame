@@ -38,3 +38,15 @@ const Game& Scene::getGame() const
 {
 	return m_game;
 }
+
+
+const NResurceManagement::ResourceManager& Scene::getResourceManager() const
+{
+	return mResourceManager;
+}
+
+NResurceManagement::ResourceManager& Scene::getResourceManager()
+{
+	return mResourceManager;
+}
+

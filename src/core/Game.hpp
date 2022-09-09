@@ -1,9 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <SFML/Graphics.hpp>
+
+#include "core/manager/ResourceManager.hpp"
+
 #include <memory>
 
-#include <SFML/Graphics.hpp>
 
 class Scene;
 
@@ -66,6 +69,7 @@ public:
 	void resume();
 	bool isPaused() const;
 
+	NResurceManagement::ResourceManager& getMainResourceManager();
 
 private:
 
@@ -90,6 +94,8 @@ bool m_isRunning;
 sf::Clock m_timestepClock;
 
 std::shared_ptr<Scene> m_curScene;
+
+NResurceManagement::ResourceManager mMainResourceManager;
 
 mutable bool m_isPaused;
 

@@ -1,16 +1,24 @@
 //#include "PCH.hpp"
 #include "scenes/Level.hpp"
-#include "core/manager/TextureManager.hpp"
 #include "utils/MathUtils.hpp"
 
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
+
+//old
+#include "core/manager/TextureManager.hpp"
+
+
+
 // Constructor.
-Level::Level(const sf::Vector2u screenSize)
-	:
-m_origin({ 0, 0 }),
-m_floorNumber(1),
-m_roomNumber(0),
-m_spawnLocation({ 0.f, 0.f }),
-m_doorTileIndices({ 0, 0 })
+Level::Level(const sf::Vector2u screenSize, const Scene& scene)
+: m_origin({ 0, 0 })
+, m_floorNumber(1)
+, m_roomNumber(0)
+, m_spawnLocation({ 0.f, 0.f })
+, m_doorTileIndices({ 0, 0 })
+, m_textureMatch_WA(static_cast<int>(eTILE::COUNT))
+, m_scene(scene)
 {
 	// Calculate the top left of the grid.
 	m_origin.x = (screenSize.x - (GRID_WIDTH * TILE_SIZE));
@@ -35,12 +43,9 @@ m_doorTileIndices({ 0, 0 })
 }
 
 // Create and adds a tile sprite to the list of those available.
-void Level::AddTile(int textureID, eTILE tileType)
+void Level::AddTile(const std::string& textureID, eTILE tileType)
 {
-	if (textureID >= 0)
-	{
-		m_textureIDs[static_cast<int>(tileType)] = textureID;
-	}
+	m_textureMatch_WA[tileType] = textureID;
 }
 
 // Checks if a given tile is passable
@@ -92,7 +97,7 @@ void Level::SetTile(int columnIndex, int rowIndex, eTILE tileType)
 
 	// change that tiles sprite to the new index
 	m_grid[columnIndex][rowIndex].type = tileType;
-	m_grid[columnIndex][rowIndex].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(tileType)]));
+	m_grid[columnIndex][rowIndex].sprite.setTexture(getTextureByTileTipe_WA(tileType));
 }
 
 // Sets the overlay color of the level tiles.
@@ -246,7 +251,8 @@ void Level::CreatePath(int columnIndex, int rowIndex)
 			{
 				// Mark the tile as floor.
 				tile->type = eTILE::FLOOR;
-				tile->sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::FLOOR)]));
+
+				tile->sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
 
 				// Knock that wall down.
 				int ddx = currentTile->columnIndex + (directions[i].x / 2);
@@ -254,7 +260,7 @@ void Level::CreatePath(int columnIndex, int rowIndex)
 
 				Tile* wall = &m_grid[ddx][ddy];
 				wall->type = eTILE::FLOOR;
-				wall->sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::FLOOR)]));
+				wall->sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
 
 				// Recursively call the function with the new tile.
 				CreatePath(dx, dy);
@@ -291,7 +297,7 @@ void Level::CreateRooms(int roomCount)
 					if ((newI != 0) && (newI != (GRID_WIDTH - 1)) && (newY != 0) && (newY != (GRID_HEIGHT - 1)))
 					{
 						m_grid[newI][newY].type = eTILE::FLOOR;
-						m_grid[newI][newY].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::FLOOR)]));
+						m_grid[newI][newY].sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
 					}
 				}
 			}
@@ -342,7 +348,7 @@ void Level::CalculateTextures()
 
 				// Set the new type.
 				m_grid[i][j].type = (eTILE)value;
-				m_grid[i][j].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[value]));
+				m_grid[i][j].sprite.setTexture(getTextureByTileTipe_WA(static_cast<eTILE>(value)));
 			}
 		}
 	}
@@ -402,7 +408,7 @@ void Level::GenerateLevel()
 			else
 			{
 				m_grid[i][j].type = eTILE::WALL_TOP;
-				m_grid[i][j].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::WALL_TOP)]));
+				m_grid[i][j].sprite.setTexture(getTextureByTileTipe_WA(eTILE::WALL_TOP));
 			}
 
 			// Set the position.
@@ -489,7 +495,13 @@ void Level::SpawnTorches(int torchCount)
 				if (std::find(usedTiles.begin(), usedTiles.end(), tile) == usedTiles.end())
 				{
 					std::shared_ptr<Torch> torch = std::make_shared<Torch>();
-    				torch->setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::TORCH)]), false, 5, 12);
+
+    				torch->setSprite(getTextureByTileTipe_WA(eTILE::TORCH), false, 5, 12);
+
+					//wall->sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
+					//torch->setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::TORCH)]), false, 5, 12);
+
+
 					torch->setPosition(GetActualTileLocation(columnIndex, rowIndex));
 					m_torches.push_back(torch);
 					tileFound = true;
@@ -543,3 +555,11 @@ void Level::draw(sf::RenderWindow& window, float timeDelta)
 		torch->draw(window, timeDelta);
 	}
 }
+
+
+const sf::Texture& Level::getTextureByTileTipe_WA(const eTILE tileType)
+{
+	return m_scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_textureMatch_WA.at(tileType));// throw std::out_of_range
+}
+
+

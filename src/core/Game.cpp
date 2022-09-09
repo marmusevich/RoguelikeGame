@@ -78,6 +78,11 @@ bool Game::isPaused() const
 	return m_isPaused;
 }
 
+NResurceManagement::ResourceManager& Game::getMainResourceManager()
+{
+	return mMainResourceManager;
+}
+
 
 void Game::run()
 {

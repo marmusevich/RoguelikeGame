@@ -1,16 +1,45 @@
 <!-- <?xml version="1.0"?> -->
-
-<!-- the path to the resource files is relative to the directory where the 'resource.xml' (THIS)  file is located -->
+<!-- 
+	<Resource_tipe_name file_name = "" />
+		Resource_tipe_name one from {Texture, Image, Font, Shader, Sound}
+		file_name - the path to the resource files is relative to the directory where the 'resource.xml' (THIS)  file is located
+		id - ID resource, if not set = file name without extension
+ -->
 <Resurces>
-   <Font file_name = "fonts/ADDSBP__.TTF" id = "font"/>
+	<Font file_name = "fonts/ADDSBP__.TTF" id = "font"/>
 
-   <Texture file_name = "tiles/spr_tile_wall_entrance.png" id = "spr_tile_wall_entrance" />
-   <Texture file_name = "tiles/spr_tile_door_locked.png" id = "spr_tile_door_locked" />
-   <Texture file_name = "tiles/spr_tile_door_unlocked.png" id = "spr_tile_door_unlocked" />
-   <Texture file_name = "spr_torch.png" id = "spr_torch" />
 
-   <Sound file_name = "resources/sounds/snd_fire.wav" id = "snd_fire" />
+	<Texture file_name = "tiles/spr_tile_wall_entrance.png" />
+	<Texture file_name = "tiles/spr_tile_door_locked.png" />
+	<Texture file_name = "tiles/spr_tile_door_unlocked.png" />
 
-<!--	<Image file_name = "" id = "" />  -->
-<!--	<Shader file_name = "" id = "" />  -->
+	<!-- tile type to level -->
+	<Texture file_name = "tiles/spr_tile_floor_alt.png" />
+	<Texture file_name = "tiles/spr_tile_floor.png"/>
+	<Texture file_name = "tiles/spr_tile_wall_top.png" />
+	<Texture file_name = "tiles/spr_tile_wall_top_left.png" />
+	<Texture file_name = "tiles/spr_tile_wall_top_right.png" />
+	<Texture file_name = "tiles/spr_tile_wall_top_t.png" />
+	<Texture file_name = "tiles/spr_tile_wall_top_end.png" />
+	<Texture file_name = "tiles/spr_tile_wall_bottom_left.png" />
+	<Texture file_name = "tiles/spr_tile_wall_bottom_right.png" />
+	<Texture file_name = "tiles/spr_tile_wall_bottom_t.png" />
+	<Texture file_name = "tiles/spr_tile_wall_bottom_end.png" />
+	<Texture file_name = "tiles/spr_tile_wall_side.png" />
+	<Texture file_name = "tiles/spr_tile_wall_side_left_t.png" />
+	<Texture file_name = "tiles/spr_tile_wall_side_left_end.png" />
+	<Texture file_name = "tiles/spr_tile_wall_side_right_t.png" />
+	<Texture file_name = "tiles/spr_tile_wall_side_right_end.png" />
+	<Texture file_name = "tiles/spr_tile_wall_intersection.png" />
+	<Texture file_name = "tiles/spr_tile_wall_single.png" />
+	<Texture file_name = "tiles/spr_tile_wall_entrance.png" />
+	<Texture file_name = "tiles/spr_tile_door_locked.png" />
+	<Texture file_name = "tiles/spr_tile_door_unlocked.png" />
+	<Texture file_name = "spr_torch.png" />
+
+
+	<Sound file_name = "sounds/snd_fire.wav" id = "snd_fire" />
+
+	<!--	<Image file_name = "" />  -->
+	<!--	<Shader file_name = "" />  -->
 </Resurces>
