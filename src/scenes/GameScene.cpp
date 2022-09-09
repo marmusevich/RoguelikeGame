@@ -68,29 +68,7 @@ bool GameScene::beforeLoad()
 
 
     // Add the new tile type to level.
-    m_level.AddTile("spr_tile_floor_alt", eTILE::FLOOR_ALT);
-    m_level.AddTile("spr_tile_floor", eTILE::FLOOR);
-    m_level.AddTile("spr_tile_wall_top", eTILE::WALL_TOP);
-    m_level.AddTile("spr_tile_wall_top_left", eTILE::WALL_TOP_LEFT);
-    m_level.AddTile("spr_tile_wall_top_right", eTILE::WALL_TOP_RIGHT);
-    m_level.AddTile("spr_tile_wall_top_t", eTILE::WALL_TOP_T);
-    m_level.AddTile("spr_tile_wall_top_end", eTILE::WALL_TOP_END);
-    m_level.AddTile("spr_tile_wall_bottom_left", eTILE::WALL_BOTTOM_LEFT);
-    m_level.AddTile("spr_tile_wall_bottom_right", eTILE::WALL_BOTTOM_RIGHT);
-    m_level.AddTile("spr_tile_wall_bottom_t", eTILE::WALL_BOTTOM_T);
-    m_level.AddTile("spr_tile_wall_bottom_end", eTILE::WALL_BOTTOM_END);
-    m_level.AddTile("spr_tile_wall_side", eTILE::WALL_SIDE);
-    m_level.AddTile("spr_tile_wall_side_left_t", eTILE::WALL_SIDE_LEFT_T);
-    m_level.AddTile("spr_tile_wall_side_left_end", eTILE::WALL_SIDE_LEFT_END);
-    m_level.AddTile("spr_tile_wall_side_right_t", eTILE::WALL_SIDE_RIGHT_T);
-    m_level.AddTile("spr_tile_wall_side_right_end", eTILE::WALL_SIDE_RIGHT_END);
-    m_level.AddTile("spr_tile_wall_intersection", eTILE::WALL_INTERSECTION);
-    m_level.AddTile("spr_tile_wall_single", eTILE::WALL_SINGLE);
-    m_level.AddTile("spr_tile_wall_entrance", eTILE::WALL_ENTRANCE);
-    m_level.AddTile("spr_tile_door_locked", eTILE::WALL_DOOR_LOCKED);
-    m_level.AddTile("spr_tile_door_unlocked", eTILE::WALL_DOOR_UNLOCKED);
-    m_level.AddTile("spr_torch", eTILE::TORCH);
-
+    m_level.initTiles();
 
     //--------------------------------------------------------
 

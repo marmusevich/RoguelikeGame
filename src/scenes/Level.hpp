@@ -224,13 +224,7 @@ public:
 	 */
 	int GetTileSize() const;
 
-	/**
-	* Adds a tile to the level.
-	* These tiles are essentially sprites with a unique index. Once added, they can be loaded via the LoadLevelFromFile() function by including its index in the level data.
-	* @param textureID 
-	* @param tileType The type of tile that is being added.
-	*/
-	void AddTile(const std::string& textureID, eTILE tileType);
+	void initTiles();
 
 private:
 

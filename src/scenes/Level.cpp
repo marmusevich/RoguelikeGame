@@ -38,10 +38,30 @@ Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 	SetColor(RandomColor(100u, 201u));
 }
 
-// Create and adds a tile sprite to the list of those available.
-void Level::AddTile(const std::string& textureID, eTILE tileType)
+void Level::initTiles()
 {
-	m_textureMatch_WA[tileType] = textureID;
+	m_textureMatch_WA[eTILE::FLOOR_ALT] = "spr_tile_floor_alt";
+	m_textureMatch_WA[eTILE::FLOOR] = "spr_tile_floor";
+	m_textureMatch_WA[eTILE::WALL_TOP] = "spr_tile_wall_top";
+	m_textureMatch_WA[eTILE::WALL_TOP_LEFT] = "spr_tile_wall_top_left";
+	m_textureMatch_WA[eTILE::WALL_TOP_RIGHT] = "spr_tile_wall_top_right";
+	m_textureMatch_WA[eTILE::WALL_TOP_T] = "spr_tile_wall_top_t";
+	m_textureMatch_WA[eTILE::WALL_TOP_END] = "spr_tile_wall_top_end";
+	m_textureMatch_WA[eTILE::WALL_BOTTOM_LEFT] = "spr_tile_wall_bottom_left";
+	m_textureMatch_WA[eTILE::WALL_BOTTOM_RIGHT] = "spr_tile_wall_bottom_right";
+	m_textureMatch_WA[eTILE::WALL_BOTTOM_T] = "spr_tile_wall_bottom_t";
+	m_textureMatch_WA[eTILE::WALL_BOTTOM_END] = "spr_tile_wall_bottom_end";
+	m_textureMatch_WA[eTILE::WALL_SIDE] = "spr_tile_wall_side";
+	m_textureMatch_WA[eTILE::WALL_SIDE_LEFT_T] = "spr_tile_wall_side_left_t";
+	m_textureMatch_WA[eTILE::WALL_SIDE_LEFT_END] = "spr_tile_wall_side_left_end";
+	m_textureMatch_WA[eTILE::WALL_SIDE_RIGHT_T] = "spr_tile_wall_side_right_t";
+	m_textureMatch_WA[eTILE::WALL_SIDE_RIGHT_END] = "spr_tile_wall_side_right_end";
+	m_textureMatch_WA[eTILE::WALL_INTERSECTION] = "spr_tile_wall_intersection";
+	m_textureMatch_WA[eTILE::WALL_SINGLE] = "spr_tile_wall_single";
+	m_textureMatch_WA[eTILE::WALL_ENTRANCE] = "spr_tile_wall_entrance";
+	m_textureMatch_WA[eTILE::WALL_DOOR_LOCKED] = "spr_tile_door_locked";
+	m_textureMatch_WA[eTILE::WALL_DOOR_UNLOCKED] = "spr_tile_door_unlocked";
+	m_textureMatch_WA[eTILE::TORCH] = "spr_torch";
 }
 
 // Checks if a given tile is passable
