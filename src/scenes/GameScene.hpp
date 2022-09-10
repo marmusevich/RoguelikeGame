@@ -18,7 +18,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <unordered_map>
-
+//#include <string>
 
 // 
 // Views - 2D camera that defines what region is shown on screen.
@@ -38,8 +38,6 @@ enum class eMUSIC_TRACK
 	ALT_4,
 	COUNT
 };
-
-
 
 
 class GameScene : public Scene
@@ -308,52 +306,21 @@ private:
 	 */
 	std::vector<std::shared_ptr<sf::Sprite>> m_uiSprites;
 
-	/**
-	 * Torch sound.
-	 */
+	// Sounds.
 	sf::Sound m_fireSound;
-
-	/**
-	 * Gem pickup sound.
-	 */
 	sf::Sound m_gemPickupSound;
-
-	/**
-	 * Coin pickup sound.
-	 */
 	sf::Sound m_coinPickupSound;
-
-	/**
-	* Key collect sound.
-	*/
 	sf::Sound m_keyPickupSound;
-
-	/**
-	 * Enemy die sound.
-	 */
 	sf::Sound m_enemyDieSound;
-
-	/**
-	 * Player hit sound.
-	 */
 	sf::Sound m_playerHitSound;
 
-	/**
-	 * The main music.
-	 */
+	 // The main music.
 	sf::Music m_music;
-
-
-	int m_gemTextureID;
-	int m_keyTextureID;
-	int m_heartTextureID;
-	int m_lightTextureID;
 
 	//TODO way m_text is class member, maybe prefer local variable
 	//sf::Text text;
 	///Text used by the DrawText() function.
 	sf::Text m_text;
-
 };
 
 #endif //SCENE_H

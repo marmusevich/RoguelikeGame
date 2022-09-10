@@ -178,8 +178,6 @@
     <ClInclude Include="src\items\bullet\Projectile.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\manager\SoundBufferManager.cpp" />
-    <ClInclude Include="src\core\manager\SoundBufferManager.hpp" />
     <ClInclude Include="src\core\manager\TextureManager.hpp" />
     <ClCompile Include="src\core\manager\TextureManager.cpp" />
   </ItemGroup>

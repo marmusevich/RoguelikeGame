@@ -118,15 +118,9 @@
     <ClCompile Include="src\core\Scene.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClInclude Include="src\core\manager\SoundBufferManager.hpp">
-      <Filter>Core\Manager Classes\__old to be remove</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\manager\TextureManager.hpp">
       <Filter>Core\Manager Classes\__old to be remove</Filter>
     </ClInclude>
-    <ClCompile Include="src\core\manager\SoundBufferManager.cpp">
-      <Filter>Core\Manager Classes\__old to be remove</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\manager\TextureManager.cpp">
       <Filter>Core\Manager Classes\__old to be remove</Filter>
     </ClCompile>

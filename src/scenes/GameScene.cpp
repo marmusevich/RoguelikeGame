@@ -10,11 +10,9 @@
 
 //it is old?
 #include "core/manager/TextureManager.hpp"
-#include "core/manager/SoundBufferManager.hpp"
 
 
-
-#include "core/resourceLoader/cResourceLoaderBuilder.hpp" // test for
+#include "core/resourceLoader/cResourceLoaderBuilder.hpp"
 
 
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
@@ -22,24 +20,18 @@ static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies t
 
 
 GameScene::GameScene(const Game& game)
-    :tBase(game),
-    m_screenSize(getGame().getScreenSize()),
-    m_screenCenter(getGame().getScreenCenter()),
-    m_scoreTotal(0),
-    m_goldTotal(0),
-    m_playerPreviousTile(nullptr),
-    m_goldGoal(0),
-    m_gemGoal(0),
-    m_killGoal(0),
-    m_goalString(""),
-    m_activeGoal(false),
-    m_level(getGame().getScreenSize(), *this),
-
-    m_gemTextureID(-1),
-    m_keyTextureID(-1),
-    m_heartTextureID(-1),
-    m_lightTextureID(-1)
-
+: tBase(game)
+, m_screenSize(getGame().getScreenSize())
+, m_screenCenter(getGame().getScreenCenter())
+, m_scoreTotal(0)
+, m_goldTotal(0)
+, m_playerPreviousTile(nullptr)
+, m_goldGoal(0)
+, m_gemGoal(0)
+, m_killGoal(0)
+, m_goalString("")
+, m_activeGoal(false)
+, m_level(getGame().getScreenSize(), *this)
 {
     // Define the game views.
     m_views[static_cast<int>(eVIEW::MAIN)] = getGame().getDefaultView();
@@ -59,70 +51,40 @@ bool GameScene::beforeLoad()
 
     m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
 
-
-    m_gemTextureID = TextureManager::AddTexture("resources/loot/gem/spr_pickup_gem.png");
-    m_keyTextureID = TextureManager::AddTexture("resources/loot/key/spr_pickup_key.png");
-    m_heartTextureID = TextureManager::AddTexture("resources/loot/heart/spr_pickup_heart.png");
-
-    m_lightTextureID = TextureManager::AddTexture("resources/spr_light_grid.png");
-
-
     // Add the new tile type to level.
     m_level.initTiles();
 
-    //--------------------------------------------------------
-
-    // Load all game sounds.
-    int soundBufferId = -1;
-
-    // Load torch sound.
-    soundBufferId = SoundBufferManager::AddSoundBuffer("resources/sounds/snd_fire.wav");
-    m_fireSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
+    // Set torch sound.
+    m_fireSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_fire"));
     m_fireSound.setLoop(true);
     m_fireSound.setAttenuation(5.f);
     m_fireSound.setMinDistance(80.f);
     m_fireSound.play();
-
-    // Load enemy die sound.
-    soundBufferId = SoundBufferManager::AddSoundBuffer("resources/sounds/snd_enemy_dead.wav");
-    m_enemyDieSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
+    // Set enemy die sound.
+    m_enemyDieSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_enemy_dead"));
     m_enemyDieSound.setAttenuation(5.f);
     m_enemyDieSound.setMinDistance(80.f);
-
-    // Load gem pickup sound.
-    soundBufferId = SoundBufferManager::AddSoundBuffer("resources/sounds/snd_gem_pickup.wav");
-    m_gemPickupSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
+    // Set gem pickup sound.
+    m_gemPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_gem_pickup"));
     m_gemPickupSound.setRelativeToListener(true);
-
-    // Load coin pickup sound.
-    soundBufferId = SoundBufferManager::AddSoundBuffer("resources/sounds/snd_coin_pickup.wav");
-    m_coinPickupSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
+    // Set coin pickup sound.
+    m_coinPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_coin_pickup"));
     m_coinPickupSound.setRelativeToListener(true);
-
-    // Load key pickup sound.
-    soundBufferId = SoundBufferManager::AddSoundBuffer("resources/sounds/snd_key_pickup.wav");
-    m_keyPickupSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
+    // Set key pickup sound.
+    m_keyPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_key_pickup"));
     m_keyPickupSound.setRelativeToListener(true);
-
-    // Load player hit sound.
-    soundBufferId = SoundBufferManager::AddSoundBuffer("resources/sounds/snd_player_hit.wav");
-    m_playerHitSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
+    // Set player hit sound.
+    m_playerHitSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_player_hit"));
     m_playerHitSound.setRelativeToListener(true);
-
 
     // Setup the main game music.
     const int trackIndex = Random(static_cast<int>(eMUSIC_TRACK::COUNT));
     // Load the music track.
     m_music.openFromFile("resources/music/msc_main_track_" + std::to_string(trackIndex) + ".wav");
-
-
-//-------------------------------------------------------------------------
-
-
+    
+    //-------------------------------------------------------------------------
     // Initialize the UI.
     LoadUI();
-
-
 
     return true;
 }
@@ -130,6 +92,8 @@ bool GameScene::beforeLoad()
 // Loads and prepares all UI assets.
 void GameScene::LoadUI()
 {
+    //getResourceManager().get<NResurceManagement::EResourceType::Texture>("")
+
     // Bar outlines.
     sf::Texture& barOutlineTexture = TextureManager::GetTexture(TextureManager::AddTexture("resources/ui/spr_bar_outline.png"));
     sf::Vector2f barOutlineTextureOrigin = { barOutlineTexture.getSize().x / 2.f, barOutlineTexture.getSize().y / 2.f };
@@ -527,9 +491,6 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
 // Constructs the grid of sprites that are used to draw the game light system.
 void GameScene::ConstructLightGrid()
 {
-    // Load the light tile texture and store a reference.
-    sf::Texture& lightTexture = TextureManager::GetTexture(m_lightTextureID);
-
     // Calculate the number of tiles in the grid. Each light tile is 25px square.
     sf::IntRect levelArea;
 
@@ -553,7 +514,7 @@ void GameScene::ConstructLightGrid()
         sf::Sprite lightSprite;
 
         // Set sprite texture.
-        lightSprite.setTexture(lightTexture);
+        lightSprite.setTexture(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_light_grid"));
 
         // Set the position of the tile.
         int xPos = levelArea.left + ((i % width) * 25);
@@ -981,17 +942,17 @@ void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
 
     case eITEM::GEM:
         item = std::make_unique<Gem>();
-        item->setSprite(TextureManager::GetTexture(m_gemTextureID), false, 8, 12);
+        item->setSprite(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gem"), false, 8, 12);
         break;
 
     case eITEM::KEY:
         item = std::make_unique<Key>();
-        item->setSprite(TextureManager::GetTexture(m_keyTextureID), false, 8, 12);
+        item->setSprite(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_key"), false, 8, 12);
         break;
 
     case eITEM::HEART:
         item = std::make_unique<Heart>();
-        item->setSprite(TextureManager::GetTexture(m_heartTextureID), false, 8, 12);
+        item->setSprite(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_heart"), false, 8, 12);
         break;
     }
 

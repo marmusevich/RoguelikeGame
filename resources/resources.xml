@@ -8,7 +8,6 @@
 <Resurces>
 	<Font file_name = "fonts/ADDSBP__.TTF" id = "font"/>
 
-
 	<Texture file_name = "tiles/spr_tile_wall_entrance.png" />
 	<Texture file_name = "tiles/spr_tile_door_locked.png" />
 	<Texture file_name = "tiles/spr_tile_door_unlocked.png" />
@@ -35,10 +34,21 @@
 	<Texture file_name = "tiles/spr_tile_wall_entrance.png" />
 	<Texture file_name = "tiles/spr_tile_door_locked.png" />
 	<Texture file_name = "tiles/spr_tile_door_unlocked.png" />
+
 	<Texture file_name = "spr_torch.png" />
+	<Texture file_name = "spr_light_grid.png" />
 
+	<Texture file_name = "loot/gem/spr_pickup_gem.png" />
+    <Texture file_name = "loot/key/spr_pickup_key.png" />
+    <Texture file_name = "loot/heart/spr_pickup_heart.png" />
+	
 
-	<Sound file_name = "sounds/snd_fire.wav" id = "snd_fire" />
+    <Sound file_name = "sounds/snd_fire.wav" />
+    <Sound file_name = "sounds/snd_enemy_dead.wav" />
+    <Sound file_name = "sounds/snd_gem_pickup.wav" />
+    <Sound file_name = "sounds/snd_coin_pickup.wav" />
+    <Sound file_name = "sounds/snd_key_pickup.wav" />
+    <Sound file_name = "sounds/snd_player_hit.wav" />
 
 	<!--	<Image file_name = "" />  -->
 	<!--	<Shader file_name = "" />  -->
