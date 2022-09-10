@@ -7,6 +7,12 @@
  -->
 <Resurces>
 	<Font file_name = "fonts/ADDSBP__.TTF" id = "font"/>
+	<!-- <Font file_name = "fonts/04B_03__.TTF" id = "font"/> -->
+	<!-- <Font file_name = "fonts/arial.TTF" id = "font"/> -->
+
+	<Texture file_name = "spr_torch.png" />
+	<Texture file_name = "spr_light_grid.png" />
+	<Texture file_name = "spr_path.png" />
 
 	<Texture file_name = "tiles/spr_tile_floor_alt.png" />
 	<Texture file_name = "tiles/spr_tile_floor.png"/>
@@ -30,13 +36,6 @@
 	<Texture file_name = "tiles/spr_tile_door_locked.png" />
 	<Texture file_name = "tiles/spr_tile_door_unlocked.png" />
 
-	<Texture file_name = "spr_torch.png" />
-	<Texture file_name = "spr_light_grid.png" />
-
-	<Texture file_name = "loot/gem/spr_pickup_gem.png" />
-    <Texture file_name = "loot/key/spr_pickup_key.png" />
-    <Texture file_name = "loot/heart/spr_pickup_heart.png" />
-
 	<Texture file_name = "ui/spr_bar_outline.png" />
 	<Texture file_name = "ui/spr_health_bar.png" />
 	<Texture file_name = "ui/spr_mana_bar.png" />
@@ -53,19 +52,34 @@
 	<Texture file_name = "ui/spr_dexterity_ui_alt.png" />
 	<Texture file_name = "ui/spr_stamina_ui.png" />
 	<Texture file_name = "ui/spr_stamina_ui_alt.png" />
+	<Texture file_name = "ui/spr_aim.png" />
+	<Texture file_name = "ui/spr_archer_ui.png" />
+	<Texture file_name = "ui/spr_heart.png" />
+	<Texture file_name = "ui/spr_key_ui_transparent.png" />
+	<Texture file_name = "ui/spr_mage_ui.png" />
+	<Texture file_name = "ui/spr_thief_ui.png" />
+	<Texture file_name = "ui/spr_warrior_ui.png" />
+	<Texture file_name = "ui/spr_spare_trait_ui.png" />
+	<Texture file_name = "ui/spr_spare_trait_ui_alt.png" />
 
+	<Texture file_name = "loot/gem/spr_pickup_gem.png" />
+    <Texture file_name = "loot/key/spr_pickup_key.png" />
+    <Texture file_name = "loot/heart/spr_pickup_heart.png" />
 	<Texture file_name = "loot/gold/spr_pickup_gold_small.png" />
 	<Texture file_name = "loot/gold/spr_pickup_gold_large.png" />
 	<Texture file_name = "loot/gold/spr_pickup_gold_medium.png" />
 	<Texture file_name = "loot/potions/spr_potion_attack.png" />
 	<Texture file_name = "loot/potions/spr_potion_defense.png" />
-	<Texture file_name = "loot/potions/spr_potion_strength.png" />
 	<Texture file_name = "loot/potions/spr_potion_dexterity.png" />
+	<Texture file_name = "loot/potions/spr_potion_health.png" />
+	<Texture file_name = "loot/potions/spr_potion_mana.png" />
 	<Texture file_name = "loot/potions/spr_potion_stamina.png" />
-	
-	<!--   
-	getResourceManager().get<NResurceManagement::EResourceType::Texture>("")
-	-->
+	<Texture file_name = "loot/potions/spr_potion_strength.png" />
+
+	<Texture file_name = "projectiles/spr_arrow.png" />
+	<Texture file_name = "projectiles/spr_dagger.png" />
+	<Texture file_name = "projectiles/spr_magic_ball.png" />
+	<Texture file_name = "projectiles/spr_sword.png" />
 
     <Sound file_name = "sounds/snd_fire.wav" />
     <Sound file_name = "sounds/snd_enemy_dead.wav" />

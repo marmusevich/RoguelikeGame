@@ -51,14 +51,14 @@ Player::Player(const Scene& scene)
 	}
 
 	// Load textures.
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_up.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_down.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_right.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_walk_left.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_up.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_down.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_right.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_left.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_up.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_down.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_right.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_left.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_up.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_down.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_right.png");
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_left.png");
 
 	// Load the correct projectile texture.
 	scene.getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
@@ -74,7 +74,7 @@ Player::Player(const Scene& scene)
 
 	// Create the player's aim sprite.
 	int textureID = TextureManager::AddTexture("resources/ui/spr_aim.png");
-	m_aimSprite.setTexture(TextureManager::GetTexture(textureID));
+	m_aimSprite.setTexture(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_aim"));
 	m_aimSprite.setOrigin(sf::Vector2f(16.5f, 16.5f));
 	m_aimSprite.setScale(2.f, 2.f);
 

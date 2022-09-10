@@ -1,0 +1,17 @@
+<!-- <?xml version="1.0"?> -->
+<!-- 
+	<Resource_tipe_name file_name = "" />
+		Resource_tipe_name one from {Texture, Image, Font, Shader, Sound}
+		file_name - the path to the resource files is relative to the directory where the 'resource.xml' (THIS)  file is located
+		id - ID resource, if not set = file name without extension
+ -->
+<Resurces>
+	<Texture file_name = "spr_walk_up.png" />
+	<Texture file_name = "spr_walk_down.png" />
+	<Texture file_name = "spr_walk_right.png" />
+	<Texture file_name = "spr_walk_left.png" />
+	<Texture file_name = "spr_idle_up.png" />
+	<Texture file_name = "spr_idle_down.png" />
+	<Texture file_name = "spr_idle_right.png" />
+	<Texture file_name = "spr_idle_left.png" />
+</Resurces>
