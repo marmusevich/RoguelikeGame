@@ -3,7 +3,11 @@
 #include "core/manager/TextureManager.hpp"
 #include "utils/MathUtils.hpp"
 
-Slime::Slime()
+//old
+#include "core/manager/TextureManager.hpp"
+
+Slime::Slime(const Scene& scene)
+: tBase(scene)
 {
 	// Load textures.
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/enemies/slime/spr_walk_up.png");

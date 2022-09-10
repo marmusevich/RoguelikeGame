@@ -266,7 +266,7 @@ void GameScene::update(float timeDelta)
             if (m_player.GetMana() >= 2)
             {
                 sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
-                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_player.getProjectileTextureID()), playerPosition, m_screenCenter, target);
+                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(*this, m_player.getProjectileTextureID(), playerPosition, m_screenCenter, target);
                 m_playerProjectiles.push_back(std::move(proj));
                 // Reduce player mana.
                 m_player.SetMana(m_player.GetMana() - 2);
@@ -889,18 +889,18 @@ void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
         break;
 
     case eITEM::GEM:
-        item = std::make_unique<Gem>();
-        item->setSprite(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gem"), false, 8, 12);
+        item = std::make_unique<Gem>(*this);
+        item->setSprite("spr_pickup_gem", false, 8, 12);
         break;
 
     case eITEM::KEY:
-        item = std::make_unique<Key>();
-        item->setSprite(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_key"), false, 8, 12);
+        item = std::make_unique<Key>(*this);
+        item->setSprite("spr_pickup_key", false, 8, 12);
         break;
 
     case eITEM::HEART:
-        item = std::make_unique<Heart>();
-        item->setSprite(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_heart"), false, 8, 12);
+        item = std::make_unique<Heart>(*this);
+        item->setSprite("spr_pickup_heart", false, 8, 12);
         break;
     }
 
@@ -929,11 +929,11 @@ void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
     switch (enemyType)
     {
     case eENEMY::SLIME:
-        enemy = std::make_unique<Slime>();
+        enemy = std::make_unique<Slime>(*this);
         break;
 
     case eENEMY::HUMANOID:
-        enemy = std::make_unique<Humanoid>();
+        enemy = std::make_unique<Humanoid>(*this);
         break;
     }
 

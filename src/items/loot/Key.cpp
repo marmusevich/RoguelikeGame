@@ -1,5 +1,6 @@
-//#include "PCH.hpp"
 #include "items/loot/Key.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 
 // Default constructor.
 Key::Key(const Scene& scene)

@@ -6,12 +6,10 @@
 
 class Humanoid : public Enemy
 {
-public:
+	using tBase = Enemy;
 
-	/**
-	 * Default constructor
-	 */
-	Humanoid();
+public:
+	explicit Humanoid(const Scene& scene);
 
 	/**
 	 * Overrides the update event of Enemy.

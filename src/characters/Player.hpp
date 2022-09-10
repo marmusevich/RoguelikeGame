@@ -26,9 +26,6 @@ class Player : public Entity
 	using tBase = Entity;
 
 public:
-	/**
-	 * Default constructor.
-	 */
 	explicit Player(const Scene& scene);
 
 	/**

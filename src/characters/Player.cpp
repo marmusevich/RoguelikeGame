@@ -1,6 +1,8 @@
 //#include "PCH.hpp"
 #include "characters/Player.hpp"
 #include "utils/MathUtils.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 
 //old
 #include "core/manager/TextureManager.hpp"

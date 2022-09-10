@@ -1,4 +1,7 @@
-#include "Item.hpp"
+#include "core/Item.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
+
 #include <sstream>
 
 Item::Item(const Scene& scene)

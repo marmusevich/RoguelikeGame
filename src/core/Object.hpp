@@ -2,7 +2,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-//#include "PCH.hpp"
 #include <SFML/Graphics.hpp>
 
 #include <string>
@@ -82,11 +81,11 @@ public:
 	*/
 	void setAnimated(bool isAnimated);
 
+protected:
+
 	const Scene& getScene() const;
 	const NResurceManagement::ResourceManager& getResourceManager() const;
 	const sf::Texture& getTexture(const std::string& textureId) const;
-
-protected:
 
 	/**
 	 * The object's sprite.

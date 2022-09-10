@@ -1,5 +1,6 @@
-//#include "PCH.hpp"
 #include "items/loot/Heart.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 #include "utils/MathUtils.hpp"
 
 Heart::Heart(const Scene& scene)

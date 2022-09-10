@@ -1,6 +1,6 @@
-//#include "PCH.hpp"
 #include "items/loot/Gold.hpp"
 #include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 
 #include "utils/MathUtils.hpp"
 
@@ -14,15 +14,15 @@ Gold::Gold(const Scene& scene)
 	// Choose a sprite based on the gold value.
 	if (this->goldValue < 9)
 	{
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gold_small"), false, 8, 12);
+		setSprite("spr_pickup_gold_small", false, 8, 12);
 	}
 	else if (this->goldValue >= 16)
 	{
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gold_large"), false, 8, 12);
+		setSprite("spr_pickup_gold_large", false, 8, 12);
 	}
 	else
 	{
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gold_medium"), false, 8, 12);
+		setSprite("spr_pickup_gold_medium", false, 8, 12);
 	}
 
 	// Set the item type.

@@ -1,5 +1,6 @@
-//#include "PCH.hpp"
 #include "items/loot/Gem.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 #include "utils/MathUtils.hpp"
 
 Gem::Gem(const Scene& scene)

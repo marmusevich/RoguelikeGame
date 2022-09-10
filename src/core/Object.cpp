@@ -1,4 +1,3 @@
-//#include "PCH.hpp"
 #include "core/Object.hpp"
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
@@ -55,7 +54,7 @@ bool Object::setSprite(const sf::Texture& texture, bool isSmooth, int frames, in
 	return true;
 }
 
-bool setSprite(const std::string& textureId, bool isSmooth, int frames = 1, int frameSpeed = 0)
+bool Object::setSprite(const std::string& textureId, bool isSmooth, int frames, int frameSpeed)
 {
 	return setSprite(getTexture(textureId), isSmooth, frames, frameSpeed);
 }

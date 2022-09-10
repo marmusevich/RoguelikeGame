@@ -15,11 +15,10 @@ enum class eENEMY
 
 class Enemy : public Entity
 {
+	using tBase = Entity;
+
 public:
-	/**
-	 * Default constructor.
-	 */
-	Enemy();
+	explicit Enemy(const Scene& scene);
 
 	/**
 	 * Overrides the default update function of Entity.

@@ -1,4 +1,3 @@
-//#include "PCH.hpp"
 #include "scenes/Level.hpp"
 #include "utils/MathUtils.hpp"
 
@@ -6,7 +5,6 @@
 #include "core/manager/ResourceManager.hpp"
 
 
-// Constructor.
 Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 : m_origin({ 0, 0 })
 , m_floorNumber(1)
@@ -510,7 +508,7 @@ void Level::SpawnTorches(int torchCount)
 			{
 				if (std::find(usedTiles.begin(), usedTiles.end(), tile) == usedTiles.end())
 				{
-					std::shared_ptr<Torch> torch = std::make_shared<Torch>();
+					std::shared_ptr<Torch> torch = std::make_shared<Torch>(m_scene);
 
     				torch->setSprite(getTextureByTileTipe_WA(eTILE::TORCH), false, 5, 12);
 					torch->setPosition(GetActualTileLocation(columnIndex, rowIndex));

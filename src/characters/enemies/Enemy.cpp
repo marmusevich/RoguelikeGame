@@ -1,11 +1,12 @@
-//#include "PCH.hpp"
 #include "characters/enemies/Enemy.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 #include "utils/MathUtils.hpp"
 
 
-// Default constructor.
-Enemy::Enemy() :
-m_currentTarget({ 0.f, 0.f })
+Enemy::Enemy(const Scene& scene) 
+: tBase(scene)
+, m_currentTarget({ 0.f, 0.f })
 {
 	// Set stats.
 	m_health = Random(80, 120);

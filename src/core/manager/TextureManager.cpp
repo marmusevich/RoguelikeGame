@@ -1,4 +1,3 @@
-//#include "PCH.hpp"
 #include "core/manager/TextureManager.hpp"
 
 std::unordered_map<std::string, int> TextureManager::m_FileToId;

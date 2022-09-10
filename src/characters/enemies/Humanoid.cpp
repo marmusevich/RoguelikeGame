@@ -1,11 +1,14 @@
-//#include "PCH.hpp"
 #include "characters/enemies/Humanoid.hpp"
-#include "core/manager/TextureManager.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 #include "utils/MathUtils.hpp"
 
+//old
+#include "core/manager/TextureManager.hpp"
 
-// Default constructor.
-Humanoid::Humanoid()
+
+Humanoid::Humanoid(const Scene& scene)
+: tBase(scene)
 {
 	// Enemy humanoid types.
 	enum class eHUMANOID

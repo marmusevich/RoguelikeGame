@@ -1,5 +1,9 @@
 //#include "PCH.hpp"
 #include "core/Entity.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
+
+//old
 #include "core/manager/TextureManager.hpp"
 
 

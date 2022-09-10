@@ -1,6 +1,6 @@
-//#include "PCH.hpp"
 #include "items/loot/Potion.hpp"
 #include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 #include "utils/MathUtils.hpp"
 
 Potion::Potion(const Scene& scene)
@@ -31,27 +31,27 @@ Potion::Potion(const Scene& scene)
 	{
 	case ePOTION::ATTACK:
 		m_dexterity = Random(5, 15);
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_potion_attack"), false, 8, 12);
+		setSprite("spr_potion_attack", false, 8, 12);
 		break;
 
 	case ePOTION::DEFENSE:
 		m_dexterity = Random(5, 15);
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_potion_defense"), false, 8, 12);
+		setSprite("spr_potion_defense", false, 8, 12);
 		break;
 
 	case ePOTION::STRENGTH:
 		m_strength = Random(5, 15);
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_potion_strength"), false, 8, 12);
+		setSprite("spr_potion_strength", false, 8, 12);
 		break;
 
 	case ePOTION::DEXTERITY:
 		m_dexterity = Random(5, 15);
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_potion_dexterity"), false, 8, 12);
+		setSprite("spr_potion_dexterity", false, 8, 12);
 		break;
 
 	case ePOTION::STAMINA:
 		m_stamina = Random(5, 15);
-		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_potion_stamina"), false, 8, 12);
+		setSprite("spr_potion_stamina", false, 8, 12);
 		break;
 	}
 

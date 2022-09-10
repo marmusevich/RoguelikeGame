@@ -5,11 +5,9 @@
 
 class Slime : public Enemy
 {
-public:
+	using tBase = Enemy;
 
-	/**
-	 * Default constructor.
-	 */
-	Slime();
+public:
+	explicit Slime(const Scene& scene);
 };
 #endif

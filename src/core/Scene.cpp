@@ -1,4 +1,3 @@
-//#include "PCH.hpp"
 #include "core/Scene.hpp"
 
 Scene::Scene(const Game& game)
