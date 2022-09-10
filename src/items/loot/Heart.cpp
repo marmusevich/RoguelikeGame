@@ -2,7 +2,8 @@
 #include "items/loot/Heart.hpp"
 #include "utils/MathUtils.hpp"
 
-Heart::Heart()
+Heart::Heart(const Scene& scene)
+: tBase(scene)
 {
 	// Set health value.
 	m_health = Random(10, 20);

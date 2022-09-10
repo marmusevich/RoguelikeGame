@@ -1,17 +1,12 @@
-//#include "PCH.hpp"
 #include "Item.hpp"
 #include <sstream>
 
-
-
-// Default constructor.
-Item::Item() :
-	m_name(""),
-	m_textOffset({0.f, 0.f})
+Item::Item(const Scene& scene)
+: tBase(scene)
+, m_name("")
+, m_textOffset({0.f, 0.f})
 {
-	// Load font.
-	m_font.loadFromFile("resources/fonts/ADDSBP__.TTF");
-	m_text.setFont(m_font);
+	m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
 
 	// Setup the text.
 	m_text.setCharacterSize(12);

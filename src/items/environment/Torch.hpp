@@ -5,12 +5,14 @@
 
 class Torch : public Object
 {
+	using tBase = Object;
+
 public:
 
 	/**
 	 * Default Constructor.
 	 */
-	Torch();
+	explicit Torch(const Scene& scene);
 
 	/**
 	 * Updates the brightness of the torch.

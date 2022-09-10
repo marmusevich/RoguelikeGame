@@ -2,7 +2,8 @@
 #include "items/loot/Gem.hpp"
 #include "utils/MathUtils.hpp"
 
-Gem::Gem()
+Gem::Gem(const Scene& scene)
+: tBase(scene)
 {
 	// Set the value of the gem.
 	m_scoreValue = Random(100);

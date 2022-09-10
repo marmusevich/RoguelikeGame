@@ -6,6 +6,7 @@
 
 
 Gold::Gold(const Scene& scene)
+: tBase(scene)
 {
 	// Randomly generate the value of the pickup.
 	this->goldValue = Random(5, 25);

@@ -24,12 +24,11 @@ enum class eANIMATION_STATE
 
 class Entity : public Object
 {
+	using tBase = Object;
+
 public:
 
-	/**
-	 * Default constructor.
-	 */
-	Entity();
+	explicit Entity(const Scene& scene);
 
 	/**
 	 * Override the default Object::update function.

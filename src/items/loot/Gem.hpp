@@ -5,11 +5,10 @@
 
 class Gem : public Item
 {
+	using tBase = Item;
+
 public:
-	/**
-	 * Default constructor.
-	 */
-	Gem();
+	explicit Gem(const Scene& scene);
 
 	/**
 	 * Gets the amount of score this pickup gives.

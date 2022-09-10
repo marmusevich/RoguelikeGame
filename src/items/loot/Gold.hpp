@@ -5,15 +5,11 @@
 
 #include <unordered_map>
 
-//fwd
-class Scene;
-
 class Gold : public Item
 {
+	using tBase = Item;
+
 public:
-	/**
-	 * constructor.
-	 */
 	explicit Gold(const Scene& scene);
 
 	/**

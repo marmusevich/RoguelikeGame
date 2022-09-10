@@ -5,12 +5,10 @@
 
 class Heart : public Item
 {
-public:
+	using tBase = Item;
 
-	/**
-	 * Default constructor.
-	 */
-	Heart();
+public:
+	explicit Heart(const Scene& scene);
 
 	/**
 	 * Returns the amount of health that the heart gives.

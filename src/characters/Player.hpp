@@ -9,10 +9,6 @@
 #include <string>
 #include <array>
 
-//fwd
-class Scene;
-
-
 // Player traits.
 enum class PLAYER_TRAIT 
 {
@@ -27,6 +23,8 @@ enum class PLAYER_TRAIT
 
 class Player : public Entity
 {
+	using tBase = Entity;
+
 public:
 	/**
 	 * Default constructor.
@@ -166,7 +164,5 @@ private:
 	std::string m_uiTextureID;
 	// The ID of the player's projectile texture.
 	std::string m_projectileTextureID;
-
-	const Scene& m_scene;
 };
 #endif

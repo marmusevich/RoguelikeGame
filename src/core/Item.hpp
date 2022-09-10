@@ -17,11 +17,10 @@ enum class eITEM
 
 class Item : public Object
 {
+	using tBase = Object;
+
 public:
-	/**
-	 * Default constructor.
-	 */
-	Item();
+	explicit Item(const Scene& scene);
 
 	/**
 	 * Draws the item name to screen if it has one. The drawing of the object is done in the parent function which is called.

@@ -5,10 +5,9 @@
 
 class Key : public Item
 {
+	using tBase = Item;
+
 public:
-	/**
-	 * Default constructor.
-	 */
-	Key();
+	explicit Key(const Scene& scene);
 };
 #endif

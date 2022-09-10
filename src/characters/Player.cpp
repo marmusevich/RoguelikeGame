@@ -1,6 +1,5 @@
 //#include "PCH.hpp"
 #include "characters/Player.hpp"
-#include "core/Scene.hpp"
 #include "utils/MathUtils.hpp"
 
 //old
@@ -9,7 +8,8 @@
 
 // Constructor.
 Player::Player(const Scene& scene)
-: m_attackDelta(0.f)
+: tBase(scene)
+, m_attackDelta(0.f)
 , m_damageDelta(0.f)
 , m_manaDelta(0.f)
 , m_isAttacking(false)
@@ -17,7 +17,6 @@ Player::Player(const Scene& scene)
 , m_statPoints(0)
 , m_uiTextureID("")
 , m_projectileTextureID("")
-, m_scene(scene)
 {
 
 }
@@ -68,11 +67,11 @@ void Player::initResources()
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_left.png");
 
 	// Load the correct projectile texture.
-	m_scene.getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
+	getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
 
 	// Initialize the player ui texture and sprite.
 	m_uiTextureID = "resources/ui/spr_" + className + "_ui.png";
-	m_scene.getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
+	getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
 
 	// Set initial sprite.
 	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
@@ -80,7 +79,7 @@ void Player::initResources()
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
 	// Create the player's aim sprite.
-	m_aimSprite.setTexture(m_scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_aim"));
+	m_aimSprite.setTexture(getTexture("spr_aim"));
 	m_aimSprite.setOrigin(sf::Vector2f(16.5f, 16.5f));
 	m_aimSprite.setScale(2.f, 2.f);
 

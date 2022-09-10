@@ -3,9 +3,9 @@
 #include "core/Scene.hpp"
 #include "utils/MathUtils.hpp"
 
-// Default constructor.
 Potion::Potion(const Scene& scene)
-: m_attack(0)
+: tBase(scene)
+, m_attack(0)
 , m_defense(0)
 , m_strength(0)
 , m_dexterity(0)

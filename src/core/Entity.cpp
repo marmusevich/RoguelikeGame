@@ -3,19 +3,20 @@
 #include "core/manager/TextureManager.hpp"
 
 
-Entity::Entity() :
-m_currentTextureIndex(static_cast<int>(eANIMATION_STATE::WALK_DOWN)),
-m_health(0),
-m_maxHealth(0),
-m_mana(0),
-m_maxMana(0),
-m_attack(0),
-m_defense(0),
-m_strength(0),
-m_dexterity(0),
-m_stamina(0),
-m_speed(0),
-m_velocity({0.f, 0.f})
+Entity::Entity(const Scene& scene)
+: tBase(scene)
+, m_currentTextureIndex(static_cast<int>(eANIMATION_STATE::WALK_DOWN))
+, m_health(0)
+, m_maxHealth(0)
+, m_mana(0)
+, m_maxMana(0)
+, m_attack(0)
+, m_defense(0)
+, m_strength(0)
+, m_dexterity(0)
+, m_stamina(0)
+, m_speed(0)
+, m_velocity({0.f, 0.f})
 {
 }
 

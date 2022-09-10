@@ -2,8 +2,9 @@
 #include "items/environment/Torch.hpp"
 #include "utils/MathUtils.hpp"
 
-Torch::Torch() :
-m_brightness(1.f)
+Torch::Torch(const Scene& scene)
+: tBase(scene)
+, m_brightness(1.f)
 {
 
 }

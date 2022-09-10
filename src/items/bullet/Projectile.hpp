@@ -5,6 +5,8 @@
 
 class Projectile : public Object
 {
+	using tBase = Object;
+
 public:
 	/**
 	 * Default constructor.
@@ -13,7 +15,7 @@ public:
 	 * @param screenCenter The center of the screen. Used to calculate direction.
 	 * @param target The target location of the projectile.
 	 */
-	Projectile(const sf::Texture& texture, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target);
+	explicit Projectile(const Scene& scene, const sf::Texture& texture, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target);
 
 	/**
 	 * Override of the update function.

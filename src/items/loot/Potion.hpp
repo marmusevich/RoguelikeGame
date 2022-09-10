@@ -6,15 +6,11 @@
 
 #include <unordered_map>
 
-//fwd
-class Scene;
-
 class Potion : public Item
 {
+	using tBase = Item;
+
 public:
-	/**
-	* constructor.
-	*/
 	explicit Potion(const Scene& scene);
 
 	/**

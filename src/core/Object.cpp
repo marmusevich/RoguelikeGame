@@ -1,17 +1,19 @@
 //#include "PCH.hpp"
 #include "core/Object.hpp"
+#include "core/Scene.hpp"
+#include "core/manager/ResourceManager.hpp"
 
-// Default constructor.
-Object::Object() 
-	: 
-m_position{ 0.f, 0.f },
-m_animationSpeed(0),
-m_isAnimated(false),
-m_frameCount(0),
-m_currentFrame(0),
-m_frameWidth(0),
-m_frameHeight(0),
-m_timeDelta(0)
+
+Object::Object(const Scene& scene)
+: m_position{ 0.f, 0.f }
+, m_animationSpeed(0)
+, m_isAnimated(false)
+, m_frameCount(0)
+, m_currentFrame(0)
+, m_frameWidth(0)
+, m_frameHeight(0)
+, m_timeDelta(0)
+, m_scene(scene)
 {
 }
 
@@ -51,6 +53,11 @@ bool Object::setSprite(const sf::Texture& texture, bool isSmooth, int frames, in
 	m_sprite.setOrigin(m_frameWidth / 2.f, m_frameHeight / 2.f);
 
 	return true;
+}
+
+bool setSprite(const std::string& textureId, bool isSmooth, int frames = 1, int frameSpeed = 0)
+{
+	return setSprite(getTexture(textureId), isSmooth, frames, frameSpeed);
 }
 
 // Returns the object's sprite.
@@ -132,4 +139,19 @@ void Object::NextFrame()
 int Object::getFrameCount() const
 {
 	return m_frameCount;
+}
+
+const Scene& Object::getScene() const
+{
+	return m_scene;
+}
+
+const NResurceManagement::ResourceManager& Object::getResourceManager() const
+{
+	return m_scene.getResourceManager();
+}
+
+const sf::Texture& Object::getTexture(const std::string& textureId) const
+{
+	return	m_scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>(textureId);
 }

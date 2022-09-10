@@ -3,16 +3,21 @@
 #define OBJECT_H
 
 //#include "PCH.hpp"
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
+#include <string>
+
+//fwd
+class Scene;
+namespace NResurceManagement
+{ 
+	class ResourceManager;
+}
 
 class Object
 {
 public:
-	/**
-	 * Default constructor.
-	 */
-	Object();
+	explicit Object(const Scene& scene);
 
 	/**
 	 * Updates the game object. Called once per tick.
@@ -51,6 +56,7 @@ public:
 	 * @return true if the operation succeeded.
 	 */
 	bool setSprite(const sf::Texture& texture, bool isSmooth, int frames = 1, int frameSpeed = 0);
+	bool setSprite(const std::string& textureId, bool isSmooth, int frames = 1, int frameSpeed = 0);
 
 	/**
 	 * Returns a reference the object's sprite.
@@ -75,6 +81,10 @@ public:
 	* @param isAnimated The new animation state of the object.
 	*/
 	void setAnimated(bool isAnimated);
+
+	const Scene& getScene() const;
+	const NResurceManagement::ResourceManager& getResourceManager() const;
+	const sf::Texture& getTexture(const std::string& textureId) const;
 
 protected:
 
@@ -131,5 +141,7 @@ private:
 	 * An aggregate of the time passed between draw calls.
 	 */
 	float m_timeDelta;
+
+	const Scene& m_scene;
 };
 #endif
