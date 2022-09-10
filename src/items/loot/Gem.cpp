@@ -1,9 +1,7 @@
 //#include "PCH.hpp"
 #include "items/loot/Gem.hpp"
-#include "core/manager/TextureManager.hpp"
 #include "utils/MathUtils.hpp"
 
-// Default Constructor.
 Gem::Gem()
 {
 	// Set the value of the gem.

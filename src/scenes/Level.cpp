@@ -513,11 +513,6 @@ void Level::SpawnTorches(int torchCount)
 					std::shared_ptr<Torch> torch = std::make_shared<Torch>();
 
     				torch->setSprite(getTextureByTileTipe_WA(eTILE::TORCH), false, 5, 12);
-
-					//wall->sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
-					//torch->setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eTILE::TORCH)]), false, 5, 12);
-
-
 					torch->setPosition(GetActualTileLocation(columnIndex, rowIndex));
 					m_torches.push_back(torch);
 					tileFound = true;

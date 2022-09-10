@@ -6,6 +6,12 @@
 #include "scenes/Level.hpp"
 #include "items/bullet/Projectile.hpp"
 
+#include <string>
+#include <array>
+
+//fwd
+class Scene;
+
 
 // Player traits.
 enum class PLAYER_TRAIT 
@@ -25,7 +31,7 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	Player();
+	explicit Player(const Scene& scene);
 
 	/**
 	 * Updates the player object.
@@ -99,10 +105,8 @@ public:
 	 */
 	void Damage(int damage);
 
-
-	int getUiTextureID();
-	int getProjectileTextureID();
-
+	const std::string getUiTextureID() const;
+	const std::string getProjectileTextureID() const;
 
 private:
 
@@ -125,68 +129,39 @@ private:
 		COUNT
 	};
 
-
-
-	/**
-	 * The number of traits that the player can have.
-	 */
+	// The number of traits that the player can have.
 	static const int PLAYER_TRAIT_COUNT = 2;
 
-	/**
-	 * An array containing the character's traits.
-	 */
-	PLAYER_TRAIT m_traits[PLAYER_TRAIT_COUNT];
+	// An array containing the character's traits.
+	std::array<PLAYER_TRAIT, PLAYER_TRAIT_COUNT> m_traits;
 
-	/**
-	 * The player's class.
-	 */
+	// The player's class.
 	ePLAYER_CLASS m_class;
 
-	/**
-	 * The sprite for the player's aim cross hair.
-	 */
+	// The sprite for the player's aim cross hair.
 	sf::Sprite m_aimSprite;
 
-	/**
-	 * The time since the player's last attack.
-	 */
+	// The time since the player's last attack.
 	float m_attackDelta;
 
-	/**
-	 * The time since the player last took damage.
-	 */
+	// The time since the player last took damage.
 	float m_damageDelta;
 
-	/**
-	 * The time since the last mana regeneration.
-	 */
+	// The time since the last mana regeneration.
 	float m_manaDelta;
 
-	/**
-	 * Is the player attacking.
-	 */
+	// Is the player attacking.
 	bool m_isAttacking;
 
-	/**
-	 * Can the player take damage.
-	 */
+	// Can the player take damage.
 	bool m_canTakeDamage;
 
-	/**
-	* The number of stat points the entities has to distribute.
-	*/
+	// The number of stat points the entities has to distribute.
 	int m_statPoints;
 
-	/**
-	 * The ui texture and sprite
-	 */
-	int m_uiTextureID;
-
-	/**
-	 * The ID of the player's projectile texture.
-	 */
-	int m_projectileTextureID;
-
-
+	// The ui texture and sprite
+	std::string m_uiTextureID;
+	// The ID of the player's projectile texture.
+	std::string m_projectileTextureID;
 };
 #endif

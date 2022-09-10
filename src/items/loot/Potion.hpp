@@ -6,6 +6,8 @@
 
 #include <unordered_map>
 
+//fwd
+class Scene;
 
 class Potion : public Item
 {
@@ -13,7 +15,7 @@ public:
 	/**
 	* constructor.
 	*/
-	explicit Potion();
+	explicit Potion(const Scene& scene);
 
 	/**
 	 * Gets the attack value of the potion.

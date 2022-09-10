@@ -1,8 +1,7 @@
 //#include "PCH.hpp"
 #include "items/loot/Heart.hpp"
-#include "core/manager/TextureManager.hpp"
 #include "utils/MathUtils.hpp"
-// Default constructor.
+
 Heart::Heart()
 {
 	// Set health value.

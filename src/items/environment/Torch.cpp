@@ -1,9 +1,7 @@
 //#include "PCH.hpp"
 #include "items/environment/Torch.hpp"
-#include "core/manager/TextureManager.hpp"
 #include "utils/MathUtils.hpp"
 
-// Default constructor.
 Torch::Torch() :
 m_brightness(1.f)
 {

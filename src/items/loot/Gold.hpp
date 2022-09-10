@@ -5,13 +5,16 @@
 
 #include <unordered_map>
 
+//fwd
+class Scene;
+
 class Gold : public Item
 {
 public:
 	/**
 	 * constructor.
 	 */
-	explicit Gold();
+	explicit Gold(const Scene& scene);
 
 	/**
 	 * Gets the amount of gold this pickup has.

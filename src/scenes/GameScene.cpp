@@ -10,7 +10,7 @@
 #include <sstream>
 
 //it is old?
-#include "core/manager/TextureManager.hpp"
+//#include "core/manager/TextureManager.hpp"
 
 
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
@@ -30,6 +30,7 @@ GameScene::GameScene(const Game& game)
 , m_goalString("")
 , m_activeGoal(false)
 , m_level(getGame().getScreenSize(), *this)
+, m_player(*this)
 {
     // Define the game views.
     m_views[static_cast<int>(eVIEW::MAIN)] = getGame().getDefaultView();
@@ -118,7 +119,7 @@ void GameScene::LoadUI()
     m_manaBarSprite->setOrigin(sf::Vector2f(barTextureOrigin.x, barTextureOrigin.y));
 
     m_playerUiSprite = std::make_shared<sf::Sprite>();
-    m_playerUiSprite->setTexture(TextureManager::GetTexture(m_player.getUiTextureID()));
+    m_playerUiSprite->setTexture(getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_player.getUiTextureID()));
     m_playerUiSprite->setPosition(sf::Vector2f(45.f, 45.f));
     m_playerUiSprite->setOrigin(sf::Vector2f(30.f, 30.f));
     m_uiSprites.push_back(m_playerUiSprite);
@@ -218,31 +219,23 @@ void GameScene::afterLoad(bool isLoaded)
     if (isLoaded)
     {
         m_music.play();
-
         // Generate a level.
         GenerateLevel();
-
         // Builds the light grid.
         ConstructLightGrid();
-
         // Change a selection of random tiles to the cracked tile sprite.
         SpawnRandomTiles(eTILE::FLOOR_ALT, 15);
-
     }
 }
-
 
 void GameScene::ReSpawnLevel()
 {
     // Clear all current items.
     m_items.clear();
-
     // Clear all current enemies.
     m_enemies.clear();
-
     // Generate a new room.
     GenerateLevel();
-
     // Set the key as not collected.
     m_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
 }
@@ -261,24 +254,19 @@ void GameScene::update(float timeDelta)
     {
         // update the player.
         m_player.update(timeDelta, m_level);
-
         // Store the player position as it's used many times.
         sf::Vector2f playerPosition = m_player.getPosition();
-
         int playerDirection = m_player.getCurrentTextureIndex() % 4;
-
         // Move the audio listener to the players location.
         sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
-
         // If the player is attacking create a projectile.
         if (m_player.IsAttacking())
         {
             if (m_player.GetMana() >= 2)
             {
                 sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
-                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(TextureManager::GetTexture(m_player.getProjectileTextureID()), playerPosition, m_screenCenter, target);
+                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_player.getProjectileTextureID()), playerPosition, m_screenCenter, target);
                 m_playerProjectiles.push_back(std::move(proj));
-
                 // Reduce player mana.
                 m_player.SetMana(m_player.GetMana() - 2);
             }
@@ -286,16 +274,12 @@ void GameScene::update(float timeDelta)
 
         // update all items.
         UpdateItems(playerPosition);
-
         // update level light.
         UpdateLight(playerPosition, playerDirection);
-
         // update all enemies.
         UpdateEnemies(playerPosition, timeDelta);
-
         // update all projectiles.
         UpdateProjectiles(timeDelta);
-
         // Find which torch is nearest the player.
         auto torches = m_level.GetTorches();
 
@@ -896,11 +880,11 @@ void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
     switch (itemType)
     {
     case eITEM::POTION:
-        item = std::make_unique<Potion>();
+        item = std::make_unique<Potion>(*this);
         break;
 
     case eITEM::GOLD:
-        item = std::make_unique<Gold>();
+        item = std::make_unique<Gold>(*this);
         break;
 
     case eITEM::GEM:

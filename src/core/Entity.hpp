@@ -3,6 +3,7 @@
 
 #include "core/Object.hpp"
 
+#include <array>
 
 
 // Animation states.
@@ -114,7 +115,7 @@ protected:
 	/**
 	 * A vector of all texture IDs.
 	 */
-	int m_textureIDs[static_cast<int>(eANIMATION_STATE::COUNT)];
+	std::array<int, static_cast<int>(eANIMATION_STATE::COUNT)> m_textureIDs;
 
 	/**
 	 * The index of the current texture.

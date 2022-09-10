@@ -2,7 +2,7 @@
 #include "items/bullet/Projectile.hpp"
 
 // Default constructor.
-Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target)
+Projectile::Projectile(const sf::Texture& texture, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target)
 {
 	// Create the sprite.
 	setSprite(texture, false);

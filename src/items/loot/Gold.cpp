@@ -1,10 +1,11 @@
 //#include "PCH.hpp"
 #include "items/loot/Gold.hpp"
-#include "core/manager/TextureManager.hpp"
+#include "core/Scene.hpp"
+
 #include "utils/MathUtils.hpp"
 
 
-Gold::Gold()
+Gold::Gold(const Scene& scene)
 {
 	// Randomly generate the value of the pickup.
 	this->goldValue = Random(5, 25);
@@ -12,15 +13,15 @@ Gold::Gold()
 	// Choose a sprite based on the gold value.
 	if (this->goldValue < 9)
 	{
-		this->setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_small.png")), false, 8, 12);
+		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gold_small"), false, 8, 12);
 	}
 	else if (this->goldValue >= 16)
 	{
-		this->setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_large.png")), false, 8, 12);
+		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gold_large"), false, 8, 12);
 	}
 	else
 	{
-		this->setSprite(TextureManager::GetTexture(TextureManager::AddTexture("resources/loot/gold/spr_pickup_gold_medium.png")), false, 8, 12);
+		setSprite(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_pickup_gold_medium"), false, 8, 12);
 	}
 
 	// Set the item type.

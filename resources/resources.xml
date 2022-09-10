@@ -54,12 +54,18 @@
 	<Texture file_name = "ui/spr_stamina_ui.png" />
 	<Texture file_name = "ui/spr_stamina_ui_alt.png" />
 
-	
+	<Texture file_name = "loot/gold/spr_pickup_gold_small.png" />
+	<Texture file_name = "loot/gold/spr_pickup_gold_large.png" />
+	<Texture file_name = "loot/gold/spr_pickup_gold_medium.png" />
+	<Texture file_name = "loot/potions/spr_potion_attack.png" />
+	<Texture file_name = "loot/potions/spr_potion_defense.png" />
+	<Texture file_name = "loot/potions/spr_potion_strength.png" />
+	<Texture file_name = "loot/potions/spr_potion_dexterity.png" />
+	<Texture file_name = "loot/potions/spr_potion_stamina.png" />
 	
 	<!--   
-	getResourceManager().get<NResurceManagement::EResourceType::Texture>("")	  
+	getResourceManager().get<NResurceManagement::EResourceType::Texture>("")
 	-->
-	
 
     <Sound file_name = "sounds/snd_fire.wav" />
     <Sound file_name = "sounds/snd_enemy_dead.wav" />

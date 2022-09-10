@@ -1,18 +1,22 @@
 //#include "PCH.hpp"
 #include "characters/Player.hpp"
-#include "core/manager/TextureManager.hpp"
+#include "core/Scene.hpp"
 #include "utils/MathUtils.hpp"
 
+//old
+#include "core/manager/TextureManager.hpp"
+
+
 // Constructor.
-Player::Player() :
-m_attackDelta(0.f),
-m_damageDelta(0.f),
-m_manaDelta(0.f),
-m_isAttacking(false),
-m_canTakeDamage(true),
-m_statPoints(0),
-m_uiTextureID(-1),
-m_projectileTextureID(-1)
+Player::Player(const Scene& scene)
+: m_attackDelta(0.f)
+, m_damageDelta(0.f)
+, m_manaDelta(0.f)
+, m_isAttacking(false)
+, m_canTakeDamage(true)
+, m_statPoints(0)
+, m_uiTextureID("")
+, m_projectileTextureID("")
 {
 	// Generate a random class.
 	m_class = Random(ePLAYER_CLASS::COUNT);
@@ -24,21 +28,25 @@ m_projectileTextureID(-1)
 	case ePLAYER_CLASS::WARRIOR:
 		m_strength += Random(5, 10);
 		className = "warrior";
+		m_projectileTextureID = "resources/projectiles/spr_sword.png";
 		break;
 
 	case ePLAYER_CLASS::MAGE:
 		m_defense = Random(5, 10);
 		className = "mage";
+		m_projectileTextureID = "resources/projectiles/spr_magic_ball.png";
 		break;
 
 	case ePLAYER_CLASS::ARCHER:
 		m_dexterity = Random(5, 10);
 		className = "archer";
+		m_projectileTextureID = "resources/projectiles/spr_arrow.png";
 		break;
 
 	case ePLAYER_CLASS::THIEF:
 		m_stamina = Random(5, 10);
 		className = "thief";
+		m_projectileTextureID = "resources/projectiles/spr_dagger.png";
 		break;
 	}
 
@@ -53,25 +61,11 @@ m_projectileTextureID(-1)
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_" + className + "_idle_left.png");
 
 	// Load the correct projectile texture.
-	switch (m_class)
-	{
-	case ePLAYER_CLASS::ARCHER:
-		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_arrow.png");
-		break;
-	case ePLAYER_CLASS::MAGE:
-		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_magic_ball.png");
-		break;
-	case ePLAYER_CLASS::THIEF:
-		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_dagger.png");
-		break;
-	case ePLAYER_CLASS::WARRIOR:
-		m_projectileTextureID = TextureManager::AddTexture("resources/projectiles/spr_sword.png");
-		break;
-	}
-
+	scene.getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
 
 	// Initialize the player ui texture and sprite.
-    m_uiTextureID = TextureManager::AddTexture("resources/ui/spr_" + className + "_ui.png");
+    m_uiTextureID = "resources/ui/spr_" + className + "_ui.png";
+	scene.getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
 
 	// Set initial sprite.
 	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
@@ -399,12 +393,12 @@ void Player::SetHealth(int healthValue)
 	}
 }
 
-int Player::getUiTextureID()
+const std::string Player::getUiTextureID() const
 {
 	return m_uiTextureID;
 }
 
-int Player::getProjectileTextureID()
+const std::string Player::getProjectileTextureID() const
 {
 	return m_projectileTextureID;
 }

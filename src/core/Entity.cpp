@@ -3,7 +3,6 @@
 #include "core/manager/TextureManager.hpp"
 
 
-// Default constructor.
 Entity::Entity() :
 m_currentTextureIndex(static_cast<int>(eANIMATION_STATE::WALK_DOWN)),
 m_health(0),
