@@ -8,11 +8,6 @@
 <Resurces>
 	<Font file_name = "fonts/ADDSBP__.TTF" id = "font"/>
 
-	<Texture file_name = "tiles/spr_tile_wall_entrance.png" />
-	<Texture file_name = "tiles/spr_tile_door_locked.png" />
-	<Texture file_name = "tiles/spr_tile_door_unlocked.png" />
-
-	<!-- tile type to level -->
 	<Texture file_name = "tiles/spr_tile_floor_alt.png" />
 	<Texture file_name = "tiles/spr_tile_floor.png"/>
 	<Texture file_name = "tiles/spr_tile_wall_top.png" />
@@ -41,6 +36,29 @@
 	<Texture file_name = "loot/gem/spr_pickup_gem.png" />
     <Texture file_name = "loot/key/spr_pickup_key.png" />
     <Texture file_name = "loot/heart/spr_pickup_heart.png" />
+
+	<Texture file_name = "ui/spr_bar_outline.png" />
+	<Texture file_name = "ui/spr_health_bar.png" />
+	<Texture file_name = "ui/spr_mana_bar.png" />
+	<Texture file_name = "ui/spr_gem_ui.png" />
+	<Texture file_name = "ui/spr_coin_ui.png" />
+	<Texture file_name = "ui/spr_key_ui.png" />
+	<Texture file_name = "ui/spr_attack_ui.png" />
+	<Texture file_name = "ui/spr_attack_ui_alt.png" />
+	<Texture file_name = "ui/spr_defense_ui.png" />
+	<Texture file_name = "ui/spr_defense_ui_alt.png" />
+	<Texture file_name = "ui/spr_strength_ui.png" />
+	<Texture file_name = "ui/spr_strength_ui_alt.png" />
+	<Texture file_name = "ui/spr_dexterity_ui.png" />
+	<Texture file_name = "ui/spr_dexterity_ui_alt.png" />
+	<Texture file_name = "ui/spr_stamina_ui.png" />
+	<Texture file_name = "ui/spr_stamina_ui_alt.png" />
+
+	
+	
+	<!--   
+	getResourceManager().get<NResurceManagement::EResourceType::Texture>("")	  
+	-->
 	
 
     <Sound file_name = "sounds/snd_fire.wav" />
