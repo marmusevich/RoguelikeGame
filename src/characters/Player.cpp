@@ -20,12 +20,6 @@ Player::Player(const Scene& scene)
 , m_uiTextureID("")
 , m_projectileTextureID("")
 {
-
-}
-
-
-void Player::initResources()
-{
 	// Generate a random class.
 	m_class = Random(ePLAYER_CLASS::COUNT);
 	std::string className;
@@ -287,9 +281,9 @@ void Player::SetRandomTraits()
 }
 
 // Return the players traits.
-PLAYER_TRAIT* Player::GetTraits()
+const Player::tTraits& Player::GetTraits() const
 {
-	return &m_traits[0];
+	return m_traits;
 }
 
 // Returns the number of traits the player has.
@@ -299,7 +293,7 @@ int Player::GetTraitCount() const
 }
 
 // Returns a reference to the player's aim sprite.
-sf::Sprite& Player::GetAimSprite()
+const sf::Sprite& Player::GetAimSprite() const
 {
 	return m_aimSprite;
 }

@@ -64,8 +64,8 @@ void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
 	level.ResetNodes();
 
 	// Store the start and goal nodes.
-	Tile* startNode = level.GetTile(m_position);
-	Tile* goalNode = level.GetTile(playerPosition);
+	auto* startNode = level.GetTile(m_position);
+	auto* goalNode = level.GetTile(playerPosition);
 
 	// Check we have a valid path to find. If not we can just end the function as there's no path to find.
 	if (startNode == goalNode)
@@ -83,7 +83,7 @@ void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
 		for (int j = 0; j < level.GetSize().y; j++)
 		{
 			int rowOffset, heightOffset;
-			Tile* node = level.GetTile(i, j);
+			auto node = level.GetTile(i, j); // TODO NOT CHEKED
 
 			heightOffset = abs(node->rowIndex - goalNode->rowIndex);
 			rowOffset = abs(node->columnIndex - goalNode->columnIndex);

@@ -6,6 +6,7 @@
 
 #include <array>
 #include <unordered_map>
+#include <optional>
 
 //fwd
 class Scene;
@@ -49,7 +50,8 @@ static int const GRID_HEIGHT = 19;
 static int const TILE_SIZE = 50;
 
 // The level tile type.
-struct Tile {
+struct Tile 
+{
 	eTILE type;							// The type of tile this is.
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
@@ -58,6 +60,17 @@ struct Tile {
 	int G;								// Movement cost. (Total of entire path)
 	int F;								// Estimated cost for full path. (G + H)
 	Tile* parentNode;					// Node to reach this node.
+
+
+	friend inline bool operator==(const Tile& lhs, const Tile& rhs)
+	{
+		return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
+	}
+	friend inline bool operator!=(const Tile& lhs, const Tile& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
 };
 
 class Level
@@ -76,7 +89,7 @@ public:
 	 * @param rowIndex The tile's row index.
 	 * @return True if the given tile is solid.
 	 */
-	bool IsSolid(int columnIndex, int rowIndex);
+	bool IsSolid(int columnIndex, int rowIndex) const;
 
 	/**
 	 * Sets the index of a given tile in the 2D game grid.
@@ -92,7 +105,7 @@ public:
 	 * @param window The render window to draw the level to.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	void draw(sf::RenderWindow &window, float timeDelta);
+	void draw(sf::RenderWindow &window, float timeDelta) const;
 
 	/**
 	 * Gets the index of the given tile.
@@ -115,6 +128,7 @@ public:
 	* @param rowIndex The row that the tile is in.
 	* @return A pointer to the tile if valid.
 	*/
+	//const std::optional<Tile> GetTile(int columnIndex, int rowIndex) const;
 	Tile* GetTile(int columnIndex, int rowIndex);
 
 	/**
@@ -127,7 +141,7 @@ public:
 	 * Gets a vector of all torches in the level.
 	 * @return A vector of shared_ptrs containing all torches in the level.
 	 */
-	std::vector<std::shared_ptr<Torch>>* GetTorches();
+	std::vector<std::shared_ptr<Torch>>& GetTorches();
 
 	/**
 	 * Checks if a given tile is valid.
@@ -135,7 +149,7 @@ public:
 	 * @param rowIndex The column that the row is in.
 	 * @return True if the tile is valid.
 	 */
-	bool TileIsValid(int columnIndex, int rowIndex);
+	bool TileIsValid(int columnIndex, int rowIndex) const;
 
 	/**
 	 * Sets the overlay color of the level tiles.
@@ -167,14 +181,14 @@ public:
 	 * @param rowIndex The column that the row is in.
 	 * @return The position of the tile if valid.
 	 */
-	sf::Vector2f GetActualTileLocation(int columnIndex, int rowIndex);
+	sf::Vector2f GetActualTileLocation(int columnIndex, int rowIndex) const;
 
 	/**
 	* Returns a valid spawn location from the current room.
 	* The position returned is relative to the game window.
 	* @return A suitable spawn location within the room.
 	*/
-	sf::Vector2f GetRandomSpawnLocation();
+	sf::Vector2f GetRandomSpawnLocation() const;
 
 	/**
 	 * Resets the A* data of all level tiles.
@@ -209,23 +223,20 @@ public:
 	 * @param rowIndex The column that the row is in.
 	 * @return True if the given tile is a floor tile.
 	 */
-	bool IsFloor(int columnIndex, int rowIndex);
+	bool IsFloor(int columnIndex, int rowIndex) const;
 
 	/**
 	* Return true if the given tile is a floor tile.
 	* @param tile The tile to check
 	* @return True if the given tile is a floor tile.
 	*/
-	bool IsFloor(const Tile& tile);
+	bool IsFloor(const Tile& tile) const;
 
 	/**
 	 * Returns the size of the tiles in the level.
 	 * @return The size of the tiles in the level.
 	 */
 	int GetTileSize() const;
-
-	void initResources();
-
 private:
 
 	/** 
@@ -256,7 +267,7 @@ private:
 	 * @param rowIndex The column that the row is in.
 	 * @return True if the given tile is a wall tile.
 	 */
-	bool IsWall(int columnIndex, int rowIndex);
+	bool IsWall(int columnIndex, int rowIndex) const;
 
 private:
 	/**
@@ -299,7 +310,7 @@ private:
 	 * An array containing all texture IDs of the level tiles.
 	 */
 	std::unordered_map<eTILE, std::string> m_textureMatch_WA;
-	const sf::Texture& getTextureByTileTipe_WA(const eTILE tileType);
+	const sf::Texture& getTextureByTileTipe_WA(const eTILE tileType) const;
 
 	/**
 	 * The spawn location for the current level.

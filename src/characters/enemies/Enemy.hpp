@@ -31,7 +31,7 @@ public:
 	 * @param level A reference to the level object.
 	 * @param playerPosition The position of the player within the level.
 	 */
-	void UpdatePathfinding(Level& level, sf::Vector2f playerPosition);
+	void UpdatePathfinding(/* TODO const */Level& level, sf::Vector2f playerPosition);
 
 	/**
 	 * Applies the given amount of damage to the enemy.

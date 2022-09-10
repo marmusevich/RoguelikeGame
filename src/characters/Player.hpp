@@ -25,7 +25,12 @@ class Player : public Entity
 {
 	using tBase = Entity;
 
+	// The number of traits that the player can have.
+	static const int PLAYER_TRAIT_COUNT = 2;
+
 public:
+	using tTraits = std::array<PLAYER_TRAIT, PLAYER_TRAIT_COUNT>;
+
 	explicit Player(const Scene& scene);
 
 	/**
@@ -40,7 +45,7 @@ public:
 	 * Gets the player's current traits.
 	 * @return The player's current traits.
 	 */
-	PLAYER_TRAIT* GetTraits();
+	const tTraits& GetTraits() const;
 
 	/**
 	 * Gets the number of traits the player has.
@@ -80,7 +85,7 @@ public:
 	 * Gets the player's aim sprite.
 	 * return The player's aim sprite.
 	 */
-	sf::Sprite& GetAimSprite();
+	const sf::Sprite& GetAimSprite() const;
 
 	/**
 	 * Checks if the player is currently attacking.
@@ -103,9 +108,6 @@ public:
 	const std::string getUiTextureID() const;
 	const std::string getProjectileTextureID() const;
 
-	//WA
-	void initResources();
-
 private:
 
 	/**
@@ -127,11 +129,8 @@ private:
 		COUNT
 	};
 
-	// The number of traits that the player can have.
-	static const int PLAYER_TRAIT_COUNT = 2;
-
 	// An array containing the character's traits.
-	std::array<PLAYER_TRAIT, PLAYER_TRAIT_COUNT> m_traits;
+	tTraits m_traits;
 
 	// The player's class.
 	ePLAYER_CLASS m_class;

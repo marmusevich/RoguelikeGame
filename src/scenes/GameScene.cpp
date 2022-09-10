@@ -9,9 +9,6 @@
 #include <algorithm>
 #include <sstream>
 
-//it is old?
-//#include "core/manager/TextureManager.hpp"
-
 
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
 static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies that can be spawned each room.
@@ -29,8 +26,8 @@ GameScene::GameScene(const Game& game)
 , m_killGoal(0)
 , m_goalString("")
 , m_activeGoal(false)
-, m_level(getGame().getScreenSize(), *this)
-, m_player(*this)
+, m_level(nullptr)
+, m_player(nullptr)
 {
     // Define the game views.
     m_views[static_cast<int>(eVIEW::MAIN)] = getGame().getDefaultView();
@@ -41,50 +38,15 @@ GameScene::GameScene(const Game& game)
 
 bool GameScene::beforeLoad()
 {
+
+    //must be in Scene::loadResurce()
+
     NResourceLoader::Ptr resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/resources.xml") };
     bool ret = resourceLoader != nullptr && resourceLoader->addResources(getResourceManager());
     if (!ret)
     {
         throw std::runtime_error("Doesn't load ressurce!!");
     }
-
-    m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
-
-    // Add the new tile type to level.
-    m_level.initResources();
-    m_player.initResources();
-
-    // Set torch sound.
-    m_fireSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_fire"));
-    m_fireSound.setLoop(true);
-    m_fireSound.setAttenuation(5.f);
-    m_fireSound.setMinDistance(80.f);
-    m_fireSound.play();
-    // Set enemy die sound.
-    m_enemyDieSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_enemy_dead"));
-    m_enemyDieSound.setAttenuation(5.f);
-    m_enemyDieSound.setMinDistance(80.f);
-    // Set gem pickup sound.
-    m_gemPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_gem_pickup"));
-    m_gemPickupSound.setRelativeToListener(true);
-    // Set coin pickup sound.
-    m_coinPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_coin_pickup"));
-    m_coinPickupSound.setRelativeToListener(true);
-    // Set key pickup sound.
-    m_keyPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_key_pickup"));
-    m_keyPickupSound.setRelativeToListener(true);
-    // Set player hit sound.
-    m_playerHitSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_player_hit"));
-    m_playerHitSound.setRelativeToListener(true);
-
-    // Setup the main game music.
-    const int trackIndex = Random(static_cast<int>(eMUSIC_TRACK::COUNT));
-    // Load the music track.
-    m_music.openFromFile("resources/music/msc_main_track_" + std::to_string(trackIndex) + ".wav");
-    
-    //-------------------------------------------------------------------------
-    // Initialize the UI.
-    LoadUI();
 
     return true;
 }
@@ -120,7 +82,7 @@ void GameScene::LoadUI()
     m_manaBarSprite->setOrigin(sf::Vector2f(barTextureOrigin.x, barTextureOrigin.y));
 
     m_playerUiSprite = std::make_shared<sf::Sprite>();
-    m_playerUiSprite->setTexture(getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_player.getUiTextureID()));
+    m_playerUiSprite->setTexture(getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_player->getUiTextureID()));
     m_playerUiSprite->setPosition(sf::Vector2f(45.f, 45.f));
     m_playerUiSprite->setOrigin(sf::Vector2f(30.f, 30.f));
     m_uiSprites.push_back(m_playerUiSprite);
@@ -179,11 +141,11 @@ void GameScene::LoadUI()
         m_uiSprites.push_back(m_staminaStatSprite);
 
         // Highlight player traits
-        int traitCount = m_player.GetTraitCount();
+        int traitCount = m_player->GetTraitCount();
 
         for (int i = 0; i < traitCount; ++i)
         {
-            switch (m_player.GetTraits()[i])
+            switch (m_player->GetTraits()[i])
             {
             case PLAYER_TRAIT::ATTACK:
                 m_attackStatSprite->setTexture(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_attack_ui_alt"));
@@ -217,6 +179,45 @@ void GameScene::LoadUI()
 
 void GameScene::afterLoad(bool isLoaded)
 {
+    m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
+
+    m_level = std::make_unique<Level>(getGame().getScreenSize(), *this);
+    m_player = std::make_unique<Player>(*this);
+
+
+    // Set torch sound.
+    m_fireSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_fire"));
+    m_fireSound.setLoop(true);
+    m_fireSound.setAttenuation(5.f);
+    m_fireSound.setMinDistance(80.f);
+    m_fireSound.play();
+    // Set enemy die sound.
+    m_enemyDieSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_enemy_dead"));
+    m_enemyDieSound.setAttenuation(5.f);
+    m_enemyDieSound.setMinDistance(80.f);
+    // Set gem pickup sound.
+    m_gemPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_gem_pickup"));
+    m_gemPickupSound.setRelativeToListener(true);
+    // Set coin pickup sound.
+    m_coinPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_coin_pickup"));
+    m_coinPickupSound.setRelativeToListener(true);
+    // Set key pickup sound.
+    m_keyPickupSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_key_pickup"));
+    m_keyPickupSound.setRelativeToListener(true);
+    // Set player hit sound.
+    m_playerHitSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_player_hit"));
+    m_playerHitSound.setRelativeToListener(true);
+
+    // Setup the main game music.
+    const int trackIndex = Random(static_cast<int>(eMUSIC_TRACK::COUNT));
+    // Load the music track.
+    m_music.openFromFile("resources/music/msc_main_track_" + std::to_string(trackIndex) + ".wav");
+
+    //-------------------------------------------------------------------------
+    // Initialize the UI.
+    LoadUI();
+
+
     if (isLoaded)
     {
         m_music.play();
@@ -245,31 +246,31 @@ void GameScene::ReSpawnLevel()
 void GameScene::update(float timeDelta)
 {
     // First check if the player is at the exit. If so there's no need to update anything.
-    Tile& playerTile = *m_level.GetTile(m_player.getPosition());
+    Tile* playerTile = m_level->GetTile(m_player->getPosition());
 
-    if (playerTile.type == eTILE::WALL_DOOR_UNLOCKED)
+    if (playerTile->type == eTILE::WALL_DOOR_UNLOCKED)
     {
         ReSpawnLevel();
     }
     else
     {
         // update the player.
-        m_player.update(timeDelta, m_level);
+        m_player->update(timeDelta, *m_level);
         // Store the player position as it's used many times.
-        sf::Vector2f playerPosition = m_player.getPosition();
-        int playerDirection = m_player.getCurrentTextureIndex() % 4;
+        sf::Vector2f playerPosition = m_player->getPosition();
+        int playerDirection = m_player->getCurrentTextureIndex() % 4;
         // Move the audio listener to the players location.
         sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
         // If the player is attacking create a projectile.
-        if (m_player.IsAttacking())
+        if (m_player->IsAttacking())
         {
-            if (m_player.GetMana() >= 2)
+            if (m_player->GetMana() >= 2)
             {
                 sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
-                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(*this, m_player.getProjectileTextureID(), playerPosition, m_screenCenter, target);
+                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(*this, m_player->getProjectileTextureID(), playerPosition, m_screenCenter, target);
                 m_playerProjectiles.push_back(std::move(proj));
                 // Reduce player mana.
-                m_player.SetMana(m_player.GetMana() - 2);
+                m_player->SetMana(m_player->GetMana() - 2);
             }
         }
 
@@ -282,16 +283,16 @@ void GameScene::update(float timeDelta)
         // update all projectiles.
         UpdateProjectiles(timeDelta);
         // Find which torch is nearest the player.
-        auto torches = m_level.GetTorches();
+        auto torches = m_level->GetTorches();
 
         // If there are torches.
-        if (!torches->empty())
+        if (!torches.empty())
         {
             // Store the first torch as the current closest.
-            std::shared_ptr<Torch> nearestTorch = torches->front();
+            std::shared_ptr<Torch> nearestTorch = torches.front();
             float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->getPosition());
 
-            for (std::shared_ptr<Torch> torch : *torches)
+            for (std::shared_ptr<Torch> torch : torches)
             {
                 // Get the distance to the player.
                 float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->getPosition());
@@ -305,7 +306,7 @@ void GameScene::update(float timeDelta)
         }
 
         // Check if the player has moved grid square.
-        Tile* playerCurrentTile = m_level.GetTile(playerPosition);
+        Tile* playerCurrentTile = m_level->GetTile(playerPosition);
 
         if (m_playerPreviousTile != playerCurrentTile)
         {
@@ -317,7 +318,7 @@ void GameScene::update(float timeDelta)
             {
                 if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < 300.f)
                 {
-                    enemy->UpdatePathfinding(m_level, playerPosition);
+                    enemy->UpdatePathfinding(*m_level, playerPosition);
                 }
             }
         }
@@ -354,7 +355,7 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
     window.setView(m_views[static_cast<int>(eVIEW::MAIN)]);
 
     // Draw the level.
-    m_level.draw(window, timeDelta);
+    m_level->draw(window, timeDelta);
 
     // Draw all objects.
     for (const auto& item : m_items)
@@ -375,7 +376,7 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
     }
 
     // Draw the player.
-    m_player.draw(window, timeDelta);
+    m_player->draw(window, timeDelta);
 
     // Draw level light.
     for (const sf::Sprite& sprite : m_lightGrid)
@@ -391,7 +392,7 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
     window.setView(m_views[static_cast<int>(eVIEW::UI)]);
 
     // Draw player aim.
-    window.draw(m_player.GetAimSprite());
+    window.draw(m_player->GetAimSprite());
 
     // Draw the level goal if active.
     if (m_activeGoal)
@@ -400,11 +401,11 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
     }
 
     // Draw player stats.
-    DrawString(window, std::to_string(m_player.getAttack()), sf::Vector2f(m_screenCenter.x - 210.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player.getDefense()), sf::Vector2f(m_screenCenter.x - 90.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player.getStrength()), sf::Vector2f(m_screenCenter.x + 30.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player.getDexterity()), sf::Vector2f(m_screenCenter.x + 150.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player.getStamina()), sf::Vector2f(m_screenCenter.x + 270.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getAttack()), sf::Vector2f(m_screenCenter.x - 210.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getDefense()), sf::Vector2f(m_screenCenter.x - 90.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getStrength()), sf::Vector2f(m_screenCenter.x + 30.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getDexterity()), sf::Vector2f(m_screenCenter.x + 150.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getStamina()), sf::Vector2f(m_screenCenter.x + 270.f, m_screenSize.y - 30.f), 25);
     DrawString(window, ToStringFormated("%.6i", m_scoreTotal), sf::Vector2f(m_screenCenter.x - 120.f, 40.f), 40);
     DrawString(window, ToStringFormated("%.5i", m_goldTotal), sf::Vector2f(m_screenCenter.x + 220.f, 40.f), 40);
 
@@ -415,14 +416,14 @@ void GameScene::draw(sf::RenderWindow& window, float timeDelta)
     }
 
     // Draw the current room and floor.
-    DrawString(window, ToStringFormated("Floor %d", m_level.GetFloorNumber()), sf::Vector2f(70.f, m_screenSize.y - 65.f), 25);
-    DrawString(window, ToStringFormated("Room %d", m_level.GetRoomNumber()), sf::Vector2f(70.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, ToStringFormated("Floor %d", m_level->GetFloorNumber()), sf::Vector2f(70.f, m_screenSize.y - 65.f), 25);
+    DrawString(window, ToStringFormated("Room %d", m_level->GetRoomNumber()), sf::Vector2f(70.f, m_screenSize.y - 30.f), 25);
 
     // Draw health and mana bars.
-    m_healthBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player.getMaxHealth()) * m_player.getHealth()), 8));
+    m_healthBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player->getMaxHealth()) * m_player->getHealth()), 8));
     window.draw(*m_healthBarSprite);
 
-    m_manaBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player.GetMaxMana()) * m_player.GetMana()), 8));
+    m_manaBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player->GetMaxMana()) * m_player->GetMana()), 8));
     window.draw(*m_manaBarSprite);
 
 
@@ -443,10 +444,10 @@ void GameScene::ConstructLightGrid()
     sf::IntRect levelArea;
 
     // Define the bounds of the level.
-    levelArea.left = static_cast<int>(m_level.getPosition().x);
-    levelArea.top = static_cast<int>(m_level.getPosition().y);
-    levelArea.width = m_level.GetSize().x * m_level.GetTileSize();
-    levelArea.height = m_level.GetSize().y * m_level.GetTileSize();
+    levelArea.left = static_cast<int>(m_level->getPosition().x);
+    levelArea.top = static_cast<int>(m_level->getPosition().y);
+    levelArea.width = m_level->GetSize().x * m_level->GetTileSize();
+    levelArea.height = m_level->GetSize().y * m_level->GetTileSize();
 
     int width, height, lightTotal;
 
@@ -479,7 +480,7 @@ void GameScene::ConstructLightGrid()
 void GameScene::GenerateLevel()
 {
     // Generate a new level.
-    m_level.GenerateLevel();
+    m_level->GenerateLevel();
 
     // Add a key to the level.
     SpawnItem(eITEM::KEY);
@@ -494,7 +495,7 @@ void GameScene::GenerateLevel()
     }
 
     // Moves the player to the start.
-    m_player.setPosition(m_level.SpawnLocation());
+    m_player->setPosition(m_level->SpawnLocation());
 }
 
 // Populate the level with items.
@@ -593,13 +594,13 @@ void GameScene::UpdateLight(sf::Vector2f playerPosition, int direction)
         //tileAlpha = std::min(0.0f, std::max(255.0f - distance,  255.0f));
 
         // Get all torches from the level.
-        auto torches = m_level.GetTorches();
+        auto torches = m_level->GetTorches();
 
         // If there are torches.
-        if (!torches->empty())
+        if (!torches.empty())
         {
             // update the light surrounding each torch.
-            for (std::shared_ptr<Torch> torch : *torches)
+            for (std::shared_ptr<Torch> torch : torches)
             {
                 // If the light tile is within range of the torch.
                 distance = DistanceBetweenPoints(sprite.getPosition(), torch->getPosition());
@@ -676,7 +677,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
             case eITEM::KEY:
             {
                 // Unlock the door.
-                m_level.UnlockDoor();
+                m_level->UnlockDoor();
 
                 // Play key collect sound.
                 PlaySound(m_keyPickupSound);
@@ -691,11 +692,11 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
                 // apply potion - move to other place
                 // Cast to position and get type.
                 Potion& potion = dynamic_cast<Potion&>(item);
-                m_player.setAttack(m_player.getAttack() + potion.getAttack());
-                m_player.setDefense(m_player.getDefense() + potion.getDefense());
-                m_player.setStrength(m_player.getStrength() + potion.getStrength());
-                m_player.setDexterity(m_player.getDexterity() + potion.getDexterity());
-                m_player.setStamina(m_player.getStamina() + potion.getStamina());
+                m_player->setAttack(m_player->getAttack() + potion.getAttack());
+                m_player->setDefense(m_player->getDefense() + potion.getDefense());
+                m_player->setStrength(m_player->getStrength() + potion.getStrength());
+                m_player->setDexterity(m_player->getDexterity() + potion.getDexterity());
+                m_player->setStamina(m_player->getStamina() + potion.getStamina());
             }
             break;
 
@@ -703,7 +704,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
                 // Cast to heart and get health.
                 Heart& heart = dynamic_cast<Heart&>(item);
 
-                m_player.SetHealth(m_player.getHealth() + heart.getHealth());
+                m_player->SetHealth(m_player->getHealth() + heart.getHealth());
             }
 
             // Finally, delete the object.
@@ -721,7 +722,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
     // Store player tile.
-    Tile* playerTile = m_level.GetTile(m_player.getPosition());
+    Tile* playerTile = m_level->GetTile(m_player->getPosition());
 
     auto enemyIterator = m_enemies.begin();
     while (enemyIterator != m_enemies.end())
@@ -733,7 +734,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
         Enemy& enemy = **enemyIterator;
 
         // Get the tile that the enemy is on.
-        Tile* enemyTile = m_level.GetTile(enemy.getPosition());
+        Tile* enemyTile = m_level->GetTile(enemy.getPosition());
 
         // Check for collisions with projectiles.
         auto projectilesIterator = m_playerProjectiles.begin();
@@ -743,7 +744,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
             Projectile& projectile = **projectilesIterator;
 
             // If the enemy and projectile occupy the same tile they have collided.
-            if (enemyTile == m_level.GetTile(projectile.getPosition()))
+            if (enemyTile == m_level->GetTile(projectile.getPosition()))
             {
                 // Delete the projectile.
                 projectilesIterator = m_playerProjectiles.erase(projectilesIterator);
@@ -813,9 +814,9 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
         // Check for collision with player.
         if (enemyTile == playerTile)
         {
-            if (m_player.CanTakeDamage())
+            if (m_player->CanTakeDamage())
             {
-                m_player.Damage(10);
+                m_player->Damage(10);
                 PlaySound(m_playerHitSound);
             }
         }
@@ -832,7 +833,7 @@ void GameScene::UpdateProjectiles(float timeDelta)
         Projectile& projectile = **projectileIterator;
 
         // Get the tile that the projectile is on.
-        eTILE projectileTileType = m_level.GetTile(projectile.getPosition())->type;
+        eTILE projectileTileType = m_level->GetTile(projectile.getPosition())->type;
 
         // If the tile the projectile is on is not floor, delete it.
         if ((projectileTileType != eTILE::FLOOR) && (projectileTileType != eTILE::FLOOR_ALT))
@@ -875,7 +876,7 @@ void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
     if ((position.x >= 0.f) || (position.y >= 0.f))
         spawnLocation = position;
     else
-        spawnLocation = m_level.GetRandomSpawnLocation();
+        spawnLocation = m_level->GetRandomSpawnLocation();
 
     // Check which type of object is being spawned.
     switch (itemType)
@@ -921,7 +922,7 @@ void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
     if ((position.x >= 0.f) || (position.y >= 0.f))
         spawnLocation = position;
     else
-        spawnLocation = m_level.GetRandomSpawnLocation();
+        spawnLocation = m_level->GetRandomSpawnLocation();
 
     // Create the enemy.
     std::unique_ptr<Enemy> enemy;
@@ -957,7 +958,7 @@ void GameScene::SpawnRandomTiles(eTILE tileType, int count)
         int columnIndex(0), rowIndex(0);
 
         // Loop until we select a floor tile.
-        while (!m_level.IsFloor(columnIndex, rowIndex))
+        while (!m_level->IsFloor(columnIndex, rowIndex))
         {
             // Generate a random index for the row and column
             columnIndex = Random(GRID_WIDTH - 1);
@@ -965,7 +966,7 @@ void GameScene::SpawnRandomTiles(eTILE tileType, int count)
         }
 
         // Now we change the selected tile.
-        m_level.SetTile(columnIndex, rowIndex, tileType);
+        m_level->SetTile(columnIndex, rowIndex, tileType);
     }
 }
 

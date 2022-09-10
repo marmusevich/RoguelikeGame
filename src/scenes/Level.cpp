@@ -11,6 +11,7 @@ Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 , m_roomNumber(0)
 , m_spawnLocation({ 0.f, 0.f })
 , m_doorTileIndices({ 0, 0 })
+, m_torches()
 , m_textureMatch_WA(static_cast<int>(eTILE::COUNT))
 , m_scene(scene)
 {
@@ -34,10 +35,7 @@ Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 
 	// Generate a random color and apply it to the level tiles.
 	SetColor(RandomColor(100u, 201u));
-}
 
-void Level::initResources()
-{
 	m_textureMatch_WA[eTILE::FLOOR_ALT] = "spr_tile_floor_alt";
 	m_textureMatch_WA[eTILE::FLOOR] = "spr_tile_floor";
 	m_textureMatch_WA[eTILE::WALL_TOP] = "spr_tile_wall_top";
@@ -63,7 +61,7 @@ void Level::initResources()
 }
 
 // Checks if a given tile is passable
-bool Level::IsSolid(int i, int j)
+bool Level::IsSolid(int i, int j) const
 {
 	// Check that the tile is valid
 	if (TileIsValid(i, j))
@@ -139,7 +137,7 @@ int Level::GetRoomNumber() const
 }
 
 // Checks if a given tile is valid.
-bool Level::TileIsValid(int column, int row)
+bool Level::TileIsValid(int column, int row) const
 {
 	bool validColumn, validRow;
 
@@ -168,15 +166,25 @@ Tile* Level::GetTile(sf::Vector2f position)
 	tileColumn = static_cast<int>(position.x) / TILE_SIZE;
 	tileRow = static_cast<int>(position.y) / TILE_SIZE;
 
-	return &m_grid[tileColumn][tileRow];
+	return &(m_grid[tileColumn][tileRow]);
 }
 
-// Returns a pointer to the tile at the given index.
+//const std::optional<Tile> Level::GetTile(int columnIndex, int rowIndex) const
+//{
+//	if (TileIsValid(columnIndex, rowIndex))
+//	{
+//		return m_grid[columnIndex][rowIndex];
+//	}
+//	else
+//	{
+//		return {};
+//	}
+//}
 Tile* Level::GetTile(int columnIndex, int rowIndex)
 {
 	if (TileIsValid(columnIndex, rowIndex))
 	{
-		return &m_grid[columnIndex][rowIndex];
+		return &( m_grid[columnIndex][rowIndex]);
 	}
 	else
 	{
@@ -185,7 +193,7 @@ Tile* Level::GetTile(int columnIndex, int rowIndex)
 }
 
 // Gets the actual location of a tile in the level.
-sf::Vector2f Level::GetActualTileLocation(int columnIndex, int rowIndex)
+sf::Vector2f Level::GetActualTileLocation(int columnIndex, int rowIndex) const
 {
 	sf::Vector2f location;
 
@@ -196,7 +204,7 @@ sf::Vector2f Level::GetActualTileLocation(int columnIndex, int rowIndex)
 }
 
 // Returns a valid spawn location from the currently loaded level.
-sf::Vector2f Level::GetRandomSpawnLocation()
+sf::Vector2f Level::GetRandomSpawnLocation() const
 {
 	// Declare the variables we need.
 	int rowIndex(0), columnIndex(0);
@@ -467,7 +475,7 @@ sf::Vector2f Level::SpawnLocation() const
 }
 
 // Checks if a given tile is a wall block.
-bool Level::IsWall(int i, int j)
+bool Level::IsWall(int i, int j) const
 {
 	if (TileIsValid(i, j))
 		return m_grid[i][j].type <= eTILE::WALL_INTERSECTION;
@@ -521,15 +529,15 @@ void Level::SpawnTorches(int torchCount)
 }
 
 // Return true if the given tile is a floor tile.
-bool Level::IsFloor(int columnIndex, int rowIndex)
+bool Level::IsFloor(int columnIndex, int rowIndex) const
 {
-	Tile* tile = &m_grid[columnIndex][rowIndex];
+	const Tile& tile = m_grid[columnIndex][rowIndex];
 
-	return ((tile->type == eTILE::FLOOR) || (tile->type == eTILE::FLOOR_ALT));
+	return ((tile.type == eTILE::FLOOR) || (tile.type == eTILE::FLOOR_ALT));
 }
 
 // Return true if the given tile is a floor tile.
-bool Level::IsFloor(const Tile& tile)
+bool Level::IsFloor(const Tile& tile) const
 {
 	return ((tile.type == eTILE::FLOOR) || (tile.type == eTILE::FLOOR_ALT));
 }
@@ -541,13 +549,13 @@ int Level::GetTileSize() const
 }
 
 // Gets a vector of all torches in the level.
-std::vector<std::shared_ptr<Torch>>* Level::GetTorches()
+std::vector<std::shared_ptr<Torch>>& Level::GetTorches()
 {
-	return &m_torches;
+	return m_torches;
 }
 
 // Draws the level grid to the given render window.
-void Level::draw(sf::RenderWindow& window, float timeDelta)
+void Level::draw(sf::RenderWindow& window, float timeDelta) const
 {
 	// Draw the level tiles.
 	for (int i = 0; i < GRID_WIDTH; i++)
@@ -566,7 +574,7 @@ void Level::draw(sf::RenderWindow& window, float timeDelta)
 }
 
 
-const sf::Texture& Level::getTextureByTileTipe_WA(const eTILE tileType)
+const sf::Texture& Level::getTextureByTileTipe_WA(const eTILE tileType) const
 {
 	return m_scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_textureMatch_WA.at(tileType));// throw std::out_of_range
 }

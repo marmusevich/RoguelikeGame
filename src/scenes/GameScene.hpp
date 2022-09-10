@@ -18,6 +18,8 @@
 #include <SFML/Graphics.hpp>
 
 #include <unordered_map>
+#include <memory>
+
 //#include <string>
 
 // 
@@ -166,15 +168,10 @@ private:
 	 */
 	std::vector<std::unique_ptr<Enemy>> m_enemies;
 
-	/**
-	 * The main level object. All data and functionally regarding the level lives in this class/object.
-	 */
-	Level m_level;
-
-	/**
-	 * The main player object. Only one instance of this object should be created at any one time.
-	 */
-	Player m_player;
+	// The main level object. All data and functionally regarding the level lives in this class/object.
+	std::unique_ptr<Level> m_level;
+	// The main player object. Only one instance of this object should be created at any one time.
+	std::unique_ptr<Player> m_player;
 
 	/**
 	 * A vector containing all sprites that make up the lighting grid.
