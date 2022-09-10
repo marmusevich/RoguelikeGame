@@ -108,6 +108,9 @@ public:
 	const std::string getUiTextureID() const;
 	const std::string getProjectileTextureID() const;
 
+	//WA
+	void initResources();
+
 private:
 
 	/**
@@ -163,5 +166,7 @@ private:
 	std::string m_uiTextureID;
 	// The ID of the player's projectile texture.
 	std::string m_projectileTextureID;
+
+	const Scene& m_scene;
 };
 #endif

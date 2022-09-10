@@ -51,7 +51,8 @@ bool GameScene::beforeLoad()
     m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
 
     // Add the new tile type to level.
-    m_level.initTiles();
+    m_level.initResources();
+    m_player.initResources();
 
     // Set torch sound.
     m_fireSound.setBuffer(getResourceManager().get<NResurceManagement::EResourceType::Sound>("snd_fire"));

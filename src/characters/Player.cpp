@@ -17,6 +17,13 @@ Player::Player(const Scene& scene)
 , m_statPoints(0)
 , m_uiTextureID("")
 , m_projectileTextureID("")
+, m_scene(scene)
+{
+
+}
+
+
+void Player::initResources()
 {
 	// Generate a random class.
 	m_class = Random(ePLAYER_CLASS::COUNT);
@@ -61,11 +68,11 @@ Player::Player(const Scene& scene)
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_left.png");
 
 	// Load the correct projectile texture.
-	scene.getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
+	m_scene.getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
 
 	// Initialize the player ui texture and sprite.
-    m_uiTextureID = "resources/ui/spr_" + className + "_ui.png";
-	scene.getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
+	m_uiTextureID = "resources/ui/spr_" + className + "_ui.png";
+	m_scene.getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
 
 	// Set initial sprite.
 	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
@@ -73,8 +80,7 @@ Player::Player(const Scene& scene)
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
 	// Create the player's aim sprite.
-	int textureID = TextureManager::AddTexture("resources/ui/spr_aim.png");
-	m_aimSprite.setTexture(scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_aim"));
+	m_aimSprite.setTexture(m_scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_aim"));
 	m_aimSprite.setOrigin(sf::Vector2f(16.5f, 16.5f));
 	m_aimSprite.setScale(2.f, 2.f);
 

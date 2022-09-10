@@ -38,7 +38,7 @@ Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 	SetColor(RandomColor(100u, 201u));
 }
 
-void Level::initTiles()
+void Level::initResources()
 {
 	m_textureMatch_WA[eTILE::FLOOR_ALT] = "spr_tile_floor_alt";
 	m_textureMatch_WA[eTILE::FLOOR] = "spr_tile_floor";

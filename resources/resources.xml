@@ -81,6 +81,44 @@
 	<Texture file_name = "projectiles/spr_magic_ball.png" />
 	<Texture file_name = "projectiles/spr_sword.png" />
 
+	<Texture file_name="enemies/goblin/spr_walk_up.png" /> 
+	<Texture file_name="enemies/goblin/spr_walk_down.png" /> 
+	<Texture file_name="enemies/goblin/spr_walk_right.png" /> 
+	<Texture file_name="enemies/goblin/spr_walk_left.png" /> 
+	<Texture file_name="enemies/goblin/spr_idle_up.png" /> 
+	<Texture file_name="enemies/goblin/spr_idle_down.png" /> 
+	<Texture file_name="enemies/goblin/spr_idle_right.png" /> 
+	<Texture file_name="enemies/goblin/spr_idle_left.png" /> 
+	<Texture file_name="enemies/slime/spr_walk_up.png" /> 
+	<Texture file_name="enemies/slime/spr_walk_down.png" /> 
+	<Texture file_name="enemies/slime/spr_walk_right.png" /> 
+	<Texture file_name="enemies/slime/spr_walk_left.png" /> 
+	<Texture file_name="enemies/slime/spr_idle_up.png" /> 
+	<Texture file_name="enemies/slime/spr_idle_down.png" /> 
+	<Texture file_name="enemies/slime/spr_idle_right.png" /> 
+	<Texture file_name="enemies/slime/spr_idle_left.png" /> 
+	<Texture file_name="enemies/skeleton/spr_walk_up.png" /> 
+	<Texture file_name="enemies/skeleton/spr_walk_down.png" /> 
+	<Texture file_name="enemies/skeleton/spr_walk_right.png" /> 
+	<Texture file_name="enemies/skeleton/spr_walk_left.png" /> 
+	<Texture file_name="enemies/skeleton/spr_idle_up.png" /> 
+	<Texture file_name="enemies/skeleton/spr_idle_down.png" /> 
+	<Texture file_name="enemies/skeleton/spr_idle_right.png" /> 
+	<Texture file_name="enemies/skeleton/spr_idle_left.png" /> 
+
+	<Texture file_name="armor/helmet/spr_idle_front.png" /> 
+	<Texture file_name="armor/helmet/spr_idle_side.png" /> 
+	<Texture file_name="armor/helmet/spr_walk_front.png" /> 
+	<Texture file_name="armor/helmet/spr_walk_side.png" /> 
+	<Texture file_name="armor/legs/spr_idle_front.png" /> 
+	<Texture file_name="armor/legs/spr_idle_side.png" /> 
+	<Texture file_name="armor/legs/spr_walk_front.png" /> 
+	<Texture file_name="armor/legs/spr_walk_side.png" /> 
+	<Texture file_name="armor/torso/spr_idle_front.png" /> 
+	<Texture file_name="armor/torso/spr_idle_side.png" /> 
+	<Texture file_name="armor/torso/spr_walk_front.png" /> 
+	<Texture file_name="armor/torso/spr_walk_side.png" /> 
+
     <Sound file_name = "sounds/snd_fire.wav" />
     <Sound file_name = "sounds/snd_enemy_dead.wav" />
     <Sound file_name = "sounds/snd_gem_pickup.wav" />

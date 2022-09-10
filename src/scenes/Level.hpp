@@ -224,7 +224,7 @@ public:
 	 */
 	int GetTileSize() const;
 
-	void initTiles();
+	void initResources();
 
 private:
 
