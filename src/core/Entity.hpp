@@ -3,7 +3,8 @@
 
 #include "core/Object.hpp"
 
-#include <array>
+//#include <array>
+#include <unordered_map>
 
 
 // Animation states.
@@ -19,8 +20,6 @@ enum class eANIMATION_STATE
 	IDLE_LEFT,
 	COUNT
 };
-
-
 
 class Entity : public Object
 {
@@ -111,69 +110,32 @@ public:
 	int getCurrentTextureIndex();
 
 protected:
-	/**
-	 * A vector of all texture IDs.
-	 */
-	std::array<int, static_cast<int>(eANIMATION_STATE::COUNT)> m_textureIDs;
-
-	/**
-	 * The index of the current texture.
-	 */
+	// A vector of all texture IDs.
+	//std::array<int, static_cast<int>(eANIMATION_STATE::COUNT)> m_textureIDs;
+	std::unordered_map<int, std::string> m_textureIDs;
+	// The index of the current texture.
 	int m_currentTextureIndex;
-
-	/**
-	 * The entities current health.
-	 */
+	// The entities current health.
 	int m_health;
-
-	/**
-	 * The entities maximum health.
-	 */
+	// The entities maximum health.
 	int m_maxHealth;
-
-	/**
-	 * The entities current mana.
-	 */
+	// The entities current mana.
 	int m_mana;
-
-	/**
-	 * The entities maximum mana.
-	 */
+	// The entities maximum mana.
 	int m_maxMana;
-
-	/**
-	 * The entities attack stat. Effects damage dealt.
-	 */
+	// The entities attack stat. Effects damage dealt.
 	int m_attack;
-
-	/**
-	 * The entities defense stat. Effects damage taken.
-	 */
+	// The entities defense stat. Effects damage taken.
 	int m_defense;
-
-	/**
-	 * The entities strength. Effects damage dealt.
-	 */
+	// The entities strength. Effects damage dealt.
 	int m_strength;
-
-	/**
-	 * The entities dexterity. Effects movement speed.
-	 */
+	// The entities dexterity. Effects movement speed.
 	int m_dexterity;
-
-	/**
-	 * The entities stamina. Effects health.
-	 */
+	// The entities stamina. Effects health.
 	int m_stamina;
-
-	/**
-	 * The entities movement speed.
-	 */
+	// The entities movement speed.
 	int m_speed;
-
-	/**
-	 * The entities current velocity.
-	 */
+	// The entities current velocity.
 	sf::Vector2f m_velocity;
 };
 #endif

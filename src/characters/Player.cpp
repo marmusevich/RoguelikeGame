@@ -3,10 +3,7 @@
 #include "utils/MathUtils.hpp"
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
-
-//old
-#include "core/manager/TextureManager.hpp"
-
+#include "core/resourceLoader/cResourceLoaderBuilder.hpp"
 
 // Constructor.
 Player::Player(const Scene& scene)
@@ -52,15 +49,23 @@ Player::Player(const Scene& scene)
 		break;
 	}
 
-	// Load textures.
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_up.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_down.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_right.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_walk_left.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_up.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_down.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_right.png");
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("resources/players/" + className + "/spr_idle_left.png");
+	NResourceLoader::Ptr resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/players/" + className + "/resources.xml") };
+	//WA  const_cast
+	if (!(resourceLoader != nullptr 
+		&& resourceLoader->addResources(const_cast<NResurceManagement::ResourceManager&>(getResourceManager()))
+		))
+	{
+		throw std::runtime_error("Doesn't load ressurce!!");
+	}
+
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = "spr_walk_up";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = "spr_walk_down";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = "spr_walk_right";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = "spr_walk_left";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = "spr_idle_up";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = "spr_idle_down";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = "spr_idle_right";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "spr_idle_left";
 
 	// Load the correct projectile texture.
 	getResourceManager().mTexture->loadFromFile(m_projectileTextureID, m_projectileTextureID);
@@ -70,7 +75,7 @@ Player::Player(const Scene& scene)
 	getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
 
 	// Set initial sprite.
-	setSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
 	m_currentTextureIndex = static_cast<int>(eANIMATION_STATE::WALK_UP);
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
@@ -176,7 +181,7 @@ void Player::update(float timeDelta, Level& level)
 	if (m_currentTextureIndex != static_cast<int>(animState))
 	{
 		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+		m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 	}
 
 	// set animation speed
@@ -189,7 +194,7 @@ void Player::update(float timeDelta, Level& level)
 			// In our enum we have 4 walking sprites followed by 4 idle sprites.
 			// Given this, we can simply add 4 to a walking sprite to get its idle counterpart.
 			m_currentTextureIndex += 4;
-			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+			m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Stop movement animations.
 			setAnimated(false);
@@ -202,7 +207,7 @@ void Player::update(float timeDelta, Level& level)
 		{
 			// update sprite to walking version.
 			//m_currentTextureIndex -= 4;
-			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+			m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Start movement animations.
 			setAnimated(true);

@@ -178,10 +178,6 @@
     <ClInclude Include="src\items\bullet\Projectile.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\manager\TextureManager.hpp" />
-    <ClCompile Include="src\core\manager\TextureManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\scenes\GameScene.hpp" />
     <ClCompile Include="src\scenes\GameScene.cpp" />
     <ClInclude Include="src\scenes\Level.hpp" />

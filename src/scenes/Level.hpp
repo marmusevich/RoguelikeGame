@@ -11,7 +11,6 @@
 //fwd
 class Scene;
 
-
 // Tiles.
 enum class eTILE 
 {
@@ -41,7 +40,6 @@ enum class eTILE
 	COUNT
 };
 
-
 // Constants for the game grid size.
 static int const GRID_WIDTH = 19;
 static int const GRID_HEIGHT = 19;
@@ -61,7 +59,6 @@ struct Tile
 	int F;								// Estimated cost for full path. (G + H)
 	Tile* parentNode;					// Node to reach this node.
 
-
 	friend inline bool operator==(const Tile& lhs, const Tile& rhs)
 	{
 		return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
@@ -70,7 +67,6 @@ struct Tile
 	{
 		return !(lhs == rhs);
 	}
-
 };
 
 class Level

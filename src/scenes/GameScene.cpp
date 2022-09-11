@@ -38,9 +38,7 @@ GameScene::GameScene(const Game& game)
 
 bool GameScene::beforeLoad()
 {
-
     //must be in Scene::loadResurce()
-
     NResourceLoader::Ptr resourceLoader{ NResourceLoader::getXmlLoaderFromFile("resources/resources.xml") };
     bool ret = resourceLoader != nullptr && resourceLoader->addResources(getResourceManager());
     if (!ret)

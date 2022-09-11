@@ -3,12 +3,9 @@
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
 
-//old
-#include "core/manager/TextureManager.hpp"
-
-
 Entity::Entity(const Scene& scene)
 : tBase(scene)
+, m_textureIDs(static_cast<int>(eANIMATION_STATE::COUNT) )
 , m_currentTextureIndex(static_cast<int>(eANIMATION_STATE::WALK_DOWN))
 , m_health(0)
 , m_maxHealth(0)
@@ -86,7 +83,7 @@ void Entity::update(float timeDelta)
 	if (m_currentTextureIndex != static_cast<int>(animState))
 	{
 		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+		m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 	}
 }
 

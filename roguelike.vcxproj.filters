@@ -118,12 +118,6 @@
     <ClCompile Include="src\core\Scene.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClInclude Include="src\core\manager\TextureManager.hpp">
-      <Filter>Core\Manager Classes\__old to be remove</Filter>
-    </ClInclude>
-    <ClCompile Include="src\core\manager\TextureManager.cpp">
-      <Filter>Core\Manager Classes\__old to be remove</Filter>
-    </ClCompile>
     <ClInclude Include="src\utils\Util.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -215,9 +209,6 @@
     </Filter>
     <Filter Include="delivery_to_move_other_prj">
       <UniqueIdentifier>{f6adbbd1-0490-4bda-ba13-cbf4aa4c5b1a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Manager Classes\__old to be remove">
-      <UniqueIdentifier>{82f40ecc-6052-4d9b-b5d7-5049a8743915}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Resource Loader">
       <UniqueIdentifier>{2e104d97-efc9-46b9-9948-504ec426952e}</UniqueIdentifier>
