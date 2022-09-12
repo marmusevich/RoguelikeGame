@@ -15,8 +15,6 @@ Enemy::Enemy(const Scene& scene)
 	m_strength = Random(6, 10);
 	m_dexterity = Random(6, 10);
 	m_stamina = Random(6, 10);
-
-	// Set speed.
 	m_speed = Random(151, 200);;
 }
 
@@ -26,7 +24,7 @@ void Enemy::update(float timeDelta)
 	// Move towards current target location.
 	if (!m_targetPositions.empty())
 	{
-		sf::Vector2f targetLocation = m_targetPositions.front();
+		const sf::Vector2f targetLocation{ m_targetPositions.front() };
 		m_velocity = sf::Vector2f(targetLocation.x - m_position.x, targetLocation.y - m_position.y);
 
 		if (abs(m_velocity.x) < 10.f && abs(m_velocity.y) < 10.f)
@@ -35,7 +33,7 @@ void Enemy::update(float timeDelta)
 		}
 		else
 		{
-			float length = sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y);
+			const float length{ sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y) };
 			m_velocity.x /= length;
 			m_velocity.y /= length;
 
@@ -53,6 +51,10 @@ void Enemy::update(float timeDelta)
 // Recalculates the enemies path finding.
 void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
 {
+	//TODO ReFACT THIS UGLU
+	// mast be util, find from - to
+
+
 	// Create all variables.
 	std::vector<Tile*> openList;
 	std::vector<Tile*> closedList;

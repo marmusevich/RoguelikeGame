@@ -16,13 +16,9 @@ Humanoid::Humanoid(const Scene& scene)
 		COUNT
 	};
 
-
 	// Generate a humanoid type. (Skeleton or Goblin)
-	const eHUMANOID humanoidType = Random(eHUMANOID::COUNT);
 	std::string enemyName;
-
-	// Set enemy specific variables.
-	switch (humanoidType)
+	switch (static_cast<eHUMANOID>(Random(eHUMANOID::COUNT)))
 	{
 	case eHUMANOID::GOBLIN:
 		enemyName = "goblin";
@@ -34,14 +30,14 @@ Humanoid::Humanoid(const Scene& scene)
 	}
 
 	// Load textures.
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = enemyName + "_spr_walk_up";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = enemyName + "_spr_walk_down";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = enemyName + "_spr_walk_right";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = enemyName + "_spr_walk_left";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = enemyName + "_spr_idle_up";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = enemyName + "_spr_idle_down";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = enemyName + "_spr_idle_right";
-	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = enemyName + "_spr_idle_left";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = "spr_" + enemyName + "_walk_up";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = "spr_" + enemyName + "_walk_down";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = "spr_" + enemyName + "_walk_right";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = "spr_" + enemyName + "_walk_left";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = "spr_" + enemyName + "_idle_up";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = "spr_" + enemyName + "_idle_down";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = "spr_" + enemyName + "_idle_right";
+	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "spr_" + enemyName + "_idle_left";
 
 	// Set initial sprite.
 	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
@@ -49,193 +45,100 @@ Humanoid::Humanoid(const Scene& scene)
 	// Copy textures.
 	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
 	{
-		m_textures_old[i] = getTexture(m_textureIDs[i]);
+		m_textures[i] = getTexture(m_textureIDs[i]);
 	}
 
 	// Generate armor.
-	GenerateArmor();
+	generateArmor();
+}
+
+void Humanoid::setArmorTexture(const std::string& armorName, std::array<sf::RenderTexture, TEXTURE_COUNT>& armorTextures)
+{
+	// Load the default helmet textures.
+	std::unordered_map<int, std::string> textureIDs(TEXTURE_COUNT);
+	textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = "spr_" + armorName + "_walk_front";
+	textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = "spr_"+ armorName +"_walk_front";
+	textureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = "spr_" + armorName + "_walk_side";
+	textureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = "spr_" + armorName + "_walk_side";
+	textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = "spr_" + armorName + "_idle_front";
+	textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = "spr_" + armorName + "_idle_front";
+	textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = "spr_" + armorName + "_idle_side";
+	textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "spr_" + armorName + "_idle_side";
+
+	// Generate random number to determine tier.
+	sf::Color tierColor;
+	const int tierValue = Random(1, 100);
+	// Select which tier armor should be created.
+	if (tierValue < 51)
+	{
+		tierColor = sf::Color(110, 55, 28, 255);	// Bronze.
+	}
+	else if (tierValue < 86)
+	{
+		tierColor = sf::Color(209, 208, 201, 255);	// Silver.
+	}
+	else
+	{
+		tierColor = sf::Color(229, 192, 21, 255);	// Gold.
+	}
+
+	// Render helmet to armor texture.
+	for (int i = 0; i < TEXTURE_COUNT; i++)
+	{
+		// Load the default helmet texture and set its color.
+		sf::Sprite tempSprite;
+		tempSprite.setTexture(getTexture(textureIDs[i]));
+		tempSprite.setColor(tierColor);
+
+		// Flip the texture vertically.
+		const sf::Vector2u size{ armorTextures[i].getTexture().getSize() };
+		tempSprite.setTextureRect(sf::IntRect(0, size.y, size.x, -static_cast<int>(size.y)));
+
+		// Draw the texture.
+		armorTextures[i].draw(tempSprite);
+	}
 }
 
 // Generates random armor for the humanoid.
-void Humanoid::GenerateArmor()
+void Humanoid::generateArmor()
 {
 	// Create arrays of textures for our armor, and the final versions.
-	const int textureCount = static_cast<int>(eANIMATION_STATE::COUNT);
-	sf::RenderTexture armorTextures[textureCount];
-	sf::RenderTexture finalTextures[textureCount];
-	sf::Image renderImage;
+	std::array<sf::RenderTexture, TEXTURE_COUNT> armorTextures;
+	std::array<sf::RenderTexture, TEXTURE_COUNT> finalTextures;
 
 	// Setup all render textures.
-	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
+	for (int i = 0; i < TEXTURE_COUNT; i++)
 	{
-		sf::Vector2u textureSize = m_textures_old[i].getSize();
+		const sf::Vector2u textureSize{ m_textures[i].getSize() };
 
 		armorTextures[i].create(textureSize.x, textureSize.y);
 		finalTextures[i].create(textureSize.x, textureSize.y);
 	}
 
-	// Create variables to determine what armor be created.
-	int hasHelmet(0), hasTorso(0), hasLegs(0);
-
-	hasHelmet = Random(5);
-	hasTorso = Random(5);
-	hasLegs = Random(5);
-
-	// Spawn helmet.
-	if (hasHelmet == 0)
+	// Spawn helmet if has ( one of 5).
+	if (Random(5) == 0)
 	{
-		// Load the default helmet textures.
-		std::unordered_map<int, std::string> defaultHelmetTextureIDs(static_cast<int>(eANIMATION_STATE::COUNT));
-
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = "helmet_spr_walk_front";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = "helmet_spr_walk_front";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = "helmet_spr_walk_side";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = "helmet_spr_walk_side";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = "helmet_spr_idle_front";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = "helmet_spr_idle_front";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = "helmet_spr_idle_side";
-		defaultHelmetTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "helmet_spr_idle_side";
-
-		// Generate random number to determine tier.
-		sf::Color tierColor;
-		const int tierValue = Random(1, 100);
-
-		// Select which tier armor should be created.
-		if (tierValue < 51)
-		{
-			tierColor = sf::Color(110, 55, 28, 255);	// Bronze.
-		}
-		else if (tierValue < 86)
-		{
-			tierColor = sf::Color(209, 208, 201, 255);	// Silver.
-		}
-		else
-		{
-			tierColor = sf::Color(229, 192, 21, 255);	// Gold.
-		}
-
-		// Render helmet to armor texture.
-		for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
-		{
-			// Load the default helmet texture and set its color.
-			sf::Sprite tempSprite;
-			tempSprite.setTexture(getTexture(defaultHelmetTextureIDs[i]));
-			tempSprite.setColor(tierColor);
-
-			// Flip the texture vertically.
-			sf::Vector2u size = armorTextures[i].getTexture().getSize();
-			tempSprite.setTextureRect(sf::IntRect(0, size.y, size.x, -static_cast<int>(size.y)));
-
-			// Draw the texture.
-			armorTextures[i].draw(tempSprite);
-		}
+		setArmorTexture("helmet", armorTextures);
 	}
-
-	// Spawn torso.
-	if (hasTorso == 0)
+	// Spawn torso if has ( one of 5).
+	if (Random(5) == 0)
 	{
-		// Load the default torso textures.
-		std::unordered_map<int, std::string> defaultTorsoTextureIDs(static_cast<int>(eANIMATION_STATE::COUNT));
-
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = "torso_spr_walk_front";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = "torso_spr_walk_front";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = "torso_spr_walk_side";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = "torso_spr_walk_side";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = "torso_spr_idle_front";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = "torso_spr_idle_front";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = "torso_spr_idle_side";
-		defaultTorsoTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "torso_spr_idle_side";
-
-		// Generate random number to determine tier.
-		sf::Color tierColor;
-		const int tierValue = Random(1, 100);
-
-		// Select which tier armor should we created.
-		if (tierValue < 51)
-		{
-			tierColor = sf::Color(110, 55, 28, 255);	// Bronze.
-		}
-		else if (tierValue < 86)
-		{
-			tierColor = sf::Color(209, 208, 201, 255);	// Silver.
-		}
-		else
-		{
-			tierColor = sf::Color(229, 192, 21, 255);	// Gold.
-		}
-
-		// Render torso to armor texture.
-		for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
-		{
-			sf::Sprite tempSprite;
-			tempSprite.setTexture(getTexture(defaultTorsoTextureIDs[i]));
-			tempSprite.setColor(tierColor);
-
-			// Flip the texture vertically.
-			sf::Vector2u size = armorTextures[i].getTexture().getSize();
-			tempSprite.setTextureRect(sf::IntRect(0, size.y, size.x, -static_cast<int>(size.y)));
-
-			// Draw the texture.
-			armorTextures[i].draw(tempSprite);
-		}
+		setArmorTexture("torso", armorTextures);
 	}
-
-	// Spawn legs.
-	if (hasLegs == 0)
+	// Spawn legs if has ( one of 5).
+	if (Random(5) == 0)
 	{
-		// Load the default legs textures.
-		std::unordered_map<int, std::string> defaultLegsTextureIDs(static_cast<int>(eANIMATION_STATE::COUNT));
-
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)] = "legs_spr_walk_front";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)] = "legs_spr_walk_front";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_RIGHT)] = "legs_spr_walk_side";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::WALK_LEFT)] = "legs_spr_walk_side";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_UP)] = "legs_spr_idle_front";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_DOWN)] = "legs_spr_idle_front";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_RIGHT)] = "legs_spr_idle_side";
-		defaultLegsTextureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "legs_spr_idle_side";
-
-		// Generate random number to determine tier.
-		sf::Color tierColor;
-		const int tierValue = Random(1, 100);
-
-		// Select which tier armor should we created.
-		if (tierValue < 51)
-		{
-			tierColor = sf::Color(110, 55, 28, 255);	// Bronze.
-		}
-		else if (tierValue < 86)
-		{
-			tierColor = sf::Color(209, 208, 201, 255);	// Silver.
-		}
-		else
-		{
-			tierColor = sf::Color(229, 192, 21, 255);	// Gold.
-		}
-
-		// Render legs to armor texture.
-		for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
-		{
-			sf::Sprite tempSprite;
-			tempSprite.setTexture(getTexture(defaultLegsTextureIDs[i]));
-			tempSprite.setColor(tierColor);
-
-			// Flip the texture vertically.
-			sf::Vector2u size = armorTextures[i].getTexture().getSize();
-			tempSprite.setTextureRect(sf::IntRect(0, size.y, size.x, -static_cast<int>(size.y)));
-
-			// Draw the texture.
-			armorTextures[i].draw(tempSprite);
-		}
+		setArmorTexture("legs", armorTextures);
 	}
 
 	// Create the final textures.
-	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
+	for (int i = 0; i < TEXTURE_COUNT; i++)
 	{
-		sf::Sprite baseSprite, armorSprite;
+		sf::Sprite baseSprite;
+		sf::Sprite armorSprite;
 
 		// Draw the default texture.
-		baseSprite.setTexture(m_textures_old[i]);
+		baseSprite.setTexture(m_textures[i]);
 		finalTextures[i].draw(baseSprite);
 
 		// Draw armor on top.
@@ -243,11 +146,11 @@ void Humanoid::GenerateArmor()
 		finalTextures[i].draw(armorSprite);
 
 		// Flip the texture vertically.
-		sf::Image img = finalTextures[i].getTexture().copyToImage();
+		sf::Image img{ finalTextures[i].getTexture().copyToImage() };
 		img.flipVertically();
 
 		// Store the resulting texture.
-		m_textures_old[i].loadFromImage(img);
+		m_textures[i].loadFromImage(img);
 	}
 }
 
@@ -258,5 +161,5 @@ void Humanoid::update(float timeDelta)
 	Enemy::update(timeDelta);
 
 	// update the texture with our custom textures.
-	m_sprite.setTexture(m_textures_old[m_currentTextureIndex]);
+	m_sprite.setTexture(m_textures[m_currentTextureIndex]);
 }

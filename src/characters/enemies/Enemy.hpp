@@ -31,6 +31,8 @@ public:
 	 * @param level A reference to the level object.
 	 * @param playerPosition The position of the player within the level.
 	 */
+	//TODO !!! invert dependesy, level CONST, has to no change
+	// mast be util, find from - to
 	void UpdatePathfinding(/* TODO const */Level& level, sf::Vector2f playerPosition);
 
 	/**
@@ -46,14 +48,10 @@ public:
 	bool IsDead();
 
 protected:
-	/**
-	 * The target position of the enemy.
-	 */
+	// The target position of the enemy.
 	std::vector<sf::Vector2f> m_targetPositions;
 
-	/**
-	 * The current target of the enemy.
-	 */
+	// The current target of the enemy.
 	sf::Vector2f m_currentTarget;
 };
 #endif
