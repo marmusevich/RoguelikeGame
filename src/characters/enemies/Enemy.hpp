@@ -4,6 +4,8 @@
 #include "core/Entity.hpp"
 #include "scenes/Level.hpp"
 
+#include <list>
+
 // Enemy types.
 enum class eENEMY 
 {
@@ -49,7 +51,7 @@ public:
 
 protected:
 	// The target position of the enemy.
-	std::vector<sf::Vector2f> m_targetPositions;
+	std::list<sf::Vector2f> m_targetPositions;
 
 	// The current target of the enemy.
 	sf::Vector2f m_currentTarget;

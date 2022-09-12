@@ -5,6 +5,9 @@
 #include "core/manager/ResourceManager.hpp"
 #include "core/resourceLoader/cResourceLoaderBuilder.hpp"
 
+#include <array>
+
+
 // Constructor.
 Player::Player(const Scene& scene)
 : tBase(scene)
@@ -338,28 +341,28 @@ void Player::Damage(int damage)
 }
 
 // Checks is the given movement will result in a collision.
-bool Player::CausesCollision(sf::Vector2f movement, Level& level)
+bool Player::CausesCollision(sf::Vector2f movement, const Level& level)
 {
+	const auto STRANGE_CONST{ 14.f };
+	const sf::Vector2f newPosition = m_position + movement;
+
 	// Get the tiles that the four corners other player are overlapping with.
-	Tile* overlappingTiles[4];
-	sf::Vector2f newPosition = m_position + movement;
-
-	// Top left.
-	overlappingTiles[0] = level.GetTile(sf::Vector2f(newPosition.x - 14.f, newPosition.y - 14.f));
-
-	// Top right.
-	overlappingTiles[1] = level.GetTile(sf::Vector2f(newPosition.x + 14.f, newPosition.y - 14.f));
-
-	// Bottom left.
-	overlappingTiles[2] = level.GetTile(sf::Vector2f(newPosition.x - 14.f, newPosition.y + 14.f));
-
-	// Bottom right.
-	overlappingTiles[3] = level.GetTile(sf::Vector2f(newPosition.x + 14.f, newPosition.y + 14.f));
+	std::array<sf::Vector2f, 4> overlappingPos
+	{
+		// Top left.
+		sf::Vector2f(newPosition.x - STRANGE_CONST, newPosition.y - STRANGE_CONST),
+		// Top right.
+		sf::Vector2f(newPosition.x + STRANGE_CONST, newPosition.y - STRANGE_CONST),
+		// Bottom left.
+		sf::Vector2f(newPosition.x - STRANGE_CONST, newPosition.y + STRANGE_CONST),
+		// Bottom right.
+		sf::Vector2f(newPosition.x + STRANGE_CONST, newPosition.y + STRANGE_CONST),
+	};
 
 	// If any of the overlapping tiles are solid there was a collision.
-	for (int i = 0; i < 4; i++)
+	for (const auto p : overlappingPos)
 	{
-		if (level.IsSolid(overlappingTiles[i]->columnIndex, overlappingTiles[i]->rowIndex))
+		if (level.IsSolid(p))
 			return true;
 	}
 

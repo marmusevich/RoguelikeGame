@@ -7,7 +7,6 @@
 #include "items/bullet/Projectile.hpp"
 
 #include <string>
-//#include <array>
 
 // Player traits.
 enum class PLAYER_TRAIT 
@@ -116,7 +115,7 @@ private:
 	 * @param level A reference to the level object.
 	 * @return True if the given movement will result in a collision.
 	 */
-	bool CausesCollision(sf::Vector2f movement, Level& level);
+	bool CausesCollision(sf::Vector2f movement, const Level& level);
 
 private:
 	// Player classes.

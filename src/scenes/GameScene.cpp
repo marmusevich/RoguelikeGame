@@ -216,16 +216,12 @@ void GameScene::afterLoad(bool isLoaded)
     LoadUI();
 
 
-    if (isLoaded)
-    {
-        m_music.play();
-        // Generate a level.
-        GenerateLevel();
-        // Builds the light grid.
-        ConstructLightGrid();
-        // Change a selection of random tiles to the cracked tile sprite.
-        SpawnRandomTiles(eTILE::FLOOR_ALT, 15);
-    }
+    m_music.play();
+    // Generate a level.
+    GenerateLevel();
+
+    // Builds the light grid.
+    ConstructLightGrid();
 }
 
 void GameScene::ReSpawnLevel()
@@ -236,6 +232,7 @@ void GameScene::ReSpawnLevel()
     m_enemies.clear();
     // Generate a new room.
     GenerateLevel();
+
     // Set the key as not collected.
     m_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
 }
@@ -244,9 +241,7 @@ void GameScene::ReSpawnLevel()
 void GameScene::update(float timeDelta)
 {
     // First check if the player is at the exit. If so there's no need to update anything.
-    Tile* playerTile = m_level->GetTile(m_player->getPosition());
-
-    if (playerTile->type == eTILE::WALL_DOOR_UNLOCKED)
+    if (m_level->GetTileType(m_player->getPosition()) == eTILE::WALL_DOOR_UNLOCKED)
     {
         ReSpawnLevel();
     }
@@ -444,8 +439,8 @@ void GameScene::ConstructLightGrid()
     // Define the bounds of the level.
     levelArea.left = static_cast<int>(m_level->getPosition().x);
     levelArea.top = static_cast<int>(m_level->getPosition().y);
-    levelArea.width = m_level->GetSize().x * m_level->GetTileSize();
-    levelArea.height = m_level->GetSize().y * m_level->GetTileSize();
+    levelArea.width = m_level->getSize().x * m_level->getTileSize();
+    levelArea.height = m_level->getSize().y * m_level->getTileSize();
 
     int width, height, lightTotal;
 
@@ -493,7 +488,8 @@ void GameScene::GenerateLevel()
     }
 
     // Moves the player to the start.
-    m_player->setPosition(m_level->SpawnLocation());
+    m_player->setPosition(m_level->getPlayerSpawnLocation());
+
 }
 
 // Populate the level with items.
@@ -720,7 +716,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
     // Store player tile.
-    Tile* playerTile = m_level->GetTile(m_player->getPosition());
+    const Tile* playerTile = m_level->GetTile(m_player->getPosition());
 
     auto enemyIterator = m_enemies.begin();
     while (enemyIterator != m_enemies.end())
@@ -732,7 +728,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
         Enemy& enemy = **enemyIterator;
 
         // Get the tile that the enemy is on.
-        Tile* enemyTile = m_level->GetTile(enemy.getPosition());
+        const Tile* enemyTile = m_level->GetTile(enemy.getPosition());
 
         // Check for collisions with projectiles.
         auto projectilesIterator = m_playerProjectiles.begin();
@@ -831,7 +827,7 @@ void GameScene::UpdateProjectiles(float timeDelta)
         Projectile& projectile = **projectileIterator;
 
         // Get the tile that the projectile is on.
-        eTILE projectileTileType = m_level->GetTile(projectile.getPosition())->type;
+        eTILE projectileTileType = m_level->GetTileType(projectile.getPosition());
 
         // If the tile the projectile is on is not floor, delete it.
         if ((projectileTileType != eTILE::FLOOR) && (projectileTileType != eTILE::FLOOR_ALT))
@@ -941,31 +937,6 @@ void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
 
     // Add to list of all enemies.
     m_enemies.push_back(std::move(enemy));
-}
-
-// Spawns a given number of a given tile randomly in the level.
-void GameScene::SpawnRandomTiles(eTILE tileType, int count)
-{
-    // Declare the variables we need.
-    int rowIndex(0), columnIndex(0), tileIndex(0);
-
-    // Loop the number of tiles we need.
-    for (int i = 0; i < count; i++)
-    {
-        // Declare the variables we need.
-        int columnIndex(0), rowIndex(0);
-
-        // Loop until we select a floor tile.
-        while (!m_level->IsFloor(columnIndex, rowIndex))
-        {
-            // Generate a random index for the row and column
-            columnIndex = Random(GRID_WIDTH - 1);
-            rowIndex = Random(GRID_HEIGHT - 1);
-        }
-
-        // Now we change the selected tile.
-        m_level->SetTile(columnIndex, rowIndex, tileType);
-    }
 }
 
 // Generates a random level goal.
