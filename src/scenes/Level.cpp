@@ -528,6 +528,26 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 		int F;								// Estimated cost for full path. (G + H)
 		Tile_PF* parentNode;	// Node to reach this node.
 		//std::optional<Tile_PF> parentNode;	// Node to reach this node.
+
+
+		inline bool operator==(const Tile_PF& rhs) const
+		{
+			return columnIndex == rhs.columnIndex && rowIndex == rhs.rowIndex;
+		}
+		inline bool operator!=(const Tile_PF& rhs) const
+		{
+			return !(*this == rhs);
+		}
+
+
+		//friend inline bool operator==(const Tile_PF& lhs, const Tile_PF& rhs)
+		//{
+		//	return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
+		//}
+		//friend inline bool operator!=(const Tile_PF& lhs, const Tile_PF& rhs)
+		//{
+		//	return !(lhs == rhs);
+		//}
 	};
 
 
