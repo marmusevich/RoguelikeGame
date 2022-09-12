@@ -33,7 +33,7 @@ public:
 	 */
 	//TODO !!! invert dependesy, level CONST, has to no change
 	// mast be util, find from - to
-	void UpdatePathfinding(/* TODO const */Level& level, sf::Vector2f playerPosition);
+	void UpdatePathfinding(const Level& level, sf::Vector2f playerPosition);
 
 	/**
 	 * Applies the given amount of damage to the enemy.

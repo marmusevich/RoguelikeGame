@@ -49,7 +49,7 @@ void Enemy::update(float timeDelta)
 }
 
 // Recalculates the enemies path finding.
-void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
+void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 {
 	//TODO ReFACT THIS UGLU
 	// mast be util, find from - to
@@ -63,11 +63,24 @@ void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
 	Tile* currentNode;
 
 	// Reset all nodes.
-	level.ResetNodes();
+	//WA const_cast
+	const_cast<Level&>(level).ResetNodes();
+
+
+	auto getTileV_WA = [&level](const sf::Vector2f& position) -> Tile*
+	{
+		return const_cast<Level&>(level).GetTile(position);
+	};
+
+	auto getTile_WA = [&level](const int columnIndex, const int rowIndex) -> Tile*
+	{
+		return const_cast<Level&>(level).GetTile(columnIndex, rowIndex);
+	};
+
 
 	// Store the start and goal nodes.
-	auto* startNode = level.GetTile(m_position);
-	auto* goalNode = level.GetTile(playerPosition);
+	auto* startNode = getTileV_WA(m_position);
+	auto* goalNode = getTileV_WA(playerPosition);
 
 	// Check we have a valid path to find. If not we can just end the function as there's no path to find.
 	if (startNode == goalNode)
@@ -85,7 +98,7 @@ void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
 		for (int j = 0; j < level.GetSize().y; j++)
 		{
 			int rowOffset, heightOffset;
-			auto node = level.GetTile(i, j); // TODO NOT CHEKED
+			auto node = getTile_WA(i, j); // TODO NOT CHEKED
 
 			heightOffset = abs(node->rowIndex - goalNode->rowIndex);
 			rowOffset = abs(node->columnIndex - goalNode->columnIndex);
@@ -124,31 +137,31 @@ void Enemy::UpdatePathfinding(Level& level, sf::Vector2f playerPosition)
 		Tile* node;
 
 		// Top.
-		node = level.GetTile(currentNode->columnIndex, currentNode->rowIndex - 1);
+		node = getTile_WA(currentNode->columnIndex, currentNode->rowIndex - 1);
 		if ((node != nullptr) && (level.IsFloor(*node)))
 		{
-			adjacentTiles.push_back(level.GetTile(currentNode->columnIndex, currentNode->rowIndex - 1));
+			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex, currentNode->rowIndex - 1));
 		}
 
 		// Right.
-		node = level.GetTile(currentNode->columnIndex + 1, currentNode->rowIndex);
+		node = getTile_WA(currentNode->columnIndex + 1, currentNode->rowIndex);
 		if ((node != nullptr) && (level.IsFloor(*node)))
 		{
-			adjacentTiles.push_back(level.GetTile(currentNode->columnIndex + 1, currentNode->rowIndex));
+			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex + 1, currentNode->rowIndex));
 		}
 
 		// Bottom.
-		node = level.GetTile(currentNode->columnIndex, currentNode->rowIndex + 1);
+		node = getTile_WA(currentNode->columnIndex, currentNode->rowIndex + 1);
 		if ((node != nullptr) && (level.IsFloor(*node)))
 		{
-			adjacentTiles.push_back(level.GetTile(currentNode->columnIndex, currentNode->rowIndex + 1));
+			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex, currentNode->rowIndex + 1));
 		}
 
 		// Left.
-		node = level.GetTile(currentNode->columnIndex - 1, currentNode->rowIndex);
+		node = getTile_WA(currentNode->columnIndex - 1, currentNode->rowIndex);
 		if ((node != nullptr) && (level.IsFloor(*node)))
 		{
-			adjacentTiles.push_back(level.GetTile(currentNode->columnIndex - 1, currentNode->rowIndex));
+			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex - 1, currentNode->rowIndex));
 		}
 
 		// For all adjacent nodes.
