@@ -56,14 +56,24 @@ struct Tile
 	//int F;								// Estimated cost for full path. (G + H)
 	//Tile* parentNode;					// Node to reach this node.
 
-	friend inline bool operator==(const Tile& lhs, const Tile& rhs)
+	//friend inline bool operator==(const Tile& lhs, const Tile& rhs)
+	//{
+	//	return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
+	//}
+	//friend inline bool operator!=(const Tile& lhs, const Tile& rhs)
+	//{
+	//	return !(lhs == rhs);
+	//}
+
+	inline bool operator==(const Tile& other) const
 	{
-		return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
+		return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
 	}
-	friend inline bool operator!=(const Tile& lhs, const Tile& rhs)
+	inline bool operator!=(const Tile& other) const
 	{
-		return !(lhs == rhs);
+		return !(*this == other);
 	}
+
 };
 
 class Level
@@ -213,7 +223,7 @@ public:
 	Tile* GetTile(const int columnIndex, const int rowIndex);
 
 
-	std::list<sf::Vector2f> pathfinding(const sf::Vector2f from, const sf::Vector2f to);
+	std::list<sf::Vector2f> pathfinding(const sf::Vector2f from, const sf::Vector2f to) const;
 
 
 

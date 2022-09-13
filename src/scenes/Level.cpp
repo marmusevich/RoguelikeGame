@@ -497,7 +497,7 @@ void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 */
 
 
-std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Vector2f to)
+std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Vector2f to) const
 {
 	struct Tile_PF
 	{
@@ -530,24 +530,17 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 		//std::optional<Tile_PF> parentNode;	// Node to reach this node.
 
 
-		inline bool operator==(const Tile_PF& rhs) const
+		inline bool operator==(const Tile_PF& other) const
 		{
-			return columnIndex == rhs.columnIndex && rowIndex == rhs.rowIndex;
+			return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
 		}
-		inline bool operator!=(const Tile_PF& rhs) const
+		inline bool operator!=(const Tile_PF& other) const
 		{
-			return !(*this == rhs);
+			return !(*this == other);
 		}
 
-
-		//friend inline bool operator==(const Tile_PF& lhs, const Tile_PF& rhs)
-		//{
-		//	return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
-		//}
-		//friend inline bool operator!=(const Tile_PF& lhs, const Tile_PF& rhs)
-		//{
-		//	return !(lhs == rhs);
-		//}
+		Tile_PF&  operator=(const Tile_PF&) = default;
+		Tile_PF(const Tile_PF&) = default;
 	};
 
 
@@ -583,14 +576,12 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 
 	const Tile_PF startNode{ fromPos };
 
-
 	// Create all variables.
-	std::vector<Tile_PF/*&*/> openList;
-	std::vector<Tile_PF/*&*/> closedList;
-	std::vector<Tile_PF/*&*/> pathList;
-	
+	std::vector<Tile_PF> openList;
+	std::vector<Tile_PF> closedList;
+	std::vector<Tile_PF> pathList;
 
-	Tile_PF/*&*/ currentNode/* = startNode*/;
+	Tile_PF currentNode = startNode;
 
 	// Add the start node to the open list.
 	openList.push_back(startNode);
@@ -633,13 +624,11 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 			{
 				adjacentTiles.push_back(grid[currentNode.columnIndex + 1][currentNode.rowIndex]);
 			}
-
 			// Bottom.
 			if (IsFloor(currentNode.columnIndex, currentNode.rowIndex + 1))
 			{
 				adjacentTiles.push_back(grid[currentNode.columnIndex][currentNode.rowIndex + 1]);
 			}
-
 			// Left.
 			if (IsFloor(currentNode.columnIndex - 1, currentNode.rowIndex))
 			{
@@ -678,7 +667,7 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 					if (std::find(openList.begin(), openList.end(), node) == openList.end())
 					{
 						// Add the node to the open list.
-						openList.push_back(node);
+						//openList.push_back(node);
 
 						// Set the parent of the node to the current node.
 						node.parentNode = &currentNode;
@@ -688,6 +677,9 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 
 						// Calculate the F (total movement cost + heuristic) cost.
 						node.F = node.G + node.H;
+
+						// Add the node to the open list.
+						openList.push_back(node);
 					}
 					else
 					{
@@ -1031,6 +1023,14 @@ void Level::draw(sf::RenderWindow& window, float timeDelta) const
 	for (auto& torch : m_torches)
 	{
 		torch->draw(window, timeDelta);
+
+		sf::CircleShape shape(10);
+		shape.setFillColor(sf::Color(250, 0, 0));
+		shape.setPosition(torch->getPosition());
+		window.draw(shape);
+
+
+
 	}
 }
 

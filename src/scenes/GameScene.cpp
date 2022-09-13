@@ -309,7 +309,7 @@ void GameScene::update(float timeDelta)
             // update path finding for all enemies if within range of the player.
             for (const auto& enemy : m_enemies)
             {
-                if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < 300.f)
+                if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < 3000.f/*300.f*/)
                 {
                     enemy->UpdatePathfinding(*m_level, playerPosition);
                 }
@@ -505,14 +505,18 @@ void GameScene::PopulateLevel()
         }
     }
 
-    // Spawn enemies.
-    for (int i = 0; i < MAX_ENEMY_SPAWN_COUNT; i++)
-    {
-        if (Random())
-        {
-            SpawnEnemy(Random(eENEMY::COUNT));
-        }
-    }
+//debag only
+SpawnEnemy((eENEMY::HUMANOID));
+
+
+    //// Spawn enemies.
+    //for (int i = 0; i < MAX_ENEMY_SPAWN_COUNT; i++)
+    //{
+    //    if (Random())
+    //    {
+    //        SpawnEnemy(Random(eENEMY::COUNT));
+    //    }
+    //}
 }
 
 

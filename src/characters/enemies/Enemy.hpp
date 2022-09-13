@@ -28,6 +28,8 @@ public:
 	 */
 	virtual void update(float timeDelta) override;
 
+	virtual void draw(sf::RenderWindow& window, float timeDelta) override ;
+
 	/**
 	 * Recalculates the enemies path finding.
 	 * @param level A reference to the level object.

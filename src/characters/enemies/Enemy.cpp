@@ -45,14 +45,27 @@ void Enemy::update(float timeDelta)
 	}
 
 	// Call Entity update.
-	Entity::update(timeDelta);
+	tBase::update(timeDelta);
 }
+
+void Enemy::draw(sf::RenderWindow& window, float timeDelta)
+{
+	tBase::draw(window, timeDelta);
+
+	for(const auto p : m_targetPositions)
+	{
+		sf::CircleShape shape(10);
+		shape.setFillColor(sf::Color(100, 250, 50));
+		shape.setPosition(p);
+		window.draw(shape);
+	}
+}
+
 
 // Recalculates the enemies path finding.
 void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 {
-	//avoid const_cast
-	m_targetPositions = const_cast<Level&>( level).pathfinding(m_position, playerPosition);
+	m_targetPositions = level.pathfinding(m_position, playerPosition);
 }
 
 // Applies the given amount of damage to the enemy.
