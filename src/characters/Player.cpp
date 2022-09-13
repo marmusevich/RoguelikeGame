@@ -7,6 +7,8 @@
 
 #include <array>
 
+#include <plog/Log.h>
+
 
 // Constructor.
 Player::Player(const Scene& scene)
@@ -58,6 +60,7 @@ Player::Player(const Scene& scene)
 		&& resourceLoader->addResources(const_cast<NResurceManagement::ResourceManager&>(getResourceManager()))
 		))
 	{
+		LOG_ERROR << "Doesn't load ressurce!!";
 		throw std::runtime_error("Doesn't load ressurce!!");
 	}
 

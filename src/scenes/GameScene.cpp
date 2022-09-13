@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <sstream>
 
+#include <plog/Log.h>
+
 
 static int const MAX_ITEM_SPAWN_COUNT = 50;			// The maximum number of items that can be spawned each room.
 static int const MAX_ENEMY_SPAWN_COUNT = 20;		// The maximum number of enemies that can be spawned each room.
@@ -43,6 +45,7 @@ bool GameScene::beforeLoad()
     bool ret = resourceLoader != nullptr && resourceLoader->addResources(getResourceManager());
     if (!ret)
     {
+        LOG_ERROR << "Doesn't load ressurce!!";
         throw std::runtime_error("Doesn't load ressurce!!");
     }
 

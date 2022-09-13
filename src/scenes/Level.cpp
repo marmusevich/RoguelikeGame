@@ -4,6 +4,8 @@
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
 
+#include <plog/Log.h>
+
 
 Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 : m_origin({ 0, 0 })
