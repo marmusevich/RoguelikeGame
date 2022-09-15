@@ -25,7 +25,7 @@ namespace NDefaultParam
 
 
 	//LOGING
-	constexpr char* logFileName = "Roguelike.csv";
+	constexpr char* logFileName = "Roguelike.log";//.csv
 #ifdef NDEBUG
 	constexpr plog::Severity logLevel = plog::error; //select one from: none, fatal, error	
 #else
@@ -52,7 +52,7 @@ int main()
 #ifdef _MSC_VER 
 	static plog::DebugOutputAppender<plog::TxtFormatter> debugOutputAppender;
 #endif // _MSC_VER
-	static plog::RollingFileAppender<plog::CsvFormatter> fileAppender(NDefaultParam::logFileName/*,size_t maxFileSize = 0, int maxFiles = 0*/);
+	static plog::RollingFileAppender<plog::TxtFormatter/*CsvFormatter*/> fileAppender(NDefaultParam::logFileName/*,size_t maxFileSize = 0, int maxFiles = 0*/);
 	plog::init(NDefaultParam::logLevel, &fileAppender)
 #ifdef _MSC_VER
 		.addAppender(&debugOutputAppender)

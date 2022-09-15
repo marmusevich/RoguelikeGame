@@ -306,6 +306,10 @@ int Level::getTileSize() const
 
 
 
+сделать отдельно этот алгоритм для сравнения
+
+PathFinding_fromBook(
+
 
 /*
 // Recalculates the enemies path finding.
@@ -528,10 +532,12 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 		int H;								// Heuristic / movement cost to goal.
 		int G;								// Movement cost. (Total of entire path)
 		int F;								// Estimated cost for full path. (G + H)
-		Tile_PF* parentNode;	// Node to reach this node.
-		//std::optional<Tile_PF> parentNode;	// Node to reach this node.
+		//Tile_PF* parentNode;	// Node to reach this node.
+		//std::optional<Tile_PF*> parentNode;	// Node to reach this node.
+		//std::shared_ptr<Tile_PF*> parentNode;	// Node to reach this node.
 
-
+//try it
+std::optional<std::reference_wrapper<Tile_PF>> parentNode;
 		inline bool operator==(const Tile_PF& other) const
 		{
 			return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
@@ -541,9 +547,47 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 			return !(*this == other);
 		}
 
-		Tile_PF&  operator=(const Tile_PF&) = default;
-		Tile_PF(const Tile_PF&) = default;
+		//Tile_PF&  operator=(const Tile_PF&) = default;
+		//Tile_PF(const Tile_PF&) = default;
+
+
+		Tile_PF& operator=(const Tile_PF& other)
+		{
+			columnIndex = other.columnIndex;
+			rowIndex = other.rowIndex;
+			H = other.H;
+			G = other.G;
+			F = other.F;
+			parentNode = other.parentNode;
+			return *this;
+		}
+		Tile_PF(const Tile_PF& other)
+			: columnIndex(other.columnIndex)
+			, rowIndex(other.rowIndex)
+			, H(other.H)
+			, G(other.G)
+			, F(other.F)
+			, parentNode(other.parentNode)
+		{}
+
+
+
 	};
+
+
+//#define fn(t) \
+//std::string{ " [ " } + std::to_string(t.columnIndex) + ", " + std::to_string(t.rowIndex) + " ] " \
+//+ "parentNode: " + (t.parentNode ? " NULL " : \
+//	+ " [ " + std::to_string(t.parentNode->columnIndex) + ",  " + std::to_string(t.parentNode->rowIndex) + " ] ")
+
+
+const Tile_PF t {};
+LOG_DEBUG << "before currentNode = " <<
+std::string{ " [ " } + std::to_string(t.columnIndex) + ", " + std::to_string(t.rowIndex) + " ] " \
++ "parentNode: " + (t.parentNode ? " NULL " : \
+	+ " [ " + std::to_string(t.parentNode  ->columnIndex) + ",  " + std::to_string(t.parentNode->rowIndex) + " ] ")
+	;
+
 
 
 
@@ -600,7 +644,10 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 			if (tile.F < lowestF)
 			{
 				lowestF = tile.F;
+
+				LOG_DEBUG << "before currentNode = " <<fn(currentNode);
 				currentNode = tile;
+				LOG_DEBUG << "after  currentNode = " <<fn(currentNode);
 			}
 		}
 
@@ -644,6 +691,11 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 			// If the node is our goal node.
 			if (node.columnIndex == toPos.x && node.rowIndex == toPos.y)
 			{
+				LOG_DEBUG << "=======================================================";
+				LOG_DEBUG << "";
+				LOG_DEBUG << "OK";
+
+
 				// Parent the goal node to current.
 				//node.parentNode.emplace(currentNode);
 				node.parentNode = &currentNode;
@@ -652,8 +704,15 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 				//while (node.parentNode.has_value())
 				while (node.parentNode != nullptr)
 				{
+					LOG_DEBUG << "node =             " <<fn(node);
+					LOG_DEBUG << "*node.parentNode = " <<fn((*node.parentNode));
+
 					pathList.push_back(node);
 					node = *node.parentNode;
+
+					if(node == *node.parentNode)
+						break;
+
 				}
 
 				// Empty the open list and break out of our for loop.
@@ -672,6 +731,9 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 						//openList.push_back(node);
 
 						// Set the parent of the node to the current node.
+
+						LOG_DEBUG << "node =        " <<fn(node);
+						LOG_DEBUG << "currentNode = " <<fn(currentNode);
 						node.parentNode = &currentNode;
 
 						// Calculate G (total movement cost so far) cost.
@@ -682,6 +744,9 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 
 						// Add the node to the open list.
 						openList.push_back(node);
+
+						LOG_DEBUG << "node =            " <<fn(node);
+						LOG_DEBUG << "openList.back() = " <<fn((openList.back()));
 					}
 					else
 					{
@@ -692,6 +757,8 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 						if (tempG < node.G)
 						{
 							// Re-parent node to this one.
+							LOG_DEBUG << "node =        " <<fn(node);
+							LOG_DEBUG << "currentNode = " <<fn(currentNode);
 							node.parentNode = &currentNode;
 						}
 					}
