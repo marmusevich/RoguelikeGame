@@ -122,6 +122,7 @@
     <ClInclude Include="src\core\drawable\private\CSingleSprite.hpp" />
     <ClInclude Include="src\core\drawable\private\CXmlDrawableCreater.hpp" />
     <ClInclude Include="src\core\manager\private\TResourceHolder.hpp" />
+    <ClCompile Include="src\core\mapUtils\CPathfinding.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\CResourceLoaderBuilder.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\CXmlResourceLoader.cpp" />
     <ClCompile Include="src\utils\Util.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="src\core\manager\ResourceManager.hpp" />
     <ClInclude Include="src\core\manager\private\ResourceTraits.hpp" />
     <ClInclude Include="src\core\manager\ResourceType.hpp" />
+    <ClInclude Include="src\core\mapUtils\CPathfinding.hpp" />
     <ClInclude Include="src\core\resourceLoader\CResourceLoaderBuilder.hpp" />
     <ClInclude Include="src\core\resourceLoader\IResourceLoader.hpp" />
     <ClInclude Include="src\core\resourceLoader\private\CXmlResourceLoader.hpp" />

@@ -4,6 +4,8 @@
 
 #include "items/environment/Torch.hpp"
 
+#include <SFML/System/Vector2.hpp>
+
 #include <array>
 #include <unordered_map>
 #include <optional>
@@ -138,13 +140,13 @@ public:
 	 * Gets the size of the level in terms of tiles.
 	 * @return The size of the level grid.
 	 */
-	sf::Vector2i getSize() const;
+	const sf::Vector2i getSize() const;
 
 	/**
 	 * Returns the size of the tiles in the level.
 	 * @return The size of the tiles in the level.
 	 */
-	int getTileSize() const;
+	const int getTileSize() const;
 
 
 	/**
