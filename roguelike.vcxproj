@@ -108,12 +108,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="deliveries\tinyxml2\tinyxml2.cpp" />
+    <ClInclude Include="deliveries\tinyxml2\tinyxml2.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\core\drawable\private\CAnimateSprite.cpp" />
     <ClCompile Include="src\core\drawable\private\CDirectedDrawableCreater.cpp" />
     <ClCompile Include="src\core\drawable\private\CDrawableCreaterBuilder.cpp" />
     <ClCompile Include="src\core\drawable\private\CSingleSprite.cpp" />
     <ClCompile Include="src\core\drawable\private\CXmlDrawableCreater.cpp" />
-    <ClCompile Include="src\core\manager\private\ResourceManager.cpp" />
     <ClInclude Include="src\core\drawable\CDrawableCreaterBuilder.hpp" />
     <ClInclude Include="src\core\drawable\IDrawable.hpp" />
     <ClInclude Include="src\core\drawable\IDrawableCreater.hpp" />
@@ -121,24 +123,38 @@
     <ClInclude Include="src\core\drawable\private\CDirectedDrawableCreater.hpp" />
     <ClInclude Include="src\core\drawable\private\CSingleSprite.hpp" />
     <ClInclude Include="src\core\drawable\private\CXmlDrawableCreater.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\manager\private\ResourceManager.cpp" />
     <ClInclude Include="src\core\manager\private\TResourceHolder.hpp" />
-    <ClCompile Include="src\core\mapUtils\CPathfinding.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\CResourceLoaderBuilder.cpp" />
     <ClCompile Include="src\core\resourceLoader\private\CXmlResourceLoader.cpp" />
-    <ClCompile Include="src\utils\Util.cpp" />
-    <ClCompile Include="src\utils\MathUtils.cpp" />
-    <ClInclude Include="deliveries\tinyxml2\tinyxml2.h" />
     <ClInclude Include="src\core\manager\ResourceManager.hpp" />
     <ClInclude Include="src\core\manager\private\ResourceTraits.hpp" />
     <ClInclude Include="src\core\manager\ResourceType.hpp" />
-    <ClInclude Include="src\core\mapUtils\CPathfinding.hpp" />
+    <ClInclude Include="src\core\mapUtils\types.hpp" />
     <ClInclude Include="src\core\resourceLoader\CResourceLoaderBuilder.hpp" />
     <ClInclude Include="src\core\resourceLoader\IResourceLoader.hpp" />
     <ClInclude Include="src\core\resourceLoader\private\CXmlResourceLoader.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\utils\Util.cpp" />
+    <ClCompile Include="src\utils\MathUtils.cpp" />
+    <ClInclude Include="src\utils\MathUtils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\mapUtils\IPathfinding.hpp" />
+    <ClInclude Include="src\core\mapUtils\CPathfindingBuilder.hpp" />
+    <ClCompile Include="src\core\mapUtils\private\CPathfindingBuilder.cpp" />
+    <ClInclude Include="src\core\mapUtils\private\CPathfinding_refactBook.hpp" />
+    <ClCompile Include="src\core\mapUtils\private\CPathfinding_refactBook.cpp" />
+    <ClInclude Include="src\core\mapUtils\private\CPathfinding_fromBook.hpp" />
+    <ClCompile Include="src\core\mapUtils\private\CPathfinding_fromBook.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClInclude Include="src\PCH.hpp" />
     <ClCompile Include="src\PCH.cpp" />
-    <ClInclude Include="src\utils\MathUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\Entity.cpp" />

@@ -3,7 +3,7 @@
 
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
-#include "core/mapUtils/CPathfinding.hpp"
+#include "core/mapUtils/CPathfindingBuilder.hpp"
 
 #include <plog/Log.h>
 
@@ -635,8 +635,29 @@ Tile* Level::GetTile(int columnIndex, int rowIndex)
 
 std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Vector2f to) const
 {
-	//avoid creation
-	NMapUtils::CPathfinding pf{ getSize() };
+	//todo move to place after level creation
+	//creation
+	if (!mPathfinding)
+	{
+		NMapUtils::CPathfindingBuilder b;
+		//mPathfinding = b
 
-	return pf.pathfinding(from, to);
+		//use lambda to convert tile type from level to pathFindinf type
+
+
+	}
+
+	if (mPathfinding)
+	{
+		//return mPathfinding->pathfinding(from, to); // list of <sf::Vector2u>
+		//use
+		//	GetActualTileLocation(tile->columnIndex, tile->rowIndex)
+		//	to convert  to 
+		//std::list<sf::Vector2f>{};
+		//std::transform
+	}
+
+	LOG_ERROR << "Pathfinding is NULL, path doesn't build";
+
+	return std::list<sf::Vector2f>{};
 }

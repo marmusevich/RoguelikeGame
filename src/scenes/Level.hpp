@@ -3,6 +3,7 @@
 #define LEVEL_H
 
 #include "items/environment/Torch.hpp"
+#include "core/mapUtils/IPathfinding.hpp"
 
 #include <SFML/System/Vector2.hpp>
 
@@ -67,14 +68,14 @@ struct Tile
 	//	return !(lhs == rhs);
 	//}
 
-	inline bool operator==(const Tile& other) const
-	{
-		return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
-	}
-	inline bool operator!=(const Tile& other) const
-	{
-		return !(*this == other);
-	}
+	//inline bool operator==(const Tile& other) const
+	//{
+	//	return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
+	//}
+	//inline bool operator!=(const Tile& other) const
+	//{
+	//	return !(*this == other);
+	//}
 
 };
 
@@ -226,13 +227,11 @@ public:
 
 
 	std::list<sf::Vector2f> pathfinding(const sf::Vector2f from, const sf::Vector2f to) const;
-
-
-
 	/**
 	 * Resets the A* data of all level tiles.
 	 */
 	//void ResetNodes___willBeRemoved();
+
 
 	/**
 	 * Sets the overlay color of the level tiles.
@@ -372,5 +371,7 @@ private:
 	std::vector<std::shared_ptr<Torch>> m_torches;
 
 	const Scene& m_scene;
+
+	std::unique_ptr<NMapUtils::IPathfinding> mPathfinding;
 };
 #endif
