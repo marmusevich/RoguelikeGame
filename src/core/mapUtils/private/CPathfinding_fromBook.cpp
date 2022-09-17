@@ -1,97 +1,44 @@
 #include "core/mapUtils/private/CPathfinding_fromBook.hpp"
 
-#include <plog/Log.h>
+#include <algorithm>
+#include <cmath>
 
+#include <plog/Log.h>
 
 namespace NMapUtils
 {
 namespace
 {
-//	struct Tile_PF
-//	{
-//		Tile_PF()
-//			: columnIndex(0)
-//			, rowIndex(0)
-//			, H(0)
-//			, G(0)
-//			, F(0)
-//			, parentNode(nullptr)
-//		{}
-//		explicit Tile_PF(const sf::Vector2i v)
-//			: columnIndex(v.x)
-//			, rowIndex(v.y)
-//			, H(0)
-//			, G(0)
-//			, F(0)
-//			, parentNode(nullptr)
-//		{}
-//		//eTILE type;							// The type of tile this is.
-//		int columnIndex;					// The column index of the tile.
-//		int rowIndex;						// The row index of the tile.
-//		int H;								// Heuristic / movement cost to goal.
-//		int G;								// Movement cost. (Total of entire path)
-//		int F;								// Estimated cost for full path. (G + H)
-//		//Tile_PF* parentNode;	// Node to reach this node.
-//		//std::optional<Tile_PF*> parentNode;	// Node to reach this node.
-//		//std::shared_ptr<Tile_PF*> parentNode;	// Node to reach this node.
-////try it
-//		std::optional<std::reference_wrapper<Tile_PF>> parentNode;
-//		inline bool operator==(const Tile_PF& other) const
-//		{
-//			return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
-//		}
-//		inline bool operator!=(const Tile_PF& other) const
-//		{
-//			return !(*this == other);
-//		}
-//		//Tile_PF&  operator=(const Tile_PF&) = default;
-//		//Tile_PF(const Tile_PF&) = default;
-//		Tile_PF& operator=(const Tile_PF& other)
-//		{
-//			columnIndex = other.columnIndex;
-//			rowIndex = other.rowIndex;
-//			H = other.H;
-//			G = other.G;
-//			F = other.F;
-//			parentNode = other.parentNode;
-//			return *this;
-//		}
-//		Tile_PF(const Tile_PF& other)
-//			: columnIndex(other.columnIndex)
-//			, rowIndex(other.rowIndex)
-//			, H(other.H)
-//			, G(other.G)
-//			, F(other.F)
-//			, parentNode(other.parentNode)
-//		{}
-//	};
 
 }
-
-
-
 
 CPathfinding_fromBook::CPathfinding_fromBook(const sf::Vector2u& mapSize)
 : mMapSize(mapSize)
 , mMap()
 {
-
 }
 
 std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u from, const sf::Vector2u to) const
 {
-	std::list<sf::Vector2u> ret;
-	return ret;
+	//WA const_cast
+	auto& t = const_cast<CPathfinding_fromBook&>(*this);
+	//t.resetNodes();
+	return t.pathfinding(from, to);
 }
 
-/*
-// Recalculates the enemies path finding.
-std::list<sf::Vector2f> pathfinding_fromBook(const sf::Vector2f from, const sf::Vector2f to) const
-void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
+std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u from, const sf::Vector2u to)
 {
-	//TODO ReFACT THIS UGLU
-	// mast be util, find from - to
+	using Tile = CPathfinding_fromBook::Tile;
 
+	// Store the start and goal nodes.
+	Tile* startNode = &mMap[from.x][from.y];
+	Tile* goalNode = &mMap[to.x][to.y];
+
+	// Check we have a valid path to find. If not we can just end the function as there's no path to find.
+	if (startNode == goalNode)
+	{
+		return std::list<sf::Vector2u>{};
+	}
 
 	// Create all variables.
 	std::vector<Tile*> openList;
@@ -100,43 +47,17 @@ void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 	std::vector<Tile*>::iterator position;
 	Tile* currentNode;
 
-	// Reset all nodes.
-	//WA const_cast
-	const_cast<Level&>(level).ResetNodes();
-	auto getTileV_WA = [&level](const sf::Vector2f& position) -> Tile*
-	{
-		return const_cast<Level&>(level).GetTile(position);
-	};
-	auto getTile_WA = [&level](const int columnIndex, const int rowIndex) -> Tile*
-	{
-		return const_cast<Level&>(level).GetTile(columnIndex, rowIndex);
-	};
-
-	// Store the start and goal nodes.
-	auto* startNode = getTileV_WA(m_position);
-	auto* goalNode = getTileV_WA(playerPosition);
-
-	// Check we have a valid path to find. If not we can just end the function as there's no path to find.
-	if (startNode == goalNode)
-	{
-		// Clear the vector of target positions.
-		m_targetPositions.clear();
-
-		// Exit the function.
-		return;
-	}
-
 	// Pre-compute our H cost (estimated cost to goal) for each node.
-	for (int i = 0; i < level.GetSize().x; i++)
+	for (std::size_t i = 0; i < mMapSize.x; i++)
 	{
-		for (int j = 0; j < level.GetSize().y; j++)
+		for (std::size_t j = 0; j < mMapSize.y; j++)
 		{
-			int rowOffset, heightOffset;
-			auto node = getTile_WA(i, j); // TODO NOT CHEKED
+			uint32_t rowOffset, heightOffset;
+			Tile* node = &mMap[i][j]; // TODO NOT CHEKED
 
-			heightOffset = abs(node->rowIndex - goalNode->rowIndex);
-			rowOffset = abs(node->columnIndex - goalNode->columnIndex);
-
+			//std.abs
+			heightOffset = (node->rowIndex > goalNode->rowIndex) ? (node->rowIndex - goalNode->rowIndex) : (goalNode->rowIndex - node->rowIndex);
+			rowOffset = (node->columnIndex > goalNode->columnIndex) ? (node->columnIndex - goalNode->columnIndex) : (goalNode->columnIndex - node->columnIndex);
 			node->H = heightOffset + rowOffset;
 		}
 	}
@@ -171,31 +92,28 @@ void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 		Tile* node;
 
 		// Top.
-		node = getTile_WA(currentNode->columnIndex, currentNode->rowIndex - 1);
-		if ((node != nullptr) && (level.IsFloor(*node)))
+		node = &mMap[currentNode->columnIndex][currentNode->rowIndex - 1];
+		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex, currentNode->rowIndex - 1));
+			adjacentTiles.push_back(&mMap[currentNode->columnIndex][currentNode->rowIndex - 1]);
 		}
-
 		// Right.
-		node = getTile_WA(currentNode->columnIndex + 1, currentNode->rowIndex);
-		if ((node != nullptr) && (level.IsFloor(*node)))
+		node = &mMap[currentNode->columnIndex + 1][currentNode->rowIndex];
+		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex + 1, currentNode->rowIndex));
+			adjacentTiles.push_back(&mMap[currentNode->columnIndex + 1][currentNode->rowIndex]);
 		}
-
 		// Bottom.
-		node = getTile_WA(currentNode->columnIndex, currentNode->rowIndex + 1);
-		if ((node != nullptr) && (level.IsFloor(*node)))
+		node = &mMap[currentNode->columnIndex][currentNode->rowIndex + 1];
+		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex, currentNode->rowIndex + 1));
+			adjacentTiles.push_back(&mMap[currentNode->columnIndex][currentNode->rowIndex + 1]);
 		}
-
 		// Left.
-		node = getTile_WA(currentNode->columnIndex - 1, currentNode->rowIndex);
-		if ((node != nullptr) && (level.IsFloor(*node)))
+		node = &mMap[currentNode->columnIndex - 1][currentNode->rowIndex];
+		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(getTile_WA(currentNode->columnIndex - 1, currentNode->rowIndex));
+			adjacentTiles.push_back(&mMap[currentNode->columnIndex - 1][currentNode->rowIndex]);
 		}
 
 		// For all adjacent nodes.
@@ -257,21 +175,22 @@ void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 		}
 	}
 
-	// Clear the vector of target positions.
-	m_targetPositions.clear();
+	// 
+	std::list<sf::Vector2u> ret;
+	//ret.reverse(pathList.size());
+	
+	LOG_DEBUG << " CPathfinding_fromBook : node count = " << pathList.size();
 
+	 
 	// Store the node locations as the enemies target locations.
 	for (Tile* tile : pathList)
 	{
-		m_targetPositions.push_back(level.GetActualTileLocation(tile->columnIndex, tile->rowIndex));
+		ret.push_back({ tile->columnIndex, tile->rowIndex });
 	}
 
 	// Reverse the target position as we read them from goal to origin and we need them the other way around.
-	std::reverse(m_targetPositions.begin(), m_targetPositions.end());
-
-*/
-
-//	return std::list<sf::Vector2f>{};
-//}
+	std::reverse(ret.begin(), ret.end());
+	return ret;
+}
 
 } // namespace NMapUtils

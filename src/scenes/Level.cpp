@@ -5,6 +5,8 @@
 #include "core/manager/ResourceManager.hpp"
 #include "core/mapUtils/CPathfindingBuilder.hpp"
 
+#include <algorithm>
+
 #include <plog/Log.h>
 
 
@@ -639,22 +641,21 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 	//creation
 	if (!mPathfinding)
 	{
-		NMapUtils::CPathfindingBuilder b;
+		//NMapUtils::CPathfindingBuilder b;
 		//mPathfinding = b
 
 		//use lambda to convert tile type from level to pathFindinf type
-
-
 	}
 
 	if (mPathfinding)
 	{
-		//return mPathfinding->pathfinding(from, to); // list of <sf::Vector2u>
-		//use
-		//	GetActualTileLocation(tile->columnIndex, tile->rowIndex)
-		//	to convert  to 
-		//std::list<sf::Vector2f>{};
-		//std::transform
+		auto r = mPathfinding->pathfinding(sf::vector_cast<uint32_t>(locationToMapCord(from)), sf::vector_cast<uint32_t>(locationToMapCord(to)));
+
+		std::list<sf::Vector2f> ret(r.size());
+		std::transform(r.begin(), r.end(), ret.begin(), [this](const auto vec)
+		{
+			return mapCordToLocation(vec.x, vec.y);
+		});
 	}
 
 	LOG_ERROR << "Pathfinding is NULL, path doesn't build";

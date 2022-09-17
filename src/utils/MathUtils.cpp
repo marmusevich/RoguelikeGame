@@ -2,25 +2,27 @@
 
 #include <ctime>
 
-float DistanceBetweenPoints(sf::Vector2f poit1, sf::Vector2f poit2)
+namespace sf
+{
+float DistanceBetweenPoints(Vector2f poit1, Vector2f poit2)
 {
 	return Magnitude(poit1 - poit2);
 }
 
-float Magnitude(sf::Vector2f vec)
+float Magnitude(Vector2f vec)
 {
 	return std::hypotf(vec.x, vec.y);
 }
 
-float AngleBetweenVectors(sf::Vector2f vec1, sf::Vector2f vec2)
+float AngleBetweenVectors(Vector2f vec1, Vector2f vec2)
 {
 	float ret = std::nanf("0");
-	
+
 	const float magnitude = Magnitude(vec1) * Magnitude(vec2);//allways great zero
 	if (magnitude > 0.0f)
 	{
 		const float cosValue = (vec1.x * vec2.x + vec1.y * vec2.y) / magnitude;
-		if(-1.0f <= cosValue && cosValue <= 1.0f)
+		if (-1.0f <= cosValue && cosValue <= 1.0f)
 		{
 			ret = acosf(cosValue);
 		}
@@ -28,7 +30,7 @@ float AngleBetweenVectors(sf::Vector2f vec1, sf::Vector2f vec2)
 	return ret;
 }
 
-sf::Vector2f Normalize(sf::Vector2f vec)
+sf::Vector2f Normalize(Vector2f vec)
 {
 	sf::Vector2f ret{ std::nanf("0") , std::nanf("0") };
 
@@ -39,6 +41,8 @@ sf::Vector2f Normalize(sf::Vector2f vec)
 	}
 	return ret;
 }
+} //sf
+
 
 float RadToGrad(float rad)
 {
