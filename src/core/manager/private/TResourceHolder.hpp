@@ -11,6 +11,8 @@
 #include <memory>
 #include <stdexcept>
 
+#include <plog/Log.h>
+
 namespace NResurceManagement
 {
 /**
@@ -70,14 +72,14 @@ const RESTYPE& TResourceHolder<TYPE, RESTYPE>::loadFromFile(const std::string& k
 			auto [it_inserted, isInserted] = mResourceMap.try_emplace(key, std::move(resource));
 			if (!isInserted)
 			{
-				//LOG
+				LOG_FATAL << "Can't add resurse from file " << filename;
 				throw std::runtime_error("ResourceHolder_NumberAutoIncKey::loadFromFile - Can't add resurse from file " + filename);
 			}
 			return *(it_inserted->second);
 		}
 		else
 		{
-			//LOG
+			LOG_FATAL << "Failed to load " << filename;
 			throw std::runtime_error("ResourceHolder_NumberAutoIncKey::loadFromFile - Failed to load " + filename);
 		}
 
@@ -115,7 +117,7 @@ const RESTYPE& TResourceHolder<TYPE, RESTYPE>::get(const std::string& key) const
 	auto it = mResourceMap.find(key);
 	if (it == mResourceMap.end())
 	{
-		//LOG
+		LOG_FATAL << "Can't get with key = " << key;
 		throw std::runtime_error("ResourceHolder_NumberAutoIncKey::get - Can't get with key =  " + key);
 	}
 	return *(it->second);
@@ -129,8 +131,8 @@ void TResourceHolder<TYPE, RESTYPE>::remove(const std::string& key)
 	{
 		mResourceMap.erase(it);
 	}
-	// LOG or ?
-	//throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Remove - Can't delete with id  " + std::to_string(id));
+	LOG_ERROR << "Can't delete with key  " << key;
+	//throw std::runtime_error("ResourceHolder_NumberAutoIncKey::Remove - Can't delete with key " + key);
 }
 
 template <EResourceType TYPE, typename RESTYPE>

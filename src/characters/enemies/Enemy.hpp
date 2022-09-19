@@ -4,6 +4,8 @@
 #include "core/Entity.hpp"
 #include "scenes/Level.hpp"
 
+#include <list>
+
 // Enemy types.
 enum class eENEMY 
 {
@@ -26,6 +28,8 @@ public:
 	 */
 	virtual void update(float timeDelta) override;
 
+	virtual void draw(sf::RenderWindow& window, float timeDelta) override ;
+
 	/**
 	 * Recalculates the enemies path finding.
 	 * @param level A reference to the level object.
@@ -33,7 +37,7 @@ public:
 	 */
 	//TODO !!! invert dependesy, level CONST, has to no change
 	// mast be util, find from - to
-	void UpdatePathfinding(/* TODO const */Level& level, sf::Vector2f playerPosition);
+	void UpdatePathfinding(const Level& level, sf::Vector2f playerPosition);
 
 	/**
 	 * Applies the given amount of damage to the enemy.
@@ -49,7 +53,7 @@ public:
 
 protected:
 	// The target position of the enemy.
-	std::vector<sf::Vector2f> m_targetPositions;
+	std::list<sf::Vector2f> m_targetPositions;
 
 	// The current target of the enemy.
 	sf::Vector2f m_currentTarget;

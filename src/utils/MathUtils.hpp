@@ -60,20 +60,28 @@ inline T LinearInterpolation(T x, T in_min, T in_max, T out_min, T out_max)
 /*
 * 2D Vectors
 */
+namespace sf
+{
+	inline float Magnitude(Vector2f vec);
 
-inline float Magnitude(sf::Vector2f vec);
+	inline float AngleBetweenVectors(Vector2f vec1, Vector2f vec2);
 
-inline float AngleBetweenVectors(sf::Vector2f vec1, sf::Vector2f vec2);
+	inline sf::Vector2f Normalize(Vector2f vec);
+	/**
+	 * Calculates the distance between two points
+	 * @param position1 The position of the first point.
+	 * @param position2 The position of the second item.
+	 * @return The distance between the two points.
+	 */
+	float DistanceBetweenPoints(Vector2f poit1, Vector2f poit2);
 
-inline sf::Vector2f Normalize(sf::Vector2f vec);
+	template<typename O, typename I>
+	Vector2<O> vector_cast(const Vector2<I>& toCast)
+	{
+		return {static_cast<O>(toCast.x), static_cast<O>(toCast.y) };
+	}
+}
 
-/**
- * Calculates the distance between two points
- * @param position1 The position of the first point.
- * @param position2 The position of the second item.
- * @return The distance between the two points.
- */
-float DistanceBetweenPoints(sf::Vector2f poit1, sf::Vector2f poit2);
 
 
 /*

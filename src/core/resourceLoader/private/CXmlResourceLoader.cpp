@@ -1,5 +1,7 @@
 #include "core/resourceLoader/private/CXmlResourceLoader.hpp"
 
+#include <plog/Log.h>
+
 namespace NResourceLoader
 {
 
@@ -31,7 +33,9 @@ bool CXmlResourceLoader::setFile(const std::filesystem::path& fileName)
 	const bool ret = mStatus == tinyxml2::XMLError::XML_SUCCESS;
 	if (!ret)
 	{
-		//LOG
+		LOG_FATAL << "CXmlResourceLoader::setFile - Can't parse file '" + fileName.string() + "' with error #"
+			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr();
+
 		throw std::runtime_error("CXmlResourceLoader::setFile - Can't parse file '" + fileName.string() + "' with error #"
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
@@ -47,7 +51,9 @@ bool CXmlResourceLoader::setString(const std::string& xml)
 	const bool ret = mStatus == tinyxml2::XMLError::XML_SUCCESS;
 	if (!ret)
 	{
-		//LOG
+		LOG_FATAL << "CXmlResourceLoader::setString - Can't parse string with error #"
+			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr();
+
 		throw std::runtime_error("CXmlResourceLoader::setString - Can't parse string with error #"
 			+ std::to_string(mStatus) + " : " + mDoc.ErrorStr());
 	}
@@ -83,13 +89,14 @@ bool addResourcefromNode(const tinyxml2::XMLElement* root, const char* elementNa
 		const auto id = element->Attribute(NXMLToken::ID);
 		if (!fileName)
 		{
-			// todo log? if cant get / parse element
+			LOG_ERROR << "Parset XML element is NULL";
 			return false;
 		}
 
 		const auto fullFileName = rootPath / fileName;
 		if(!fs::exists(fullFileName))
 		{
+			LOG_ERROR << "File is not exist :" << fullFileName;
 			//todo log ? if file res is not exist
 			return false;
 		}
@@ -111,6 +118,7 @@ bool CXmlResourceLoader::addResources(NResurceManagement::ResourceManager& resou
 {
 	if (mStatus != tinyxml2::XMLError::XML_SUCCESS)
 	{
+		//LOG_ERROR <<
 		return false;
 	}
 	

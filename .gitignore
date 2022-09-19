@@ -10,3 +10,5 @@
 /deliveries/SFML/bin
 /deliveries/SFML/examples
 /deliveries/SFML/*.md
+/*.log
+/*.csv

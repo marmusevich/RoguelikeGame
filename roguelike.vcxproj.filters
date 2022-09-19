@@ -172,6 +172,15 @@
     <ClCompile Include="src\core\drawable\private\CXmlDrawableCreater.cpp">
       <Filter>Core\Drawable\private</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\mapUtils\private\CPathfinding_fromBook.cpp">
+      <Filter>Core\mapUtils\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\mapUtils\private\CPathfinding_refactBook.cpp">
+      <Filter>Core\mapUtils\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\mapUtils\private\CPathfindingBuilder.cpp">
+      <Filter>Core\mapUtils\private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -225,6 +234,12 @@
     <Filter Include="_resources">
       <UniqueIdentifier>{f5ba2e7d-1ddd-4000-8890-63ad1a596e01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\mapUtils">
+      <UniqueIdentifier>{0189912c-ea69-49ca-a1c5-643d50d827d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\mapUtils\private">
+      <UniqueIdentifier>{13fa6c89-aa83-4d1d-bda9-a774dd078521}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\utils\Util.cpp">
@@ -264,6 +279,21 @@
     </ClInclude>
     <ClInclude Include="src\core\drawable\private\CXmlDrawableCreater.hpp">
       <Filter>Core\Drawable\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mapUtils\IPathfinding.hpp">
+      <Filter>Core\mapUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mapUtils\CPathfindingBuilder.hpp">
+      <Filter>Core\mapUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mapUtils\private\CPathfinding_fromBook.hpp">
+      <Filter>Core\mapUtils\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mapUtils\private\CPathfinding_refactBook.hpp">
+      <Filter>Core\mapUtils\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mapUtils\types.hpp">
+      <Filter>Core\mapUtils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -71,14 +71,6 @@ private:
 	void PopulateLevel();
 
 	/**
-	 * Spawns a given number of a certain tile at random locations in the level.
-	 * This is used to give variance to the level grid.
-	 * @param newTileIndex The index of the tiles you want to create.
-	 * @param count The number of tiles to create.
-	 */
-	void SpawnRandomTiles(eTILE tileType, int count);
-
-	/**
 	 * Loads all sprites needed for the UI.
 	 */
 	void LoadUI();
