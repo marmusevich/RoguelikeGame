@@ -128,7 +128,7 @@ void Level::SetTile(int columnIndex, int rowIndex, eTILE tileType)
 
 	// change that tiles sprite to the new index
 	m_grid[columnIndex][rowIndex].type = tileType;
-	m_grid[columnIndex][rowIndex].sprite.setTexture(getTextureByTileTipe_WA(tileType));
+	m_grid[columnIndex][rowIndex].sprite.setTexture(getTextureByTileType_WA(tileType));
 }
 
 // Sets the overlay color of the level tiles.
@@ -295,7 +295,7 @@ void Level::CreatePath(int columnIndex, int rowIndex)
 				// Mark the tile as floor.
 				tile->type = eTILE::FLOOR;
 
-				tile->sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
+				tile->sprite.setTexture(getTextureByTileType_WA(eTILE::FLOOR));
 
 				// Knock that wall down.
 				int ddx = currentTile->columnIndex + (directions[i].x / 2);
@@ -303,7 +303,7 @@ void Level::CreatePath(int columnIndex, int rowIndex)
 
 				Tile* wall = &m_grid[ddx][ddy];
 				wall->type = eTILE::FLOOR;
-				wall->sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
+				wall->sprite.setTexture(getTextureByTileType_WA(eTILE::FLOOR));
 
 				// Recursively call the function with the new tile.
 				CreatePath(dx, dy);
@@ -340,7 +340,7 @@ void Level::CreateRooms(int roomCount)
 					if ((newI != 0) && (newI != (GRID_WIDTH - 1)) && (newY != 0) && (newY != (GRID_HEIGHT - 1)))
 					{
 						m_grid[newI][newY].type = eTILE::FLOOR;
-						m_grid[newI][newY].sprite.setTexture(getTextureByTileTipe_WA(eTILE::FLOOR));
+						m_grid[newI][newY].sprite.setTexture(getTextureByTileType_WA(eTILE::FLOOR));
 					}
 				}
 			}
@@ -391,7 +391,7 @@ void Level::CalculateTextures()
 
 				// Set the new type.
 				m_grid[i][j].type = (eTILE)value;
-				m_grid[i][j].sprite.setTexture(getTextureByTileTipe_WA(static_cast<eTILE>(value)));
+				m_grid[i][j].sprite.setTexture(getTextureByTileType_WA(static_cast<eTILE>(value)));
 			}
 		}
 	}
@@ -451,7 +451,7 @@ void Level::GenerateLevel()
 			else
 			{
 				m_grid[i][j].type = eTILE::WALL_TOP;
-				m_grid[i][j].sprite.setTexture(getTextureByTileTipe_WA(eTILE::WALL_TOP));
+				m_grid[i][j].sprite.setTexture(getTextureByTileType_WA(eTILE::WALL_TOP));
 			}
 
 			// Set the position.
@@ -559,7 +559,7 @@ void Level::SpawnTorches(int torchCount)
 				{
 					std::shared_ptr<Torch> torch = std::make_shared<Torch>(m_scene);
 
-    				torch->setSprite(getTextureByTileTipe_WA(eTILE::TORCH), false, 5, 12);
+    				torch->setSprite(getTextureByTileType_WA(eTILE::TORCH), false, 5, 12);
 					torch->setPosition(mapCordToLocation(columnIndex, rowIndex));
 					m_torches.push_back(torch);
 					tileFound = true;
@@ -570,13 +570,11 @@ void Level::SpawnTorches(int torchCount)
 }
 
 
-
 // Gets a vector of all torches in the level.
 std::vector<std::shared_ptr<Torch>>& Level::GetTorches()
 {
 	return m_torches;
 }
-
 
 
 // Draws the level grid to the given render window.
@@ -595,69 +593,13 @@ void Level::draw(sf::RenderWindow& window, float timeDelta) const
 	for (auto& torch : m_torches)
 	{
 		torch->draw(window, timeDelta);
-
-		sf::CircleShape shape(10);
-		shape.setFillColor(sf::Color(250, 0, 0));
-		shape.setPosition(torch->getPosition());
-		window.draw(shape);
-
-
-
 	}
 }
 
-
-const sf::Texture& Level::getTextureByTileTipe_WA(const eTILE tileType) const
+const sf::Texture& Level::getTextureByTileType_WA(const eTILE tileType) const
 {
 	return m_scene.getResourceManager().get<NResurceManagement::EResourceType::Texture>(m_textureMatch_WA.at(tileType));// throw std::out_of_range
 }
-
-
-
-
-
-
-
-
-
-// Resets the A* data of all tiles.
-//void Level::ResetNodes___willBeRemoved()
-//{
-//	for (int i = 0; i < GRID_WIDTH; i++)
-//	{
-//		for (int j = 0; j < GRID_HEIGHT; j++)
-//		{
-//			auto cell = &m_grid[i][j];
-//			cell->parentNode = nullptr;
-//			cell->H = 0;
-//			cell->G = 0;
-//			cell->F = 0;
-//		}
-//	}
-//}
-
-
-//avoid this methods
-
-// Gets the tile that the position lies on.
-Tile* Level::GetTile(const sf::Vector2f position)
-{
-	const auto&& [tileColumn, tileRow] = locationToMapCord(position);
-	return GetTile(tileColumn, tileRow);
-}
-
-Tile* Level::GetTile(int columnIndex, int rowIndex)
-{
-	if (TileIsValid(columnIndex, rowIndex))
-	{
-		return &(m_grid[columnIndex][rowIndex]);
-	}
-	else
-	{
-		return nullptr;
-	}
-}
-
 
 
 std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Vector2f to) const

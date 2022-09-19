@@ -54,13 +54,17 @@ void Enemy::draw(sf::RenderWindow& window, float timeDelta)
 {
 	tBase::draw(window, timeDelta);
 
-	for(const auto p : m_targetPositions)
-	{
-		sf::CircleShape shape(10);
-		shape.setFillColor(sf::Color(100, 250, 50));
-		shape.setPosition(p);
-		window.draw(shape);
-	}
+//show path
+#ifndef NDEBUG
+for (const auto p : m_targetPositions)
+{
+	sf::CircleShape shape(10);
+	shape.setFillColor(sf::Color(100, 250, 50));
+	shape.setPosition(p);
+	window.draw(shape);
+}
+#endif
+
 }
 
 // Recalculates the enemies path finding.

@@ -22,7 +22,7 @@ GameScene::GameScene(const Game& game)
 , m_screenCenter(getGame().getScreenCenter())
 , m_scoreTotal(0)
 , m_goldTotal(0)
-, m_playerPreviousTile(nullptr)
+, m_playerPreviousPos()
 , m_goldGoal(0)
 , m_gemGoal(0)
 , m_killGoal(0)
@@ -302,17 +302,22 @@ void GameScene::update(float timeDelta)
         }
 
         // Check if the player has moved grid square.
-        Tile* playerCurrentTile = m_level->GetTile(playerPosition);
+        const auto playerCurrentPos = m_level->locationToMapCord(playerPosition);
 
-        if (m_playerPreviousTile != playerCurrentTile)
+        if (m_playerPreviousPos != playerCurrentPos)
         {
             // Store the new tile.
-            m_playerPreviousTile = playerCurrentTile;
+            m_playerPreviousPos = playerCurrentPos;
 
             // update path finding for all enemies if within range of the player.
             for (const auto& enemy : m_enemies)
             {
-                if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < 3000.f/*300.f*/)
+#ifdef NDEBUG
+                const float distanceToPlayer = 300.f;
+#else
+                const float distanceToPlayer = 30000.f;
+#endif
+                if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < distanceToPlayer)
                 {
                     enemy->UpdatePathfinding(*m_level, playerPosition);
                 }
@@ -508,20 +513,23 @@ void GameScene::PopulateLevel()
         }
     }
 
-//debag only
-SpawnEnemy((eENEMY::HUMANOID));
 
 
-    //// Spawn enemies.
-    //for (int i = 0; i < MAX_ENEMY_SPAWN_COUNT; i++)
-    //{
-    //    if (Random())
-    //    {
-    //        SpawnEnemy(Random(eENEMY::COUNT));
-    //    }
-    //}
+//debug path finding
+#ifdef NDEBUG
+    // Spawn enemies.
+    for (int i = 0; i < MAX_ENEMY_SPAWN_COUNT; i++)
+    {
+        if (Random())
+        {
+            SpawnEnemy(Random(eENEMY::COUNT));
+        }
+    }
+#else
+    SpawnEnemy((eENEMY::HUMANOID));
+#endif
+
 }
-
 
 
 // Updates the level light.
@@ -723,7 +731,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
     // Store player tile.
-    const Tile* playerTile = m_level->GetTile(m_player->getPosition());
+    const auto playerPos = m_level->locationToMapCord(m_player->getPosition());
 
     auto enemyIterator = m_enemies.begin();
     while (enemyIterator != m_enemies.end())
@@ -735,7 +743,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
         Enemy& enemy = **enemyIterator;
 
         // Get the tile that the enemy is on.
-        const Tile* enemyTile = m_level->GetTile(enemy.getPosition());
+        const auto enemyPos = m_level->locationToMapCord(enemy.getPosition());
 
         // Check for collisions with projectiles.
         auto projectilesIterator = m_playerProjectiles.begin();
@@ -745,7 +753,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
             Projectile& projectile = **projectilesIterator;
 
             // If the enemy and projectile occupy the same tile they have collided.
-            if (enemyTile == m_level->GetTile(projectile.getPosition()))
+            if (enemyPos == m_level->locationToMapCord(projectile.getPosition()))
             {
                 // Delete the projectile.
                 projectilesIterator = m_playerProjectiles.erase(projectilesIterator);
@@ -813,7 +821,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
         }
 
         // Check for collision with player.
-        if (enemyTile == playerTile)
+        if (enemyPos == playerPos)
         {
             if (m_player->CanTakeDamage())
             {

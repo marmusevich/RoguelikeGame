@@ -236,9 +236,9 @@ private:
 	std::shared_ptr<sf::Sprite> m_staminaStatSprite;
 
 	/**
-	 * The last tile that the player was on.
+	 * The last position that the player was on.
 	 */
-	Tile* m_playerPreviousTile;
+	sf::Vector2i m_playerPreviousPos;
 
 	/**
 	 * A vector of all the player's projectiles.

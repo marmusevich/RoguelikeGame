@@ -15,7 +15,7 @@
 //fwd
 class Scene;
 
-// Tiles.
+// Tiles types.
 enum class eTILE 
 {
 	WALL_SINGLE,
@@ -44,40 +44,6 @@ enum class eTILE
 	COUNT
 };
 
-// The level tile type.
-struct Tile 
-{
-	eTILE type;							// The type of tile this is.
-	int columnIndex;					// The column index of the tile.
-	int rowIndex;						// The row index of the tile.
-	sf::Sprite sprite;					// The tile sprite.
-
-
-	////for path finding
-	//int H;								// Heuristic / movement cost to goal.
-	//int G;								// Movement cost. (Total of entire path)
-	//int F;								// Estimated cost for full path. (G + H)
-	//Tile* parentNode;					// Node to reach this node.
-
-	//friend inline bool operator==(const Tile& lhs, const Tile& rhs)
-	//{
-	//	return lhs.columnIndex == rhs.columnIndex && lhs.rowIndex == rhs.rowIndex;
-	//}
-	//friend inline bool operator!=(const Tile& lhs, const Tile& rhs)
-	//{
-	//	return !(lhs == rhs);
-	//}
-
-	//inline bool operator==(const Tile& other) const
-	//{
-	//	return columnIndex == other.columnIndex && rowIndex == other.rowIndex;
-	//}
-	//inline bool operator!=(const Tile& other) const
-	//{
-	//	return !(*this == other);
-	//}
-
-};
 
 class Level
 {
@@ -87,6 +53,15 @@ static int const GRID_HEIGHT = 19;
 
 // The width and height of each tile in pixels.
 static int const TILE_SIZE = 50;
+
+// The level tile type.
+struct Tile
+{
+	eTILE type;							// The type of tile this is.
+	int columnIndex;					// The column index of the tile.
+	int rowIndex;						// The row index of the tile.
+	sf::Sprite sprite;					// The tile sprite.
+};
 
 public:
 	/** 
@@ -103,6 +78,10 @@ public:
 	 */
 	void draw(sf::RenderWindow &window, float timeDelta) const;
 
+	/**
+	 * 
+	 */
+	std::list<sf::Vector2f> pathfinding(const sf::Vector2f from, const sf::Vector2f to) const;
 
 	/**
 	 * Gets the position of the level grid relative to the window.
@@ -205,33 +184,6 @@ public:
 	 */
 	bool IsSolid(const int columnIndex, const int rowIndex) const;
 	bool IsSolid(const sf::Vector2f position) const;
-
-
-
-
-	/**
-	 * Gets the tile at the given position.
-	 * @param position The coordinates of the position to check.
-	 * @return A pointer to the tile at the given location.
-	 */
-	Tile* GetTile(const sf::Vector2f position);
-
-	/**
-	* Gets the tile at the given position in the level array.
-	* @param columnIndex The column that the tile is in.
-	* @param rowIndex The row that the tile is in.
-	* @return A pointer to the tile if valid.
-	*/
-	//const std::optional<Tile> GetTile(int columnIndex, int rowIndex) const;
-	Tile* GetTile(const int columnIndex, const int rowIndex);
-
-
-	std::list<sf::Vector2f> pathfinding(const sf::Vector2f from, const sf::Vector2f to) const;
-	/**
-	 * Resets the A* data of all level tiles.
-	 */
-	//void ResetNodes___willBeRemoved();
-
 
 	/**
 	 * Sets the overlay color of the level tiles.
@@ -353,7 +305,7 @@ private:
 	 * An array containing all texture IDs of the level tiles.
 	 */
 	std::unordered_map<eTILE, std::string> m_textureMatch_WA;
-	const sf::Texture& getTextureByTileTipe_WA(const eTILE tileType) const;
+	const sf::Texture& getTextureByTileType_WA(const eTILE tileType) const;
 
 	/**
 	 * The spawn location for the current level.
