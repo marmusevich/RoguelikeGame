@@ -22,8 +22,22 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 {
 	//WA const_cast
 	auto& t = const_cast<CPathfinding_fromBook&>(*this);
-	//t.resetNodes();
 	return t.pathfinding(from, to);
+}
+
+void CPathfinding_fromBook::resetMap()
+{
+	for (uint32_t columnIndex = 0; columnIndex < mMapSize.x; ++columnIndex)
+	{
+		for (uint32_t rowIndex = 0; rowIndex < mMapSize.x; ++rowIndex)
+		{
+			auto& tile = mMap[columnIndex][rowIndex];
+			tile.H = 0;
+			tile.F = 0;
+			tile.G = 0;
+			tile.parentNode = nullptr;
+		}
+	}
 }
 
 std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u from, const sf::Vector2u to)
@@ -39,6 +53,8 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 	{
 		return std::list<sf::Vector2u>{};
 	}
+
+	resetMap();
 
 	// Create all variables.
 	std::vector<Tile*> openList;
@@ -179,7 +195,7 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 	std::list<sf::Vector2u> ret;
 	//ret.reverse(pathList.size());
 	
-	LOG_DEBUG << " CPathfinding_fromBook : node count = " << pathList.size();
+	LOG_DEBUG << "node count = " << pathList.size();
 
 	 
 	// Store the node locations as the enemies target locations.
@@ -191,6 +207,11 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 	// Reverse the target position as we read them from goal to origin and we need them the other way around.
 	std::reverse(ret.begin(), ret.end());
 	return ret;
+}
+
+CPathfinding_fromBook::~CPathfinding_fromBook()
+{
+	LOG_DEBUG << "~CPathfinding_fromBook";
 }
 
 } // namespace NMapUtils

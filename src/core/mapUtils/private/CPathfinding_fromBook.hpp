@@ -11,6 +11,7 @@ namespace NMapUtils
 //fwd 
 struct CPathfindingBuilder;
 
+
 /**
 * 
 */
@@ -20,8 +21,8 @@ public:
 	std::list<sf::Vector2u> pathfinding(const sf::Vector2u from, const sf::Vector2u to) const override;
 
 private:
-	friend struct CPathfindingBuilder;
-
+	friend struct NMapUtils::CPathfindingBuilder;
+	
 	struct Tile
 	{
 		eTILE_TYPE type;					// The type of tile this is.
@@ -35,10 +36,11 @@ private:
 	};
 
 	explicit CPathfinding_fromBook(const sf::Vector2u& mapSize);
-
+	~CPathfinding_fromBook();
 
 	std::list<sf::Vector2u> pathfinding(const sf::Vector2u from, const sf::Vector2u to);
 
+	void resetMap();
 
 	const sf::Vector2u mMapSize;
 	std::vector<std::vector<Tile>> mMap;

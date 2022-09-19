@@ -63,16 +63,10 @@ void Enemy::draw(sf::RenderWindow& window, float timeDelta)
 	}
 }
 
-
 // Recalculates the enemies path finding.
 void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
 {
-	LOG_DEBUG << "before m_targetPositions size = " << m_targetPositions.size();
-
 	m_targetPositions = level.pathfinding(m_position, playerPosition);
-
-	LOG_DEBUG << "after m_targetPositions size = " << m_targetPositions.size();
-
 }
 
 // Applies the given amount of damage to the enemy.

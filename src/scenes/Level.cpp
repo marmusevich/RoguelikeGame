@@ -491,6 +491,31 @@ void Level::GenerateLevel()
 	// Change a selection of random tiles to the cracked tile sprite.
 	SpawnRandomTiles(eTILE::FLOOR_ALT, 15);
 
+
+
+	//todo move to place after level creation
+	//creation
+	if (mPathfinding)
+	{
+		mPathfinding.reset();
+	}
+
+	auto converter = [this](uint32_t columnIndex, uint32_t rowIndex)->NMapUtils::eTILE_TYPE
+	{
+		if (IsFloor(columnIndex, rowIndex))
+		{
+			return NMapUtils::eTILE_TYPE::FLOOR;
+		}
+		else
+		{
+			return NMapUtils::eTILE_TYPE::WALL;
+		}
+	};
+
+	mPathfinding.reset( NMapUtils::CPathfindingBuilder::makeFromBook(sf::vector_cast<uint32_t>(getSize()), converter) );
+
+
+
 }
 
 // Spawns a given number of a given tile randomly in the level.
@@ -637,16 +662,6 @@ Tile* Level::GetTile(int columnIndex, int rowIndex)
 
 std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Vector2f to) const
 {
-	//todo move to place after level creation
-	//creation
-	if (!mPathfinding)
-	{
-		//NMapUtils::CPathfindingBuilder b;
-		//mPathfinding = b
-
-		//use lambda to convert tile type from level to pathFindinf type
-	}
-
 	if (mPathfinding)
 	{
 		auto r = mPathfinding->pathfinding(sf::vector_cast<uint32_t>(locationToMapCord(from)), sf::vector_cast<uint32_t>(locationToMapCord(to)));
@@ -656,6 +671,7 @@ std::list<sf::Vector2f> Level::pathfinding(const sf::Vector2f from, const sf::Ve
 		{
 			return mapCordToLocation(vec.x, vec.y);
 		});
+		return ret;
 	}
 
 	LOG_ERROR << "Pathfinding is NULL, path doesn't build";
