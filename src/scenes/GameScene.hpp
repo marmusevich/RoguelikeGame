@@ -19,17 +19,10 @@
 
 #include <unordered_map>
 #include <memory>
+#include <array>
+#include <string>
 
-//#include <string>
-
-// 
-// Views - 2D camera that defines what region is shown on screen.
-enum class eVIEW
-{
-	MAIN,
-	UI,
-	COUNT
-};
+ 
 
 // Music tracks.
 enum class eMUSIC_TRACK
@@ -57,6 +50,19 @@ public:
 	virtual void draw(sf::RenderWindow& window, float timeDelta) override;
 
 private:
+
+	// Views - 2D camera that defines what region is shown on screen.
+	enum class eVIEW
+	{
+		MAIN,
+		UI,
+		COUNT
+	};
+
+
+	void drawGame(sf::RenderWindow& window, const float timeDelta, const eVIEW viev);
+	void drawUI(sf::RenderWindow& window, const float timeDelta, const eVIEW viev);
+
 
 	/**
 	 * Plays the given sound effect, with randomized parameters.
@@ -114,81 +120,59 @@ private:
 	 */
 	void GenerateLevelGoal();
 
+
 	/**
 	 * Updates the level light.
 	 * @param playerPosition The position of the players within the level.
 	 */
-	void UpdateLight(sf::Vector2f playerPosition, int direction);
-
+	void UpdateLight(sf::Vector2f playerPosition);
 	/**
 	 * Updates all items in the level.
 	 * @param playerPosition The position of the players within the level.
 	 */
 	void UpdateItems(sf::Vector2f playerPosition);
-
 	/**
 	 * Updates all enemies in the level.
 	 * @param playerPosition The position of the players within the level.
 	 * @param timeDelta The amount of time that has passed since the last update.
 	 */
 	void UpdateEnemies(sf::Vector2f playerPosition, float timeDelta);
-
 	/**
 	 * Updates all projectiles in the level.
 	 * @param timeDetla The amount of time that has passed since the last update.
 	 */
 	void UpdateProjectiles(float timeDelta);
+	sf::Vector2f updatePlayer(float timeDelta);
 
 	void ReSpawnLevel();
 
 	std::string MakeGoalString();
 
 private:
+	// An array of the different views the game needs.
+	std::array<sf::View, static_cast<int>(eVIEW::COUNT)> m_views;
 
-	/**
-	 * An array of the different views the game needs.
-	 */
-	sf::View m_views[static_cast<int>(eVIEW::COUNT)];
-
-	/**
-	 * A vector that holds all items within the level.
-	 */
+	// A vector that holds all items within the level.
 	std::vector<std::unique_ptr<Item>> m_items;
 
-	/**
-	 * A vector that holds all the enemies within the level.
-	 */
+	// A vector that holds all the enemies within the level.
 	std::vector<std::unique_ptr<Enemy>> m_enemies;
+
+	// A vector containing all sprites that make up the lighting grid.
+	std::vector<sf::Sprite> m_lightGrid;
 
 	// The main level object. All data and functionally regarding the level lives in this class/object.
 	std::unique_ptr<Level> m_level;
+
 	// The main player object. Only one instance of this object should be created at any one time.
 	std::unique_ptr<Player> m_player;
 
-	/**
-	 * A vector containing all sprites that make up the lighting grid.
-	 */
-	std::vector<sf::Sprite> m_lightGrid;
-
-	/**
-	 * The size of the screen and window.
-	 */
+	// The size of the screen and window.
 	sf::Vector2u m_screenSize;
 
-	/**
-	* The center of the screen.
-	*/
+	// The center of the screen.
 	sf::Vector2f m_screenCenter;
 
-	/**
-	 * The current game score.
-	 */
-	int m_scoreTotal;
-
-	/**
-	* The amount of gold that the player currently has.
-	*/
-	int m_goldTotal;
 
 	/**
 	 * The sprite that shows the player class in the UI.
@@ -236,39 +220,32 @@ private:
 	std::shared_ptr<sf::Sprite> m_staminaStatSprite;
 
 	/**
-	 * The last position that the player was on.
-	 */
-	sf::Vector2i m_playerPreviousPos;
-
-	/**
 	 * A vector of all the player's projectiles.
 	 */
 	std::vector<std::unique_ptr<Projectile>> m_playerProjectiles;
 
-	/**
-	 * The value of gold remaining for the current goal.
-	 */
+
+	// The current game score.
+	int m_scoreTotal;
+
+	// The amount of gold that the player currently has.
+	int m_goldTotal;
+
+	// The value of gold remaining for the current goal.
 	int m_goldGoal;
 
-	/**
-	 * The value of gems remaining for the current goal.
-	 */
+	// The value of gems remaining for the current goal.
 	int m_gemGoal;
 
-	/**
-	 * The number of kills remaining for the current goal.
-	 */
+	// The number of kills remaining for the current goal.
 	int m_killGoal;
 
-	/**
-	* The text that will hold the level goal.
-	*/
+	// The text that will hold the level goal.
 	sf::String m_goalString;
 
-	/**
-	 * A boolean denoting if a goal is currently active.
-	 */
+	// A boolean denoting if a goal is currently active.
 	bool m_activeGoal;
+
 
 	/**
 	 * Sprite for the health bar.

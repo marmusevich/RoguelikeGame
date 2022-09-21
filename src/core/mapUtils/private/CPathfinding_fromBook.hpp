@@ -36,7 +36,6 @@ private:
 	};
 
 	explicit CPathfinding_fromBook(const sf::Vector2u& mapSize);
-	~CPathfinding_fromBook();
 
 	std::list<sf::Vector2u> pathfinding(const sf::Vector2u from, const sf::Vector2u to);
 

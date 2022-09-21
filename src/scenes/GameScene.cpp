@@ -22,7 +22,6 @@ GameScene::GameScene(const Game& game)
 , m_screenCenter(getGame().getScreenCenter())
 , m_scoreTotal(0)
 , m_goldTotal(0)
-, m_playerPreviousPos()
 , m_goldGoal(0)
 , m_gemGoal(0)
 , m_killGoal(0)
@@ -227,6 +226,8 @@ void GameScene::afterLoad(bool isLoaded)
     ConstructLightGrid();
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------
+
 void GameScene::ReSpawnLevel()
 {
     // Clear all current items.
@@ -240,203 +241,28 @@ void GameScene::ReSpawnLevel()
     m_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
 }
 
-// Updates the game.
-void GameScene::update(float timeDelta)
+// Generates a new level.
+void GameScene::GenerateLevel()
 {
-    // First check if the player is at the exit. If so there's no need to update anything.
-    if (m_level->GetTileType(m_player->getPosition()) == eTILE::WALL_DOOR_UNLOCKED)
+    // Generate a new level.
+    m_level->GenerateLevel();
+
+    // Add a key to the level.
+    SpawnItem(eITEM::KEY);
+
+    // Populate the level with items.
+    PopulateLevel();
+
+    // 1 in 3 change of creating a level goal.
+    if ((Random(2) == 0) && !m_activeGoal)
     {
-        ReSpawnLevel();
-    }
-    else
-    {
-        // update the player.
-        m_player->update(timeDelta, *m_level);
-        // Store the player position as it's used many times.
-        sf::Vector2f playerPosition = m_player->getPosition();
-        int playerDirection = m_player->getCurrentTextureIndex() % 4;
-        // Move the audio listener to the players location.
-        sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
-        // If the player is attacking create a projectile.
-        if (m_player->IsAttacking())
-        {
-            if (m_player->GetMana() >= 2)
-            {
-                sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
-                std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(*this, m_player->getProjectileTextureID(), playerPosition, m_screenCenter, target);
-                m_playerProjectiles.push_back(std::move(proj));
-                // Reduce player mana.
-                m_player->SetMana(m_player->GetMana() - 2);
-            }
-        }
-
-        // update all items.
-        UpdateItems(playerPosition);
-        // update level light.
-        UpdateLight(playerPosition, playerDirection);
-        // update all enemies.
-        UpdateEnemies(playerPosition, timeDelta);
-        // update all projectiles.
-        UpdateProjectiles(timeDelta);
-        // Find which torch is nearest the player.
-        auto torches = m_level->GetTorches();
-
-        // If there are torches.
-        if (!torches.empty())
-        {
-            // Store the first torch as the current closest.
-            std::shared_ptr<Torch> nearestTorch = torches.front();
-            float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->getPosition());
-
-            for (std::shared_ptr<Torch> torch : torches)
-            {
-                // Get the distance to the player.
-                float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->getPosition());
-                if (distanceToPlayer < lowestDistanceToPlayer)
-                {
-                    lowestDistanceToPlayer = distanceToPlayer;
-                    nearestTorch = torch;
-                }
-            }
-            m_fireSound.setPosition(nearestTorch->getPosition().x, nearestTorch->getPosition().y, 0.0f);
-        }
-
-        // Check if the player has moved grid square.
-        const auto playerCurrentPos = m_level->locationToMapCord(playerPosition);
-
-        if (m_playerPreviousPos != playerCurrentPos)
-        {
-            // Store the new tile.
-            m_playerPreviousPos = playerCurrentPos;
-
-            // update path finding for all enemies if within range of the player.
-            for (const auto& enemy : m_enemies)
-            {
-#ifdef NDEBUG
-                const float distanceToPlayer = 300.f;
-#else
-                const float distanceToPlayer = 30000.f;
-#endif
-                if (DistanceBetweenPoints(enemy->getPosition(), playerPosition) < distanceToPlayer)
-                {
-                    enemy->UpdatePathfinding(*m_level, playerPosition);
-                }
-            }
-        }
-
-        // Check if we have completed an active goal.
-        if (m_activeGoal)
-        {
-            if ((m_gemGoal <= 0) &&
-                (m_goldGoal <= 0) &&
-                (m_killGoal <= 0))
-            {
-                m_scoreTotal += Random(1000, 2000);
-                m_activeGoal = false;
-            }
-            else
-            {
-                m_goalString = MakeGoalString();
-            }
-        }
-
-        // Center the view.
-        m_views[static_cast<int>(eVIEW::MAIN)].setCenter(playerPosition);
-    }
-}
-
-
-// Draw the current game scene.
-void GameScene::draw(sf::RenderWindow& window, float timeDelta)
-{
-    // Clear the screen.
-    window.clear(sf::Color(3, 3, 3, 225));		// Gray
-
-    // Set the main game view.
-    window.setView(m_views[static_cast<int>(eVIEW::MAIN)]);
-
-    // Draw the level.
-    m_level->draw(window, timeDelta);
-
-    // Draw all objects.
-    for (const auto& item : m_items)
-    {
-        item->draw(window, timeDelta);
+        GenerateLevelGoal();
     }
 
-    // Draw all enemies.
-    for (const auto& enemy : m_enemies)
-    {
-        enemy->draw(window, timeDelta);
-    }
-
-    // Draw all projectiles
-    for (const auto& proj : m_playerProjectiles)
-    {
-        window.draw(proj->getSprite());
-    }
-
-    // Draw the player.
-    m_player->draw(window, timeDelta);
-
-    // Draw level light.
-    for (const sf::Sprite& sprite : m_lightGrid)
-    {
-        window.draw(sprite);
-    }
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    // Switch to UI view.
-    window.setView(m_views[static_cast<int>(eVIEW::UI)]);
-
-    // Draw player aim.
-    window.draw(m_player->GetAimSprite());
-
-    // Draw the level goal if active.
-    if (m_activeGoal)
-    {
-        DrawString(window, m_goalString, sf::Vector2f(static_cast<float>(window.getSize().x / 2), static_cast<float>(window.getSize().y - 75)), 30);
-    }
-
-    // Draw player stats.
-    DrawString(window, std::to_string(m_player->getAttack()), sf::Vector2f(m_screenCenter.x - 210.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player->getDefense()), sf::Vector2f(m_screenCenter.x - 90.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player->getStrength()), sf::Vector2f(m_screenCenter.x + 30.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player->getDexterity()), sf::Vector2f(m_screenCenter.x + 150.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, std::to_string(m_player->getStamina()), sf::Vector2f(m_screenCenter.x + 270.f, m_screenSize.y - 30.f), 25);
-    DrawString(window, ToStringFormated("%.6i", m_scoreTotal), sf::Vector2f(m_screenCenter.x - 120.f, 40.f), 40);
-    DrawString(window, ToStringFormated("%.5i", m_goldTotal), sf::Vector2f(m_screenCenter.x + 220.f, 40.f), 40);
-
-    // Draw rest of the UI.
-    for (const auto& sprite : m_uiSprites)
-    {
-        window.draw(*sprite);
-    }
-
-    // Draw the current room and floor.
-    DrawString(window, ToStringFormated("Floor %d", m_level->GetFloorNumber()), sf::Vector2f(70.f, m_screenSize.y - 65.f), 25);
-    DrawString(window, ToStringFormated("Room %d", m_level->GetRoomNumber()), sf::Vector2f(70.f, m_screenSize.y - 30.f), 25);
-
-    // Draw health and mana bars.
-    m_healthBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player->getMaxHealth()) * m_player->getHealth()), 8));
-    window.draw(*m_healthBarSprite);
-
-    m_manaBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player->GetMaxMana()) * m_player->GetMana()), 8));
-    window.draw(*m_manaBarSprite);
-
-
-    DrawString(window, ToStringFormated("is paused %s", (getGame().isPaused() == true ? "true" : "false")), m_screenCenter, 25);
-
+    // Moves the player to the start.
+    m_player->setPosition(m_level->getPlayerSpawnLocation());
 
 }
-
-
-
-
-
 
 // Constructs the grid of sprites that are used to draw the game light system.
 void GameScene::ConstructLightGrid()
@@ -477,29 +303,6 @@ void GameScene::ConstructLightGrid()
     }
 }
 
-// Generates a new level.
-void GameScene::GenerateLevel()
-{
-    // Generate a new level.
-    m_level->GenerateLevel();
-
-    // Add a key to the level.
-    SpawnItem(eITEM::KEY);
-
-    // Populate the level with items.
-    PopulateLevel();
-
-    // 1 in 3 change of creating a level goal.
-    if ((Random(2) == 0) && !m_activeGoal)
-    {
-        GenerateLevelGoal();
-    }
-
-    // Moves the player to the start.
-    m_player->setPosition(m_level->getPlayerSpawnLocation());
-
-}
-
 // Populate the level with items.
 void GameScene::PopulateLevel()
 {
@@ -515,7 +318,7 @@ void GameScene::PopulateLevel()
 
 
 
-//debug path finding
+    //debug path finding
 #ifdef NDEBUG
     // Spawn enemies.
     for (int i = 0; i < MAX_ENEMY_SPAWN_COUNT; i++)
@@ -526,14 +329,243 @@ void GameScene::PopulateLevel()
         }
     }
 #else
-    SpawnEnemy((eENEMY::HUMANOID));
+    SpawnEnemy(eENEMY::HUMANOID);
 #endif
 
 }
 
+// Spawns a given object type at a random location within the map. Has the option to explicitly set a spawn location.
+void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
+{
+    std::unique_ptr<Item> item;
+
+    int objectIndex = 0;
+
+    // Choose a random, unused spawn location.
+    sf::Vector2f spawnLocation;
+
+    if ((position.x >= 0.f) || (position.y >= 0.f))
+        spawnLocation = position;
+    else
+        spawnLocation = m_level->GetRandomSpawnLocation();
+
+    // Check which type of object is being spawned.
+    switch (itemType)
+    {
+    case eITEM::POTION:
+        item = std::make_unique<Potion>(*this);
+        break;
+
+    case eITEM::GOLD:
+        item = std::make_unique<Gold>(*this);
+        break;
+
+    case eITEM::GEM:
+        item = std::make_unique<Gem>(*this);
+        item->setSprite("spr_pickup_gem", false, 8, 12);
+        break;
+
+    case eITEM::KEY:
+        item = std::make_unique<Key>(*this);
+        item->setSprite("spr_pickup_key", false, 8, 12);
+        break;
+
+    case eITEM::HEART:
+        item = std::make_unique<Heart>(*this);
+        item->setSprite("spr_pickup_heart", false, 8, 12);
+        break;
+    }
+
+    // Set the item position.
+    item->setPosition(spawnLocation);
+
+    // Add the item to the list of all items.
+    m_items.push_back(std::move(item));
+}
+
+// Spawns a given number of enemies in the level.
+void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
+{
+    // Spawn location of enemy(s).
+    sf::Vector2f spawnLocation;
+
+    // Choose a random, unused spawn location.
+    if ((position.x >= 0.f) || (position.y >= 0.f))
+        spawnLocation = position;
+    else
+        spawnLocation = m_level->GetRandomSpawnLocation();
+
+    // Create the enemy.
+    std::unique_ptr<Enemy> enemy;
+
+    switch (enemyType)
+    {
+    case eENEMY::SLIME:
+        enemy = std::make_unique<Slime>(*this);
+        break;
+
+    case eENEMY::HUMANOID:
+        enemy = std::make_unique<Humanoid>(*this);
+        break;
+    }
+
+    // Set spawn location.
+    enemy->setPosition(spawnLocation);
+
+    // Add to list of all enemies.
+    m_enemies.push_back(std::move(enemy));
+}
+
+// Generates a random level goal.
+void GameScene::GenerateLevelGoal()
+{
+    // Reset our goal variables.
+    m_killGoal = 0;
+    m_goldGoal = 0;
+    m_gemGoal = 0;
+
+    // Choose which type of goal is to be generated.
+    int goalType = Random(2);
+
+    switch (goalType)
+    {
+    case 0:		// Kill X Enemies
+        m_killGoal = Random(5, 10);
+        break;
+
+    case 1:		// Collect X Gold
+        m_goldGoal = Random(50, 100);
+        break;
+
+    case 2:		// Collect X Gems
+        m_gemGoal = Random(5, 10);
+        break;
+    }
+
+    // Store our string.
+    m_goalString = MakeGoalString();
+
+    // Set the goal as active.
+    m_activeGoal = true;
+}
+
+std::string GameScene::MakeGoalString()
+{
+    std::ostringstream ss;
+
+    if (m_goldGoal > 0)
+    {
+        ss << "Current Goal: Collect " << m_goldGoal << " gold" << "!" << std::endl;
+    }
+    else if (m_gemGoal > 0)
+    {
+        ss << "Current Goal: Collect " << m_gemGoal << " gem" << "!" << std::endl;
+    }
+    else if (m_killGoal > 0)
+    {
+        ss << "Current Goal: Kill " << m_killGoal << " enemies" << "!" << std::endl;
+    }
+    return ss.str();
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+// Updates the game.
+void GameScene::update(float timeDelta)
+{
+    // First check if the player is at the exit. If so there's no need to update anything.
+    if (m_level->GetTileType(m_player->getPosition()) == eTILE::WALL_DOOR_UNLOCKED)
+    {
+        ReSpawnLevel();
+    }
+    else
+    {
+        // update the player.
+        const sf::Vector2f playerPosition = updatePlayer(timeDelta);
+        //const int playerDirection = m_player->getCurrentTextureIndex() % 4;
+
+        // update all items.
+        UpdateItems(playerPosition);
+        // update level light.
+        UpdateLight(playerPosition);
+        
+        // update all enemies.
+        UpdateEnemies(playerPosition, timeDelta);
+
+        // update all projectiles.
+        UpdateProjectiles(timeDelta);
+
+        // Find which torch is nearest the player.
+        auto torches = m_level->GetTorches();
+
+        // If there are torches.
+        if (!torches.empty())
+        {
+            // Store the first torch as the current closest.
+            std::shared_ptr<Torch> nearestTorch = torches.front();
+            float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->getPosition());
+
+            for (std::shared_ptr<Torch> torch : torches)
+            {
+                // Get the distance to the player.
+                float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->getPosition());
+                if (distanceToPlayer < lowestDistanceToPlayer)
+                {
+                    lowestDistanceToPlayer = distanceToPlayer;
+                    nearestTorch = torch;
+                }
+            }
+            m_fireSound.setPosition(nearestTorch->getPosition().x, nearestTorch->getPosition().y, 0.0f);
+        }
+
+        // Check if we have completed an active goal.
+        if (m_activeGoal)
+        {
+            if ((m_gemGoal <= 0) &&
+                (m_goldGoal <= 0) &&
+                (m_killGoal <= 0))
+            {
+                m_scoreTotal += Random(1000, 2000);
+                m_activeGoal = false;
+            }
+            else
+            {
+                m_goalString = MakeGoalString();
+            }
+        }
+
+        // Center the view.
+        m_views[static_cast<int>(eVIEW::MAIN)].setCenter(playerPosition);
+    }
+}
+
+sf::Vector2f GameScene::updatePlayer(float timeDelta)
+{
+    
+    m_player->update(timeDelta, *m_level);
+    // Store the player position as it's used many times.
+    sf::Vector2f playerPosition = m_player->getPosition();
+    //int playerDirection = m_player->getCurrentTextureIndex() % 4;
+    // Move the audio listener to the players location.
+    sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
+    // If the player is attacking create a projectile.
+    if (m_player->IsAttacking())
+    {
+        if (m_player->GetMana() >= 2)
+        {
+            sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
+            std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(*this, m_player->getProjectileTextureID(), playerPosition, m_screenCenter, target);
+            m_playerProjectiles.push_back(std::move(proj));
+            // Reduce player mana.
+            m_player->SetMana(m_player->GetMana() - 2);
+        }
+    }
+
+    return playerPosition;
+}
 
 // Updates the level light.
-void GameScene::UpdateLight(sf::Vector2f playerPosition, int direction)
+void GameScene::UpdateLight(sf::Vector2f playerPosition)
 {
     for (sf::Sprite& sprite : m_lightGrid)
     {
@@ -731,7 +763,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
     // Store player tile.
-    const auto playerPos = m_level->locationToMapCord(m_player->getPosition());
+    const auto playerPos = m_level->locationToMapCord(playerPosition);
 
     auto enemyIterator = m_enemies.begin();
     while (enemyIterator != m_enemies.end())
@@ -817,17 +849,21 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
         if (!enemyWasDeleted)
         {
             enemy.update(timeDelta);
-            ++enemyIterator;
-        }
 
-        // Check for collision with player.
-        if (enemyPos == playerPos)
-        {
-            if (m_player->CanTakeDamage())
+            // Check for collision with player.
+            if (enemyPos == playerPos)
             {
-                m_player->Damage(10);
-                PlaySound(m_playerHitSound);
+                if (m_player->CanTakeDamage())
+                {
+                    m_player->Damage(10);
+                    PlaySound(m_playerHitSound);
+                }
             }
+
+            enemy.invokeAI(*m_level, playerPosition);
+
+
+            ++enemyIterator;
         }
     }
 }
@@ -841,11 +877,8 @@ void GameScene::UpdateProjectiles(float timeDelta)
         // Get the projectile object from the iterator.
         Projectile& projectile = **projectileIterator;
 
-        // Get the tile that the projectile is on.
-        eTILE projectileTileType = m_level->GetTileType(projectile.getPosition());
-
         // If the tile the projectile is on is not floor, delete it.
-        if ((projectileTileType != eTILE::FLOOR) && (projectileTileType != eTILE::FLOOR_ALT))
+        if (!m_level->IsFloor(projectile.getPosition()))
         {
             projectileIterator = m_playerProjectiles.erase(projectileIterator);
         }
@@ -857,6 +890,99 @@ void GameScene::UpdateProjectiles(float timeDelta)
         }
     }
 }
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+// Draw the current game scene.
+void GameScene::draw(sf::RenderWindow& window, float timeDelta)
+{
+    // Clear the screen.
+    window.clear(sf::Color(3, 3, 3, 225));		// Gray
+
+    drawGame(window, timeDelta, eVIEW::MAIN);
+    drawUI(window, timeDelta, eVIEW::UI);
+}
+
+void GameScene::drawGame(sf::RenderWindow& window, const float timeDelta, const GameScene::eVIEW viev)
+{
+    // Set the main game view.
+    window.setView(m_views[static_cast<int>(viev)]);
+
+    // Draw the level.
+    m_level->draw(window, timeDelta);
+
+    // Draw all objects.
+    for (const auto& item : m_items)
+    {
+        item->draw(window, timeDelta);
+    }
+
+    // Draw all enemies.
+    for (const auto& enemy : m_enemies)
+    {
+        enemy->draw(window, timeDelta);
+    }
+
+    // Draw all projectiles
+    for (const auto& proj : m_playerProjectiles)
+    {
+        window.draw(proj->getSprite());
+    }
+
+    // Draw the player.
+    m_player->draw(window, timeDelta);
+
+    // Draw level light.
+    for (const sf::Sprite& sprite : m_lightGrid)
+    {
+        window.draw(sprite);
+    }
+}
+
+void GameScene::drawUI(sf::RenderWindow& window, const float timeDelta, const GameScene::eVIEW viev)
+{
+    // Switch to UI view.
+    window.setView(m_views[static_cast<int>(viev)]);
+
+    // Draw player aim.
+    window.draw(m_player->GetAimSprite());
+
+    // Draw the level goal if active.
+    if (m_activeGoal)
+    {
+        DrawString(window, m_goalString, sf::Vector2f(static_cast<float>(window.getSize().x / 2), static_cast<float>(window.getSize().y - 75)), 30);
+    }
+
+    // Draw player stats.
+    DrawString(window, std::to_string(m_player->getAttack()), sf::Vector2f(m_screenCenter.x - 210.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getDefense()), sf::Vector2f(m_screenCenter.x - 90.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getStrength()), sf::Vector2f(m_screenCenter.x + 30.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getDexterity()), sf::Vector2f(m_screenCenter.x + 150.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, std::to_string(m_player->getStamina()), sf::Vector2f(m_screenCenter.x + 270.f, m_screenSize.y - 30.f), 25);
+    DrawString(window, ToStringFormated("%.6i", m_scoreTotal), sf::Vector2f(m_screenCenter.x - 120.f, 40.f), 40);
+    DrawString(window, ToStringFormated("%.5i", m_goldTotal), sf::Vector2f(m_screenCenter.x + 220.f, 40.f), 40);
+
+    // Draw rest of the UI.
+    for (const auto& sprite : m_uiSprites)
+    {
+        window.draw(*sprite);
+    }
+
+    // Draw the current room and floor.
+    DrawString(window, ToStringFormated("Floor %d", m_level->GetFloorNumber()), sf::Vector2f(70.f, m_screenSize.y - 65.f), 25);
+    DrawString(window, ToStringFormated("Room %d", m_level->GetRoomNumber()), sf::Vector2f(70.f, m_screenSize.y - 30.f), 25);
+
+    // Draw health and mana bars.
+    m_healthBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player->getMaxHealth()) * m_player->getHealth()), 8));
+    window.draw(*m_healthBarSprite);
+
+    m_manaBarSprite->setTextureRect(sf::IntRect(0, 0, static_cast<int>((213.f / m_player->GetMaxMana()) * m_player->GetMana()), 8));
+    window.draw(*m_manaBarSprite);
+
+
+    //DrawString(window, ToStringFormated("is paused %s", (getGame().isPaused() == true ? "true" : "false")), m_screenCenter, 25);
+}
+
 
 // Draw the given string at the given position.
 void GameScene::DrawString(sf::RenderWindow& window, std::string text, sf::Vector2f position, unsigned int size)
@@ -872,120 +998,7 @@ void GameScene::DrawString(sf::RenderWindow& window, std::string text, sf::Vecto
     window.draw(m_text);
 }
 
-// Spawns a given object type at a random location within the map. Has the option to explicitly set a spawn location.
-void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
-{
-    std::unique_ptr<Item> item;
-
-    int objectIndex = 0;
-
-    // Choose a random, unused spawn location.
-    sf::Vector2f spawnLocation;
-
-    if ((position.x >= 0.f) || (position.y >= 0.f))
-        spawnLocation = position;
-    else
-        spawnLocation = m_level->GetRandomSpawnLocation();
-
-    // Check which type of object is being spawned.
-    switch (itemType)
-    {
-    case eITEM::POTION:
-        item = std::make_unique<Potion>(*this);
-        break;
-
-    case eITEM::GOLD:
-        item = std::make_unique<Gold>(*this);
-        break;
-
-    case eITEM::GEM:
-        item = std::make_unique<Gem>(*this);
-        item->setSprite("spr_pickup_gem", false, 8, 12);
-        break;
-
-    case eITEM::KEY:
-        item = std::make_unique<Key>(*this);
-        item->setSprite("spr_pickup_key", false, 8, 12);
-        break;
-
-    case eITEM::HEART:
-        item = std::make_unique<Heart>(*this);
-        item->setSprite("spr_pickup_heart", false, 8, 12);
-        break;
-    }
-
-    // Set the item position.
-    item->setPosition(spawnLocation);
-
-    // Add the item to the list of all items.
-    m_items.push_back(std::move(item));
-}
-
-// Spawns a given number of enemies in the level.
-void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
-{
-    // Spawn location of enemy(s).
-    sf::Vector2f spawnLocation;
-
-    // Choose a random, unused spawn location.
-    if ((position.x >= 0.f) || (position.y >= 0.f))
-        spawnLocation = position;
-    else
-        spawnLocation = m_level->GetRandomSpawnLocation();
-
-    // Create the enemy.
-    std::unique_ptr<Enemy> enemy;
-
-    switch (enemyType)
-    {
-    case eENEMY::SLIME:
-        enemy = std::make_unique<Slime>(*this);
-        break;
-
-    case eENEMY::HUMANOID:
-        enemy = std::make_unique<Humanoid>(*this);
-        break;
-    }
-
-    // Set spawn location.
-    enemy->setPosition(spawnLocation);
-
-    // Add to list of all enemies.
-    m_enemies.push_back(std::move(enemy));
-}
-
-// Generates a random level goal.
-void GameScene::GenerateLevelGoal()
-{
-    // Reset our goal variables.
-    m_killGoal = 0;
-    m_goldGoal = 0;
-    m_gemGoal = 0;
-
-    // Choose which type of goal is to be generated.
-    int goalType = Random(2);
-
-    switch (goalType)
-    {
-    case 0:		// Kill X Enemies
-        m_killGoal = Random(5, 10);
-        break;
-
-    case 1:		// Collect X Gold
-        m_goldGoal = Random(50, 100);
-        break;
-
-    case 2:		// Collect X Gems
-        m_gemGoal = Random(5, 10);
-        break;
-    }
-
-    // Store our string.
-    m_goalString = MakeGoalString();
-
-    // Set the goal as active.
-    m_activeGoal = true;
-}
+//--------------------------------------------------------------------------------------------------------------------------------
 
 // Plays the given sound effect, with randomized parameters.
 void GameScene::PlaySound(sf::Sound& sound, sf::Vector2f position)
@@ -999,23 +1012,4 @@ void GameScene::PlaySound(sf::Sound& sound, sf::Vector2f position)
 
     // Play the sound.
     sound.play();
-}
-
-std::string GameScene::MakeGoalString()
-{
-    std::ostringstream ss;
-
-    if (m_goldGoal > 0)
-    {
-        ss << "Current Goal: Collect " << m_goldGoal << " gold" << "!" << std::endl;
-    }
-    else if (m_gemGoal > 0)
-    {
-        ss << "Current Goal: Collect " << m_gemGoal << " gem" << "!" << std::endl;
-    }
-    else if (m_killGoal > 0)
-    {
-        ss << "Current Goal: Kill " << m_killGoal << " enemies" << "!" << std::endl;
-    }
-    return ss.str();
 }

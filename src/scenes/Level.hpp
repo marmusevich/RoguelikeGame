@@ -101,7 +101,6 @@ public:
 	 * @param rowIndex The row index of the tile to check.
 	 * @return The index of the given tile.
 	 */
-	eTILE GetTileType(const int columnIndex, const int rowIndex) const;
 	eTILE GetTileType(const sf::Vector2f position) const;
 
 	/**
@@ -167,14 +166,8 @@ public:
 	 * @param rowIndex The column that the row is in.
 	 * @return True if the given tile is a floor tile.
 	 */
-	bool IsFloor(int columnIndex, int rowIndex) const;
-
-	/**
-	* Return true if the given tile is a floor tile.
-	* @param tile The tile to check
-	* @return True if the given tile is a floor tile.
-	*/
-	bool IsFloor(const Tile& tile) const;
+	bool IsFloor(const sf::Vector2i& pos) const;
+	bool IsFloor(const sf::Vector2f position) const;
 
 	/**
 	 * Returns true if the given tile index is solid.
@@ -182,7 +175,6 @@ public:
 	 * @param rowIndex The tile's row index.
 	 * @return True if the given tile is solid.
 	 */
-	bool IsSolid(const int columnIndex, const int rowIndex) const;
 	bool IsSolid(const sf::Vector2f position) const;
 
 	/**

@@ -37,7 +37,7 @@ public:
 	 */
 	//TODO !!! invert dependesy, level CONST, has to no change
 	// mast be util, find from - to
-	void UpdatePathfinding(const Level& level, sf::Vector2f playerPosition);
+	virtual void invokeAI(const Level& level, sf::Vector2f playerPosition);
 
 	/**
 	 * Applies the given amount of damage to the enemy.
@@ -57,5 +57,10 @@ protected:
 
 	// The current target of the enemy.
 	sf::Vector2f m_currentTarget;
+
+	//WA
+	sf::Vector2i s_playerPreviousPos;
+
+	sf::Color debugPathColor;
 };
 #endif
