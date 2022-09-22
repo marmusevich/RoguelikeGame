@@ -39,7 +39,7 @@ public:
 	 * Returns true if the game is currently running.
 	 * @return True if the game is running.
 	 */
-	bool isRunning();
+	bool isRunning() const;
 
 	/**
 	 * Set current scene.

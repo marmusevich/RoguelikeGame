@@ -18,13 +18,13 @@ public:
 	 * Updates the brightness of the torch.
 	 * @param timeDelta The time that has passed since the last update.
 	 */
-	void update(float timeDelta) override;
+	void update(const float timeDelta) override;
 
 	/**
 	 * Gets the brightness modifier of the torch. This is used to create flicker.
 	 * @return The brightness of the torch.
 	 */
-	float GetBrightness();
+	float GetBrightness() const;
 
 private:
 

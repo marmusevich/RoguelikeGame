@@ -22,7 +22,7 @@ Entity::Entity(const Scene& scene)
 }
 
 // Override the default Object::update function.
-void Entity::update(float timeDelta)
+void Entity::update(const float timeDelta)
 {
 	// Choose animation state.
 	eANIMATION_STATE animState = static_cast<eANIMATION_STATE>(m_currentTextureIndex);
@@ -130,36 +130,31 @@ int Entity::getStamina() const
 }
 
 // Sets the entities attack stat.
-void Entity::setAttack(int attackValue)
+void Entity::setAttack(const int attackValue)
 {
 	m_attack = attackValue;
 }
 
 // Sets the entities defense stat.
-void Entity::setDefense(int defenseValue)
+void Entity::setDefense(const int defenseValue)
 {
 	m_defense = defenseValue;
 }
 
 // Sets the entities strength stat.
-void Entity::setStrength(int strengthValue)
+void Entity::setStrength(const int strengthValue)
 {
 	m_strength = strengthValue;
 }
 
 // Sets the entities dexterity stat.
-void Entity::setDexterity(int dexterityValue)
+void Entity::setDexterity(const int dexterityValue)
 {
 	m_dexterity = dexterityValue;
 }
 
 // Sets the entities stamina stat.
-void Entity::setStamina(int staminaValue)
+void Entity::setStamina(const int staminaValue)
 {
 	m_stamina = staminaValue;
-}
-
-int Entity::getCurrentTextureIndex()
-{
-	return m_currentTextureIndex;
 }

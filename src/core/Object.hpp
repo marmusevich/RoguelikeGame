@@ -23,20 +23,20 @@ public:
 	 * This is a pure virtual function, and must be implemented by extending classes.
 	 * @param timeDelta The time elapsed since the last tick in MS.
 	 */
-	virtual void update(float timeDelta) {};
+	virtual void update(const float timeDelta) {};
 
 	/**
 	 * Draws the object to the screen at its current position.
 	 * @param window The render window to draw the object to.
 	 * @param tileDelta The time, in MS, since the last draw call.
 	 */
-	virtual void draw(sf::RenderWindow &window, float timeDelta);
+	virtual void draw(sf::RenderWindow &window, const float timeDelta);
 
 	/**
 	 * Sets the position of the object on screen. This is relative to the top-left of the game window.
 	 * @param position The new position of the player.
 	 */
-	void setPosition(sf::Vector2f position);
+	void setPosition(const sf::Vector2f position);
 
 	/** 
 	 * Returns the position of the object. This is relative to the top-left of the game window.
@@ -54,8 +54,8 @@ public:
 	 * @param frameSpeed The speed that the animation plays at. Defaults to 1.
 	 * @return true if the operation succeeded.
 	 */
-	bool setSprite(const sf::Texture& texture, bool isSmooth, int frames = 1, int frameSpeed = 0);
-	bool setSprite(const std::string& textureId, bool isSmooth, int frames = 1, int frameSpeed = 0);
+	bool setSprite(const sf::Texture& texture, const bool isSmooth, const int frames = 1, const int frameSpeed = 0);
+	bool setSprite(const std::string& textureId, const bool isSmooth, const int frames = 1, const int frameSpeed = 0);
 
 	/**
 	 * Returns a reference the object's sprite.
@@ -73,13 +73,13 @@ public:
 	 * Gets the current animation state of the object.
 	 * @return The current animation state of the object.
 	 */
-	bool isAnimated();
+	bool isAnimated() const;
 
 	/**
 	* Sets the animation state of the object.
 	* @param isAnimated The new animation state of the object.
 	*/
-	void setAnimated(bool isAnimated);
+	void setAnimated(const bool isAnimated);
 
 protected:
 

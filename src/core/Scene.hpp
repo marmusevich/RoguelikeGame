@@ -17,13 +17,13 @@ public :
 	 * The main update loop. This loop in turns calls the update loops of all game objects.
 	 * @param timeDelta The time, in MS, since the last update call.
 	 */
-	virtual void update(float timeDelta);
+	virtual void update(const float timeDelta);
 
 	/**
 	 * Draws all game objects to screen.
 	 * @param tileDelta The time, in MS, since the last draw call.
 	 */
-	virtual void draw(sf::RenderWindow& window, float timeDelta);
+	virtual void draw(sf::RenderWindow& window, const float timeDelta);
 
 	/** 
 	 * callbeck before load
@@ -46,7 +46,7 @@ public :
 	 * callback after
 	 * isLoaded resurse loaded
 	 */
-	virtual void afterLoad(bool isLoaded);
+	virtual void afterLoad(const bool isLoaded);
 
 	virtual const NResurceManagement::ResourceManager& getResourceManager() const;
 

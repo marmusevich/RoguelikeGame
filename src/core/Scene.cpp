@@ -17,18 +17,18 @@ bool Scene::loadResurce()
 	return true;
 }
 
-void Scene::afterLoad(bool isLoaded)
+void Scene::afterLoad(const bool isLoaded)
 {
 
 }
 
 
-void Scene::update(float timeDelta)
+void Scene::update(const float timeDelta)
 {
 
 }
 
-void Scene::draw(sf::RenderWindow& window, float timeDelta)
+void Scene::draw(sf::RenderWindow& window, const float timeDelta)
 {
 
 }

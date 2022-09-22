@@ -209,9 +209,4 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 	return ret;
 }
 
-CPathfinding_fromBook::~CPathfinding_fromBook()
-{
-	LOG_DEBUG << "~CPathfinding_fromBook";
-}
-
 } // namespace NMapUtils

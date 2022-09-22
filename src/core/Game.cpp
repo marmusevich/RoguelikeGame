@@ -58,7 +58,7 @@ bool Game::setScene(std::shared_ptr<Scene> scene)
 	return isOk;
 }
 
-bool Game::isRunning()
+bool Game::isRunning() const
 {
 	return m_isRunning;
 }

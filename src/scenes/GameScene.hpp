@@ -19,17 +19,11 @@
 
 #include <unordered_map>
 #include <memory>
+#include <array>
+#include <string>
+#include <optional>
 
-//#include <string>
-
-// 
-// Views - 2D camera that defines what region is shown on screen.
-enum class eVIEW
-{
-	MAIN,
-	UI,
-	COUNT
-};
+ 
 
 // Music tracks.
 enum class eMUSIC_TRACK
@@ -50,20 +44,33 @@ public:
 
 	virtual bool beforeLoad() override;
 
-	virtual void afterLoad(bool isLoaded) override;
+	virtual void afterLoad(const bool isLoaded) override;
 
-	virtual void update(float timeDelta) override;
+	virtual void update(const float timeDelta) override;
 
-	virtual void draw(sf::RenderWindow& window, float timeDelta) override;
+	virtual void draw(sf::RenderWindow& window, const float timeDelta) override;
 
 private:
+
+	// Views - 2D camera that defines what region is shown on screen.
+	enum class eVIEW
+	{
+		MAIN,
+		UI,
+		COUNT
+	};
+
+
+	void drawGame(sf::RenderWindow& window, const float timeDelta, const eVIEW viev);
+	void drawUI(sf::RenderWindow& window, const float timeDelta, const eVIEW viev);
+
 
 	/**
 	 * Plays the given sound effect, with randomized parameters.
 	 * @param sound A reference to the sound to play.
 	 * @param position The position to play the sound at.
 	 */
-	void PlaySound(sf::Sound& sound, sf::Vector2f position = { 0.f, 0.f });
+	void PlaySound(sf::Sound& sound, const sf::Vector2f position = { 0.f, 0.f });
 
 	/**
 	 * Populates the current game room with items and enemies.
@@ -86,7 +93,7 @@ private:
 	 * @param position The top-left position of the string.
 	 * @param size (Optional) The font-size to use. Default value is 10.
 	 */
-	void DrawString(sf::RenderWindow& window, std::string text, sf::Vector2f position, unsigned int size = 10);
+	void DrawString(sf::RenderWindow& window, const std::string text, const sf::Vector2f position, const unsigned int size = 10);
 
 	/**
 	 * Spawns a given item within the level.
@@ -94,7 +101,7 @@ private:
 	 * @param itemType The type of the item to spawn.
 	 * @param position The position to spawn the item at.
 	 */
-	void SpawnItem(eITEM itemType, sf::Vector2f position = { -1.f, -1.f });
+	void SpawnItem(const eITEM itemType, const sf::Vector2f position = { -1.f, -1.f });
 
 	/**
 	* Spawns a given enemy within the level.
@@ -102,93 +109,71 @@ private:
 	* @param enemyType The type of the enemy to spawn.
 	* @param position The position to spawn the enemy at.
 	*/
-	void SpawnEnemy(eENEMY enemyType, sf::Vector2f position = { -1.f, -1.f });
+	void SpawnEnemy(const eENEMY enemyType, const sf::Vector2f position = { -1.f, -1.f });
 
 	/**
-	 * Constructs the grid of sprites that are used to draw the game light system.
+	 * Constructs the grid of sprites that are used to draw the game shadow system.
 	 */
-	void ConstructLightGrid();
+	void ConstructShadowGrid();
 
 	/**
 	 * Generates a level goal.
 	 */
 	void GenerateLevelGoal();
 
+
 	/**
-	 * Updates the level light.
+	 * Updates the level shadow.
 	 * @param playerPosition The position of the players within the level.
 	 */
-	void UpdateLight(sf::Vector2f playerPosition, int direction);
-
+	std::optional<sf::Vector2f> UpdateShadow(const sf::Vector2f playerPosition);
 	/**
 	 * Updates all items in the level.
 	 * @param playerPosition The position of the players within the level.
 	 */
-	void UpdateItems(sf::Vector2f playerPosition);
-
+	void UpdateItems(const sf::Vector2f playerPosition);
 	/**
 	 * Updates all enemies in the level.
 	 * @param playerPosition The position of the players within the level.
 	 * @param timeDelta The amount of time that has passed since the last update.
 	 */
-	void UpdateEnemies(sf::Vector2f playerPosition, float timeDelta);
-
+	void UpdateEnemies(const sf::Vector2f playerPosition, const float timeDelta);
 	/**
 	 * Updates all projectiles in the level.
 	 * @param timeDetla The amount of time that has passed since the last update.
 	 */
-	void UpdateProjectiles(float timeDelta);
+	void UpdateProjectiles(const float timeDelta);
+	sf::Vector2f updatePlayer(const float timeDelta);
 
 	void ReSpawnLevel();
 
-	std::string MakeGoalString();
+	std::string MakeGoalString() const;
 
 private:
+	// An array of the different views the game needs.
+	std::array<sf::View, static_cast<int>(eVIEW::COUNT)> m_views;
 
-	/**
-	 * An array of the different views the game needs.
-	 */
-	sf::View m_views[static_cast<int>(eVIEW::COUNT)];
-
-	/**
-	 * A vector that holds all items within the level.
-	 */
+	// A vector that holds all items within the level.
 	std::vector<std::unique_ptr<Item>> m_items;
 
-	/**
-	 * A vector that holds all the enemies within the level.
-	 */
+	// A vector that holds all the enemies within the level.
 	std::vector<std::unique_ptr<Enemy>> m_enemies;
+
+	// A vector containing all sprites that make up the shadowing grid.
+	std::vector<sf::Sprite> m_shadowGrid;
 
 	// The main level object. All data and functionally regarding the level lives in this class/object.
 	std::unique_ptr<Level> m_level;
+
 	// The main player object. Only one instance of this object should be created at any one time.
 	std::unique_ptr<Player> m_player;
 
-	/**
-	 * A vector containing all sprites that make up the lighting grid.
-	 */
-	std::vector<sf::Sprite> m_lightGrid;
-
-	/**
-	 * The size of the screen and window.
-	 */
+	// The size of the screen and window.
 	sf::Vector2u m_screenSize;
 
-	/**
-	* The center of the screen.
-	*/
+	// The center of the screen.
 	sf::Vector2f m_screenCenter;
 
-	/**
-	 * The current game score.
-	 */
-	int m_scoreTotal;
-
-	/**
-	* The amount of gold that the player currently has.
-	*/
-	int m_goldTotal;
 
 	/**
 	 * The sprite that shows the player class in the UI.
@@ -236,39 +221,32 @@ private:
 	std::shared_ptr<sf::Sprite> m_staminaStatSprite;
 
 	/**
-	 * The last tile that the player was on.
-	 */
-	Tile* m_playerPreviousTile;
-
-	/**
 	 * A vector of all the player's projectiles.
 	 */
 	std::vector<std::unique_ptr<Projectile>> m_playerProjectiles;
 
-	/**
-	 * The value of gold remaining for the current goal.
-	 */
+
+	// The current game score.
+	int m_scoreTotal;
+
+	// The amount of gold that the player currently has.
+	int m_goldTotal;
+
+	// The value of gold remaining for the current goal.
 	int m_goldGoal;
 
-	/**
-	 * The value of gems remaining for the current goal.
-	 */
+	// The value of gems remaining for the current goal.
 	int m_gemGoal;
 
-	/**
-	 * The number of kills remaining for the current goal.
-	 */
+	// The number of kills remaining for the current goal.
 	int m_killGoal;
 
-	/**
-	* The text that will hold the level goal.
-	*/
+	// The text that will hold the level goal.
 	sf::String m_goalString;
 
-	/**
-	 * A boolean denoting if a goal is currently active.
-	 */
+	// A boolean denoting if a goal is currently active.
 	bool m_activeGoal;
+
 
 	/**
 	 * Sprite for the health bar.

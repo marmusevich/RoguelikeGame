@@ -117,7 +117,7 @@ Player::Player(const Scene& scene)
 }
 
 // Updates the player object.
-void Player::update(float timeDelta, Level& level)
+void Player::update(const float timeDelta, Level& level)
 {
 	// Calculate movement speed based on the timeDelta since the last update.
 	sf::Vector2f movementSpeed(0.f, 0.f);
@@ -325,7 +325,7 @@ bool Player::IsAttacking()
 }
 
 // Checks if the player can take damage.
-bool Player::CanTakeDamage()
+bool Player::CanTakeDamage() const
 {
 	return m_canTakeDamage;
 }

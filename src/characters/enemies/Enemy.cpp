@@ -1,7 +1,13 @@
 #include "characters/enemies/Enemy.hpp"
+#include "scenes/Level.hpp"
+
 #include "core/Scene.hpp"
 #include "core/manager/ResourceManager.hpp"
+
 #include "utils/MathUtils.hpp"
+
+
+
 
 #include <plog/Log.h>
 
@@ -17,11 +23,15 @@ Enemy::Enemy(const Scene& scene)
 	m_strength = Random(6, 10);
 	m_dexterity = Random(6, 10);
 	m_stamina = Random(6, 10);
-	m_speed = Random(151, 200);;
+	m_speed = Random(151, 200);
+
+
+	debugPathColor = RandomColor(150, 255);
+	debugPathColor.a = 200;
 }
 
 // Overrides the default update function of Entity.
-void Enemy::update(float timeDelta)
+void Enemy::update(const float timeDelta)
 {
 	// Move towards current target location.
 	if (!m_targetPositions.empty())
@@ -50,33 +60,58 @@ void Enemy::update(float timeDelta)
 	tBase::update(timeDelta);
 }
 
-void Enemy::draw(sf::RenderWindow& window, float timeDelta)
+void Enemy::draw(sf::RenderWindow& window, const float timeDelta)
 {
 	tBase::draw(window, timeDelta);
 
-	for(const auto p : m_targetPositions)
-	{
-		sf::CircleShape shape(10);
-		shape.setFillColor(sf::Color(100, 250, 50));
-		shape.setPosition(p);
-		window.draw(shape);
-	}
+//show path
+#ifndef NDEBUG
+for (const auto p : m_targetPositions)
+{
+	sf::CircleShape shape(m_speed / 20.f);
+	shape.setFillColor(debugPathColor);
+	shape.setPosition(p);
+	window.draw(shape);
+}
+#endif
+
 }
 
 // Recalculates the enemies path finding.
-void Enemy::UpdatePathfinding(const Level& level, sf::Vector2f playerPosition)
+void Enemy::invokeAI(const Level& level, const sf::Vector2f playerPosition)
 {
-	m_targetPositions = level.pathfinding(m_position, playerPosition);
+	// [WA] in future each enemy type has self AI logic
+
+	//static sf::Vector2i s_playerPreviousPos { -1, -1 };
+
+	const auto playerCurrentPos = level.locationToMapCord(playerPosition);
+	if (s_playerPreviousPos != playerCurrentPos)
+	{
+		s_playerPreviousPos = playerCurrentPos;
+
+		LOG_DEBUG << "s_playerPosition = { " << s_playerPreviousPos.x << " ; " << s_playerPreviousPos.y << " } ";
+
+
+#ifdef NDEBUG
+		const float distanceToPlayer = 300.f;
+#else
+		const float distanceToPlayer = 30000.f;
+#endif
+		if (DistanceBetweenPoints(m_position, playerPosition) < distanceToPlayer)
+		{
+			m_targetPositions = level.pathfinding(m_position, playerPosition);
+		}
+	}
 }
 
 // Applies the given amount of damage to the enemy.
-void Enemy::Damage(int damage)
+void Enemy::Damage(const int damage)
 {
 	m_health -= damage;
 }
 
 // Checks if the enemy has taken enough damage that they are now dead.
-bool Enemy::IsDead()
+bool Enemy::IsDead() const
 {
 	return (m_health <= 0);
 }
