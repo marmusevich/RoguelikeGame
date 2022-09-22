@@ -26,9 +26,9 @@ public:
 	 * Overrides the default update function of Entity.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	virtual void update(float timeDelta) override;
+	virtual void update(const float timeDelta) override;
 
-	virtual void draw(sf::RenderWindow& window, float timeDelta) override ;
+	virtual void draw(sf::RenderWindow& window, const float timeDelta) override ;
 
 	/**
 	 * Recalculates the enemies path finding.
@@ -37,19 +37,19 @@ public:
 	 */
 	//TODO !!! invert dependesy, level CONST, has to no change
 	// mast be util, find from - to
-	virtual void invokeAI(const Level& level, sf::Vector2f playerPosition);
+	virtual void invokeAI(const Level& level, const sf::Vector2f playerPosition);
 
 	/**
 	 * Applies the given amount of damage to the enemy.
 	 * @param damage The amount of damage to deal to the enemy.
 	 */
-	void Damage(int damage);
+	void Damage(const int damage);
 
 	/**
 	 * Checks if the enemy has taken enough damage that they are now dead.
 	 * @return True if the enemy is dead.
 	 */
-	bool IsDead();
+	bool IsDead() const;
 
 protected:
 	// The target position of the enemy.

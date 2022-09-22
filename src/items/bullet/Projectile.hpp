@@ -17,13 +17,13 @@ public:
 	 * @param screenCenter The center of the screen. Used to calculate direction.
 	 * @param target The target location of the projectile.
 	 */
-	explicit Projectile(const Scene& scene, const std::string& textureId, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target);
+	explicit Projectile(const Scene& scene, const std::string& textureId, const sf::Vector2f origin, const sf::Vector2f screenCenter, const sf::Vector2f target);
 
 	/**
 	 * Override of the update function.
 	 * @param timeDelta The time in seconds since the last update.
 	 */
-	void update(float timeDelta) override;
+	void update(const float timeDelta) override;
 
 private:
 	/**

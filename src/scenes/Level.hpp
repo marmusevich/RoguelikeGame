@@ -15,8 +15,17 @@
 //fwd
 class Scene;
 
+class Level
+{
+// Constants for the game grid size.
+static int const GRID_WIDTH = 19;
+static int const GRID_HEIGHT = 19;
+
+// The width and height of each tile in pixels.
+static int const TILE_SIZE = 50;
+
 // Tiles types.
-enum class eTILE 
+enum class eTILE
 {
 	WALL_SINGLE,
 	WALL_TOP_END,
@@ -44,16 +53,6 @@ enum class eTILE
 	COUNT
 };
 
-
-class Level
-{
-// Constants for the game grid size.
-static int const GRID_WIDTH = 19;
-static int const GRID_HEIGHT = 19;
-
-// The width and height of each tile in pixels.
-static int const TILE_SIZE = 50;
-
 // The level tile type.
 struct Tile
 {
@@ -76,7 +75,7 @@ public:
 	 * @param window The render window to draw the level to.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	void draw(sf::RenderWindow &window, float timeDelta) const;
+	void draw(sf::RenderWindow &window, const float timeDelta) const;
 
 	/**
 	 * 
@@ -101,7 +100,7 @@ public:
 	 * @param rowIndex The row index of the tile to check.
 	 * @return The index of the given tile.
 	 */
-	eTILE GetTileType(const sf::Vector2f position) const;
+	bool isItGoal(const sf::Vector2f position) const;
 
 	/**
 	 * Gets the current floor number.

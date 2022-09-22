@@ -88,15 +88,14 @@ sf::Vector2f Level::getPosition() const
 	return sf::Vector2f(static_cast<float>(m_origin.x), static_cast<float>(m_origin.y));
 }
 
-eTILE Level::GetTileType(const sf::Vector2f position) const
+bool Level::isItGoal(const sf::Vector2f position) const
 {
 	const auto&& [columnIndex, rowIndex] = locationToMapCord(position);
 	if (!TileIsValid(columnIndex, rowIndex))
 	{
-		return eTILE::EMPTY; // failed
+		return false;
 	}
-	// Fetch the id.
-	return m_grid[columnIndex][rowIndex].type;
+	return m_grid[columnIndex][rowIndex].type == eTILE::WALL_DOOR_UNLOCKED;
 }
 
 
@@ -563,7 +562,7 @@ std::vector<std::shared_ptr<Torch>>& Level::GetTorches()
 
 
 // Draws the level grid to the given render window.
-void Level::draw(sf::RenderWindow& window, float timeDelta) const
+void Level::draw(sf::RenderWindow& window, const float timeDelta) const
 {
 	// Draw the level tiles.
 	for (int i = 0; i < GRID_WIDTH; i++)

@@ -38,7 +38,7 @@ public:
 	 * @param timeDelta The time, in MS, since the last game tick.
 	 * @param level A reference to the level object.
 	 */
-	void update(float timeDelta, Level& level);
+	void update(const float timeDelta, Level& level);
 
 	/**
 	 * Gets the player's current traits.
@@ -67,13 +67,13 @@ public:
 	 * Set the player's health.
 	 * @param healthValue The player's new health.
 	 */
-	void SetHealth(int healthValue);
+	void SetHealth(const int healthValue);
 
 	/**
 	 * Set the player's mana level.
 	 * @param mana The new mana value.
 	 */
-	void SetMana(int manaValue);
+	void SetMana(const int manaValue);
 
 	/**
 	 * Chooses random traits for the character.
@@ -96,13 +96,13 @@ public:
 	 * Checks if the player can take damage.
 	 * @return True if the player can take damage.
 	 */
-	bool CanTakeDamage();
+	bool CanTakeDamage() const;
 
 	/**
 	 * Apply the given amount of damage to the player.
 	 * @param damage The amount of damage to deal to the player.
 	 */
-	void Damage(int damage);
+	void Damage(const int damage);
 
 	const std::string getUiTextureID() const;
 	const std::string getProjectileTextureID() const;
@@ -115,7 +115,7 @@ private:
 	 * @param level A reference to the level object.
 	 * @return True if the given movement will result in a collision.
 	 */
-	bool CausesCollision(sf::Vector2f movement, const Level& level);
+	bool CausesCollision(const sf::Vector2f movement, const Level& level);
 
 private:
 	// Player classes.

@@ -155,7 +155,7 @@ void Humanoid::generateArmor()
 }
 
 // Overrides the update event of Enemy.
-void Humanoid::update(float timeDelta)
+void Humanoid::update(const float timeDelta)
 {
 	// Call parent functionality.
 	Enemy::update(timeDelta);

@@ -27,7 +27,7 @@ public:
 	 * @param window The render window to draw to.
 	 * @param font The font to use when drawing the item name.
 	 */
-	void draw(sf::RenderWindow& window, float timeDelta);
+	void draw(sf::RenderWindow& window, const float timeDelta);
 
 	/**
 	 * Gets the name of the item.
@@ -46,7 +46,7 @@ protected:
 	 * Sets the item name.
 	 * @param name The new item name.
 	 */
-	void setItemName(std::string name);
+	void setItemName(const std::string name);
 
 public:
 	/**

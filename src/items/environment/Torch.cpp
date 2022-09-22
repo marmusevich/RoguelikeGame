@@ -9,7 +9,7 @@ Torch::Torch(const Scene& scene)
 }
 
 // update the brightness of the torch.
-void Torch::update(float timeDelta)
+void Torch::update(const float timeDelta)
 {
 	// Generate a random number between 80 and 120, divide by 100 and store as float between .8 and 1.2.
 	m_brightness = Random(80, 120) / 100.f;
@@ -17,7 +17,7 @@ void Torch::update(float timeDelta)
 }
 
 // Returns the brightness of the torch.
-float Torch::GetBrightness()
+float Torch::GetBrightness() const
 {
 	return m_brightness;
 }

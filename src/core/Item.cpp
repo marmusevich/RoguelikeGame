@@ -22,7 +22,7 @@ std::string Item::getItemName() const
 }
 
 // Sets the item name.
-void Item::setItemName(std::string name)
+void Item::setItemName(const std::string name)
 {
 	// Store new name.
 	m_name = name;
@@ -44,7 +44,7 @@ eITEM Item::getType() const
 }
 
 // Draws the item and its name if it has one.
-void Item::draw(sf::RenderWindow& window, float timeDelta)
+void Item::draw(sf::RenderWindow& window, const float timeDelta)
 {
 	// Draw the object.
 	Object::draw(window, timeDelta);

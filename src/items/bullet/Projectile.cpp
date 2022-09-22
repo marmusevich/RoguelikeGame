@@ -1,7 +1,7 @@
 #include "items/bullet/Projectile.hpp"
 
 // Default constructor.
-Projectile::Projectile(const Scene& scene, const std::string& textureId, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target)
+Projectile::Projectile(const Scene& scene, const std::string& textureId, const sf::Vector2f origin, const sf::Vector2f screenCenter, const sf::Vector2f target)
 	: tBase(scene)
 {
 	// Create the sprite.
@@ -22,7 +22,7 @@ Projectile::Projectile(const Scene& scene, const std::string& textureId, sf::Vec
 }
 
 // update the projectile.
-void Projectile::update(float timeDelta)
+void Projectile::update(const float timeDelta)
 {
 	// update rotation.
 	m_sprite.setRotation(m_sprite.getRotation() + (400.f * timeDelta));

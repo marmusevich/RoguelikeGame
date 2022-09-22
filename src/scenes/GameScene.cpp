@@ -177,7 +177,7 @@ void GameScene::LoadUI()
 }
 
 
-void GameScene::afterLoad(bool isLoaded)
+void GameScene::afterLoad(const bool isLoaded)
 {
     m_text.setFont(getResourceManager().get<NResurceManagement::EResourceType::Font>("font"));
 
@@ -335,7 +335,7 @@ void GameScene::PopulateLevel()
 }
 
 // Spawns a given object type at a random location within the map. Has the option to explicitly set a spawn location.
-void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
+void GameScene::SpawnItem(const eITEM itemType, const sf::Vector2f position)
 {
     std::unique_ptr<Item> item;
 
@@ -384,7 +384,7 @@ void GameScene::SpawnItem(eITEM itemType, sf::Vector2f position)
 }
 
 // Spawns a given number of enemies in the level.
-void GameScene::SpawnEnemy(eENEMY enemyType, sf::Vector2f position)
+void GameScene::SpawnEnemy(const eENEMY enemyType, const sf::Vector2f position)
 {
     // Spawn location of enemy(s).
     sf::Vector2f spawnLocation;
@@ -449,7 +449,7 @@ void GameScene::GenerateLevelGoal()
     m_activeGoal = true;
 }
 
-std::string GameScene::MakeGoalString()
+std::string GameScene::MakeGoalString() const
 {
     std::ostringstream ss;
 
@@ -471,10 +471,10 @@ std::string GameScene::MakeGoalString()
 //--------------------------------------------------------------------------------------------------------------------------------
 
 // Updates the game.
-void GameScene::update(float timeDelta)
+void GameScene::update(const float timeDelta)
 {
     // First check if the player is at the exit. If so there's no need to update anything.
-    if (m_level->GetTileType(m_player->getPosition()) == eTILE::WALL_DOOR_UNLOCKED)
+    if (m_level->isItGoal(m_player->getPosition()))
     {
         ReSpawnLevel();
     }
@@ -539,7 +539,7 @@ void GameScene::update(float timeDelta)
     }
 }
 
-sf::Vector2f GameScene::updatePlayer(float timeDelta)
+sf::Vector2f GameScene::updatePlayer(const float timeDelta)
 {
     
     m_player->update(timeDelta, *m_level);
@@ -565,7 +565,7 @@ sf::Vector2f GameScene::updatePlayer(float timeDelta)
 }
 
 // Updates the level light.
-void GameScene::UpdateLight(sf::Vector2f playerPosition)
+void GameScene::UpdateLight(const sf::Vector2f playerPosition)
 {
     for (sf::Sprite& sprite : m_lightGrid)
     {
@@ -666,7 +666,7 @@ void GameScene::UpdateLight(sf::Vector2f playerPosition)
 }
 
 // Updates all items in the level.
-void GameScene::UpdateItems(sf::Vector2f playerPosition)
+void GameScene::UpdateItems(const sf::Vector2f playerPosition)
 {
     // update all items.
     auto itemIterator = m_items.begin();
@@ -760,7 +760,7 @@ void GameScene::UpdateItems(sf::Vector2f playerPosition)
 }
 
 // Updates all enemies in the level.
-void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
+void GameScene::UpdateEnemies(const sf::Vector2f playerPosition, const float timeDelta)
 {
     // Store player tile.
     const auto playerPos = m_level->locationToMapCord(playerPosition);
@@ -869,7 +869,7 @@ void GameScene::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 }
 
 // Updates all projectiles in the level.
-void GameScene::UpdateProjectiles(float timeDelta)
+void GameScene::UpdateProjectiles(const float timeDelta)
 {
     auto projectileIterator = m_playerProjectiles.begin();
     while (projectileIterator != m_playerProjectiles.end())
@@ -894,7 +894,7 @@ void GameScene::UpdateProjectiles(float timeDelta)
 //--------------------------------------------------------------------------------------------------------------------------------
 
 // Draw the current game scene.
-void GameScene::draw(sf::RenderWindow& window, float timeDelta)
+void GameScene::draw(sf::RenderWindow& window, const float timeDelta)
 {
     // Clear the screen.
     window.clear(sf::Color(3, 3, 3, 225));		// Gray
@@ -985,7 +985,7 @@ void GameScene::drawUI(sf::RenderWindow& window, const float timeDelta, const Ga
 
 
 // Draw the given string at the given position.
-void GameScene::DrawString(sf::RenderWindow& window, std::string text, sf::Vector2f position, unsigned int size)
+void GameScene::DrawString(sf::RenderWindow& window, const std::string text, const sf::Vector2f position, const unsigned int size)
 {
     //TODO way m_text is class member, maybe prefer local variable
     //sf::Text text;
@@ -1001,7 +1001,7 @@ void GameScene::DrawString(sf::RenderWindow& window, std::string text, sf::Vecto
 //--------------------------------------------------------------------------------------------------------------------------------
 
 // Plays the given sound effect, with randomized parameters.
-void GameScene::PlaySound(sf::Sound& sound, sf::Vector2f position)
+void GameScene::PlaySound(sf::Sound& sound, const sf::Vector2f position)
 {
     // Generate and set a random pitch.
     float pitch = Random(95, 105) / 100.f;

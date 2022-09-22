@@ -43,11 +43,11 @@ public:
 
 	virtual bool beforeLoad() override;
 
-	virtual void afterLoad(bool isLoaded) override;
+	virtual void afterLoad(const bool isLoaded) override;
 
-	virtual void update(float timeDelta) override;
+	virtual void update(const float timeDelta) override;
 
-	virtual void draw(sf::RenderWindow& window, float timeDelta) override;
+	virtual void draw(sf::RenderWindow& window, const float timeDelta) override;
 
 private:
 
@@ -69,7 +69,7 @@ private:
 	 * @param sound A reference to the sound to play.
 	 * @param position The position to play the sound at.
 	 */
-	void PlaySound(sf::Sound& sound, sf::Vector2f position = { 0.f, 0.f });
+	void PlaySound(sf::Sound& sound, const sf::Vector2f position = { 0.f, 0.f });
 
 	/**
 	 * Populates the current game room with items and enemies.
@@ -92,7 +92,7 @@ private:
 	 * @param position The top-left position of the string.
 	 * @param size (Optional) The font-size to use. Default value is 10.
 	 */
-	void DrawString(sf::RenderWindow& window, std::string text, sf::Vector2f position, unsigned int size = 10);
+	void DrawString(sf::RenderWindow& window, const std::string text, const sf::Vector2f position, const unsigned int size = 10);
 
 	/**
 	 * Spawns a given item within the level.
@@ -100,7 +100,7 @@ private:
 	 * @param itemType The type of the item to spawn.
 	 * @param position The position to spawn the item at.
 	 */
-	void SpawnItem(eITEM itemType, sf::Vector2f position = { -1.f, -1.f });
+	void SpawnItem(const eITEM itemType, const sf::Vector2f position = { -1.f, -1.f });
 
 	/**
 	* Spawns a given enemy within the level.
@@ -108,7 +108,7 @@ private:
 	* @param enemyType The type of the enemy to spawn.
 	* @param position The position to spawn the enemy at.
 	*/
-	void SpawnEnemy(eENEMY enemyType, sf::Vector2f position = { -1.f, -1.f });
+	void SpawnEnemy(const eENEMY enemyType, const sf::Vector2f position = { -1.f, -1.f });
 
 	/**
 	 * Constructs the grid of sprites that are used to draw the game light system.
@@ -125,28 +125,28 @@ private:
 	 * Updates the level light.
 	 * @param playerPosition The position of the players within the level.
 	 */
-	void UpdateLight(sf::Vector2f playerPosition);
+	void UpdateLight(const sf::Vector2f playerPosition);
 	/**
 	 * Updates all items in the level.
 	 * @param playerPosition The position of the players within the level.
 	 */
-	void UpdateItems(sf::Vector2f playerPosition);
+	void UpdateItems(const sf::Vector2f playerPosition);
 	/**
 	 * Updates all enemies in the level.
 	 * @param playerPosition The position of the players within the level.
 	 * @param timeDelta The amount of time that has passed since the last update.
 	 */
-	void UpdateEnemies(sf::Vector2f playerPosition, float timeDelta);
+	void UpdateEnemies(const sf::Vector2f playerPosition, const float timeDelta);
 	/**
 	 * Updates all projectiles in the level.
 	 * @param timeDetla The amount of time that has passed since the last update.
 	 */
-	void UpdateProjectiles(float timeDelta);
-	sf::Vector2f updatePlayer(float timeDelta);
+	void UpdateProjectiles(const float timeDelta);
+	sf::Vector2f updatePlayer(const float timeDelta);
 
 	void ReSpawnLevel();
 
-	std::string MakeGoalString();
+	std::string MakeGoalString() const;
 
 private:
 	// An array of the different views the game needs.

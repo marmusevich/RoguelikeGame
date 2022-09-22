@@ -25,7 +25,7 @@ Enemy::Enemy(const Scene& scene)
 }
 
 // Overrides the default update function of Entity.
-void Enemy::update(float timeDelta)
+void Enemy::update(const float timeDelta)
 {
 	// Move towards current target location.
 	if (!m_targetPositions.empty())
@@ -54,7 +54,7 @@ void Enemy::update(float timeDelta)
 	tBase::update(timeDelta);
 }
 
-void Enemy::draw(sf::RenderWindow& window, float timeDelta)
+void Enemy::draw(sf::RenderWindow& window, const float timeDelta)
 {
 	tBase::draw(window, timeDelta);
 
@@ -62,7 +62,7 @@ void Enemy::draw(sf::RenderWindow& window, float timeDelta)
 #ifndef NDEBUG
 for (const auto p : m_targetPositions)
 {
-	sf::CircleShape shape(m_speed / 20);
+	sf::CircleShape shape(m_speed / 20.f);
 	shape.setFillColor(debugPathColor);
 	shape.setPosition(p);
 	window.draw(shape);
@@ -72,7 +72,7 @@ for (const auto p : m_targetPositions)
 }
 
 // Recalculates the enemies path finding.
-void Enemy::invokeAI(const Level& level, sf::Vector2f playerPosition)
+void Enemy::invokeAI(const Level& level, const sf::Vector2f playerPosition)
 {
 	// [WA] in future each enemy type has self AI logic
 
@@ -99,13 +99,13 @@ void Enemy::invokeAI(const Level& level, sf::Vector2f playerPosition)
 }
 
 // Applies the given amount of damage to the enemy.
-void Enemy::Damage(int damage)
+void Enemy::Damage(const int damage)
 {
 	m_health -= damage;
 }
 
 // Checks if the enemy has taken enough damage that they are now dead.
-bool Enemy::IsDead()
+bool Enemy::IsDead() const
 {
 	return (m_health <= 0);
 }

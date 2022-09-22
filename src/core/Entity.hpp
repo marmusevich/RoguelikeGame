@@ -33,7 +33,7 @@ public:
 	 * Override the default Object::update function.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	virtual void update(float timeDelta) override;
+	virtual void update(const float timeDelta) override;
 
 	/**
 	 * Gets the entities health.
@@ -81,33 +81,31 @@ public:
 	 * Sets the entities attack stat.
 	 * @param attackValue The player's new attack stat value.
 	 */
-	void setAttack(int attackValue);
+	void setAttack(const int attackValue);
 
 	/**
 	 * Sets the entities defense stat.
 	 * @param defenseValue The player's new defense stat value.
 	*/
-	 void setDefense(int defenseValue);
+	 void setDefense(const int defenseValue);
 
 	/**
 	 * Sets the entities strength stat.
 	 * @param strengthValue The player's new strength stat value.
 	 */
-	void setStrength(int strengthValue);
+	void setStrength(const int strengthValue);
 
 	/**
 	 * Sets the entities dexterity stat.
 	 * @param dexterityValue The player's new dexterity stat value.
 	 */
-	void setDexterity(int dexterityValue);
+	void setDexterity(const int dexterityValue);
 
 	/**
 	 * Sets the entities stamina stat.
 	 * @param staminaValue The player's new stamina stat value.
 	 */
-	void setStamina(int staminaValue);
-
-	int getCurrentTextureIndex();
+	void setStamina(const int staminaValue);
 
 protected:
 	// A vector of all texture IDs.

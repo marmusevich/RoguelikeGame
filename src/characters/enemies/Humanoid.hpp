@@ -18,7 +18,7 @@ public:
 	 * Overrides the update event of Enemy.
 	 * @param timeDelta The time that has elapsed since the last update.
 	 */
-	void update(float timeDelta) override;
+	void update(const float timeDelta) override;
 
 private:
 	static const std::size_t TEXTURE_COUNT = static_cast<int>(eANIMATION_STATE::COUNT);
