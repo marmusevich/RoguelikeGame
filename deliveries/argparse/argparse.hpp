@@ -107,7 +107,7 @@ namespace argparse {
     template<> inline double get(const std::string &v) { return std::stod(v); }
     template<> inline unsigned char get(const std::string &v) { return get<char>(v); }
     template<> inline unsigned int get(const std::string &v) { return std::stoul(v); }
-    template<> inline unsigned short get(const std::string &v) { return std::stoul(v); }
+    template<> inline unsigned short get(const std::string &v) { return static_cast<unsigned short>( std::stoul(v)); } //warning C4244 : 'return' : conversion from 'unsigned long' to 'unsigned short', possible loss of data
     template<> inline unsigned long get(const std::string &v) { return std::stoul(v); }
 
     template<typename T> inline T get(const std::string &v) { // remaining types
@@ -257,6 +257,7 @@ namespace argparse {
                 this->value_ = value;
                 datap->convert(value);
             } catch (const std::invalid_argument &e) {
+                (void)e;//supress, warning C4101 : 'e' : unreferenced local variable
                 error = "Invalid argument, could not convert \"" + value + "\" for " + _get_keys() + " (" + help + ")";
             } catch (const std::runtime_error &e) {
                 error = "Invalid argument \"" + value + "\" for " + _get_keys() + " (" + help + "). Error: " + e.what();
