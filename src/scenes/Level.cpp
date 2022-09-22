@@ -39,7 +39,7 @@ Level::Level(const sf::Vector2u screenSize, const Scene& scene)
 	}
 
 	// Generate a random color and apply it to the level tiles.
-	SetColor(RandomColor(100u, 201u));
+	SetColorAllTile(RandomColor(100u, 201u));
 
 	m_textureMatch_WA[eTILE::FLOOR_ALT] = "spr_tile_floor_alt";
 	m_textureMatch_WA[eTILE::FLOOR] = "spr_tile_floor";
@@ -120,7 +120,7 @@ void Level::SetTile(int columnIndex, int rowIndex, eTILE tileType)
 }
 
 // Sets the overlay color of the level tiles.
-void Level::SetColor(sf::Color tileColor)
+void Level::SetColorAllTile(sf::Color tileColor)
 {
 	for (int i = 0; i < GRID_WIDTH; i++)
 	{
@@ -466,7 +466,7 @@ void Level::GenerateLevel()
 		m_floorNumber++;
 
 		// Generate a random color and apply it to the level tiles.
-		SetColor(RandomColor(100u, 201u));
+		SetColorAllTile(RandomColor(100u, 201u));
 	}
 
 	// Add entrance and exit tiles to the level.
@@ -555,7 +555,7 @@ void Level::SpawnTorches(int torchCount)
 
 
 // Gets a vector of all torches in the level.
-std::vector<std::shared_ptr<Torch>>& Level::GetTorches()
+const std::vector<std::shared_ptr<Torch>>& Level::GetTorches() const
 {
 	return m_torches;
 }

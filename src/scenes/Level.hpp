@@ -92,7 +92,7 @@ public:
 	 * Gets a vector of all torches in the level.
 	 * @return A vector of shared_ptrs containing all torches in the level.
 	 */
-	std::vector<std::shared_ptr<Torch>>& GetTorches();
+	const std::vector<std::shared_ptr<Torch>>& GetTorches() const;
 
 	/**
 	 * Gets the index of the given tile.
@@ -177,12 +177,6 @@ public:
 	bool IsSolid(const sf::Vector2f position) const;
 
 	/**
-	 * Sets the overlay color of the level tiles.
-	 * @param tileColor The new tile overlay color.
-	 */
-	void SetColor(sf::Color tileColor);
-
-	/**
 	 * Generates a random level.
 	 */
 	void GenerateLevel();
@@ -253,6 +247,12 @@ private:
 	 * @return True if the tile is valid.
 	 */
 	bool TileIsValid(int columnIndex, int rowIndex) const;
+
+	/**
+	 * Sets the overlay color of the level tiles.
+	 * @param tileColor The new tile overlay color.
+	 */
+	void SetColorAllTile(sf::Color tileColor);
 
 private:
 

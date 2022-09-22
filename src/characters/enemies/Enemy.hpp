@@ -2,9 +2,12 @@
 #define ENEMY_H
 
 #include "core/Entity.hpp"
-#include "scenes/Level.hpp"
 
 #include <list>
+
+
+//fwd
+class Level;
 
 // Enemy types.
 enum class eENEMY 
