@@ -11,7 +11,7 @@
 	<!-- <Font file_name = "fonts/arial.TTF" id = "font"/> -->
 
 	<Texture file_name = "spr_torch.png" />
-	<Texture file_name = "spr_light_grid.png" />
+	<Texture file_name = "spr_shadow_grid.png" />
 	<Texture file_name = "spr_path.png" />
 
 	<Texture file_name = "tiles/spr_tile_floor_alt.png" />

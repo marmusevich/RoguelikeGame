@@ -222,8 +222,8 @@ void GameScene::afterLoad(const bool isLoaded)
     // Generate a level.
     GenerateLevel();
 
-    // Builds the light grid.
-    ConstructLightGrid();
+    // Builds the shadow grid.
+    ConstructShadowGrid();
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------
@@ -264,10 +264,13 @@ void GameScene::GenerateLevel()
 
 }
 
-// Constructs the grid of sprites that are used to draw the game light system.
-void GameScene::ConstructLightGrid()
+// Constructs the grid of sprites that are used to draw the game shadow system.
+void GameScene::ConstructShadowGrid()
 {
-    // Calculate the number of tiles in the grid. Each light tile is 25px square.
+    //Each shadow tile is 25px square.
+    const int size_texture_shadow_grid = 25.f;
+
+    // Calculate the number of tiles in the grid. 
     sf::IntRect levelArea;
 
     // Define the bounds of the level.
@@ -276,30 +279,23 @@ void GameScene::ConstructLightGrid()
     levelArea.width = m_level->getSize().x * m_level->getTileSize();
     levelArea.height = m_level->getSize().y * m_level->getTileSize();
 
-    int width, height, lightTotal;
 
-    width = levelArea.width / 25;
-    height = levelArea.height / 25;
+    const int width = levelArea.width / size_texture_shadow_grid;
+    const int height = levelArea.height / size_texture_shadow_grid;
+    const int shadowTotal = width * height;
 
-    lightTotal = width * height;
+    const auto& shadow_texture = getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_shadow_grid");
 
     // Create all tiles.
-    for (int i = 0; i < lightTotal; i++)
+    for (int i = 0; i < shadowTotal; i++)
     {
-        // Create the tile.
-        sf::Sprite lightSprite;
-
-        // Set sprite texture.
-        lightSprite.setTexture(getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_light_grid"));
-
         // Set the position of the tile.
-        int xPos = levelArea.left + ((i % width) * 25);
-        int yPos = levelArea.top + ((i / width) * 25);
+        const float xPos = levelArea.left + ((i % width) * size_texture_shadow_grid);
+        const float yPos = levelArea.top + ((i / width) * size_texture_shadow_grid);
 
-        lightSprite.setPosition(static_cast<float>(xPos), static_cast<float>(yPos));
-
-        // Add the sprite to our light vector.
-        m_lightGrid.push_back(lightSprite);
+        sf::Sprite shadowSprite(shadow_texture);
+        shadowSprite.setPosition(xPos, yPos);
+        m_shadowGrid.push_back(shadowSprite);
     }
 }
 
@@ -482,41 +478,21 @@ void GameScene::update(const float timeDelta)
     {
         // update the player.
         const sf::Vector2f playerPosition = updatePlayer(timeDelta);
-        //const int playerDirection = m_player->getCurrentTextureIndex() % 4;
 
         // update all items.
         UpdateItems(playerPosition);
-        // update level light.
-        UpdateLight(playerPosition);
+        // update level shadow.
+        std::optional<sf::Vector2f> distanceToNearestTorch = UpdateShadow(playerPosition);
+        if (distanceToNearestTorch)
+        {
+            m_fireSound.setPosition(distanceToNearestTorch.value().x, distanceToNearestTorch.value().y, 0.0f);
+        }
         
         // update all enemies.
         UpdateEnemies(playerPosition, timeDelta);
 
         // update all projectiles.
         UpdateProjectiles(timeDelta);
-
-        // Find which torch is nearest the player.
-        auto torches = m_level->GetTorches();
-
-        // If there are torches.
-        if (!torches.empty())
-        {
-            // Store the first torch as the current closest.
-            std::shared_ptr<Torch> nearestTorch = torches.front();
-            float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->getPosition());
-
-            for (std::shared_ptr<Torch> torch : torches)
-            {
-                // Get the distance to the player.
-                float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->getPosition());
-                if (distanceToPlayer < lowestDistanceToPlayer)
-                {
-                    lowestDistanceToPlayer = distanceToPlayer;
-                    nearestTorch = torch;
-                }
-            }
-            m_fireSound.setPosition(nearestTorch->getPosition().x, nearestTorch->getPosition().y, 0.0f);
-        }
 
         // Check if we have completed an active goal.
         if (m_activeGoal)
@@ -564,18 +540,22 @@ sf::Vector2f GameScene::updatePlayer(const float timeDelta)
     return playerPosition;
 }
 
-// Updates the level light.
-void GameScene::UpdateLight(const sf::Vector2f playerPosition)
+// Updates the level shadow.
+std::optional<sf::Vector2f> GameScene::UpdateShadow(const sf::Vector2f playerPosition)
 {
-    for (sf::Sprite& sprite : m_lightGrid)
+    std::optional<sf::Vector2f> distanceToPlayer;
+
+    // Get all torches from the level.
+    auto torches = m_level->GetTorches();
+
+
+    for (sf::Sprite& shadow : m_shadowGrid)
     {
         float tileAlpha = 255.f;			// Tile alpha.
-        float distance = 0.f;				// The distance between player and tile.
-
         // Calculate distance between tile and player.
-        distance = DistanceBetweenPoints(sprite.getPosition(), playerPosition);
+        float distance = DistanceBetweenPoints(shadow.getPosition(), playerPosition); // The distance between player and tile.
 
-        // Calculate tile transparency.
+        // Calculate tile transparency by PLAYER.
         if (distance < 200.f)
         {
             tileAlpha = 0.f;
@@ -585,84 +565,53 @@ void GameScene::UpdateLight(const sf::Vector2f playerPosition)
             tileAlpha = (51.f * (distance - 200.f)) / 10.f;
         }
 
-
-
-        //bool isOn = false;
-        //sf::Vector2f d = playerPosition - sprite.getPosition();
-        //if (direction == 1 && d.y <= 0)
-        //{
-        //	isOn = true;
-        //}
-        //else if (direction == 0 && d.y >= 0)
-        //{
-        //	isOn = true;
-        //}
-        //else if (direction == 3 && d.x >= 0)
-        //{
-        //	isOn = true;
-        //}
-        //else if (direction == 2 && d.x <= 0)
-        //{
-        //	isOn = true;
-        //}
-
-        //if (distance < 100.f)
-        //{
-        //	tileAlpha = 0.f;
-        //}
-        //else if (distance < 200.f)
-        //{
-        //	if (isOn )
-        //	{
-        //		//tileAlpha = std::abs(distance - 50) * (255 - 0) / (200 - 50);
-        //		tileAlpha = 100;
-        //	}
-        //	else
-        //	{
-        //		//tileAlpha = (distance - 50) * (255 - 0) / (100 - 50);
-        //		tileAlpha = 230;
-        //	}
-        //}
-
-
-        //WALK_UP,
-        //	WALK_DOWN,
-        //	WALK_RIGHT,
-        //	WALK_LEFT,
-
-
-
-        //tileAlpha = std::min(0.0f, std::max(255.0f - distance,  255.0f));
-
-        // Get all torches from the level.
-        auto torches = m_level->GetTorches();
-
-        // If there are torches.
-        if (!torches.empty())
+        // Correcte tile transparency by torches.
+        for (std::shared_ptr<Torch> torch : torches)
         {
-            // update the light surrounding each torch.
-            for (std::shared_ptr<Torch> torch : torches)
+            // If the shadow tile is within range of the torch.
+            distance = DistanceBetweenPoints(shadow.getPosition(), torch->getPosition());
+            if (distance < 100.f)
             {
-                // If the light tile is within range of the torch.
-                distance = DistanceBetweenPoints(sprite.getPosition(), torch->getPosition());
-                if (distance < 50.f)
-                    //if (distance < 100.f)
-                {
-                    // Edit its alpha.
-                    tileAlpha -= (tileAlpha - ((tileAlpha / 100.f) * distance)) * torch->GetBrightness();
-                }
-            }
-
-            // Ensure alpha does not go negative.
-            if (tileAlpha < 0)
-            {
-                tileAlpha = 0;
+                // Edit its alpha.
+                tileAlpha -= (tileAlpha - ((tileAlpha / 100.f) * distance)) * torch->GetBrightness();
             }
         }
 
+        // Ensure alpha does not go negative.
+        if (tileAlpha < 0)
+        {
+            tileAlpha = 0.0;
+        }
+
         // Set the sprite transparency.
-        sprite.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(tileAlpha)));
+        shadow.setColor(sf::Color(255, 255, 255, static_cast<sf::Uint8>(tileAlpha)));
     }
+
+
+    //algoritm get min distace
+    if (!torches.empty())
+    {
+        // Store the first torch as the current closest.
+        std::shared_ptr<Torch> nearestTorch = torches.front();
+        float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->getPosition());
+
+        for (std::shared_ptr<Torch> torch : torches)
+        {
+            // Find which torch is nearest the player.
+            {
+                // Get the distance to the player.
+                float distToPlayer = DistanceBetweenPoints(playerPosition, torch->getPosition());
+                if (distToPlayer < lowestDistanceToPlayer)
+                {
+                    lowestDistanceToPlayer = distToPlayer;
+                    nearestTorch = torch;
+                }
+            }
+        }
+        distanceToPlayer = nearestTorch->getPosition();
+    }
+
+    return distanceToPlayer;
 }
 
 // Updates all items in the level.
@@ -932,10 +881,10 @@ void GameScene::drawGame(sf::RenderWindow& window, const float timeDelta, const 
     // Draw the player.
     m_player->draw(window, timeDelta);
 
-    // Draw level light.
-    for (const sf::Sprite& sprite : m_lightGrid)
+    // Draw level shadow.
+    for (const sf::Sprite& shadow : m_shadowGrid)
     {
-        window.draw(sprite);
+        window.draw(shadow);
     }
 }
 

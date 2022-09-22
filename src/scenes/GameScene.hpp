@@ -21,6 +21,7 @@
 #include <memory>
 #include <array>
 #include <string>
+#include <optional>
 
  
 
@@ -111,9 +112,9 @@ private:
 	void SpawnEnemy(const eENEMY enemyType, const sf::Vector2f position = { -1.f, -1.f });
 
 	/**
-	 * Constructs the grid of sprites that are used to draw the game light system.
+	 * Constructs the grid of sprites that are used to draw the game shadow system.
 	 */
-	void ConstructLightGrid();
+	void ConstructShadowGrid();
 
 	/**
 	 * Generates a level goal.
@@ -122,10 +123,10 @@ private:
 
 
 	/**
-	 * Updates the level light.
+	 * Updates the level shadow.
 	 * @param playerPosition The position of the players within the level.
 	 */
-	void UpdateLight(const sf::Vector2f playerPosition);
+	std::optional<sf::Vector2f> UpdateShadow(const sf::Vector2f playerPosition);
 	/**
 	 * Updates all items in the level.
 	 * @param playerPosition The position of the players within the level.
@@ -158,8 +159,8 @@ private:
 	// A vector that holds all the enemies within the level.
 	std::vector<std::unique_ptr<Enemy>> m_enemies;
 
-	// A vector containing all sprites that make up the lighting grid.
-	std::vector<sf::Sprite> m_lightGrid;
+	// A vector containing all sprites that make up the shadowing grid.
+	std::vector<sf::Sprite> m_shadowGrid;
 
 	// The main level object. All data and functionally regarding the level lives in this class/object.
 	std::unique_ptr<Level> m_level;
