@@ -1,0 +1,18 @@
+#[toml] see https://toml.io/en/  for format
+
+#window title
+title = "Roguelike Template"
+#frame per second
+FPS = 60
+#enable fullscreen
+fullscreen = false
+
+#use default screen param
+defMode = false
+#Video mode width, in pixels
+mode.width = 1366
+#Video mode height, in pixels
+mode.height = 768
+#Video mode pixel depth, in bits per pixels, if coment use defaul
+#mode.bitsPerPixel = 24
+

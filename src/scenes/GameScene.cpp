@@ -268,7 +268,7 @@ void GameScene::GenerateLevel()
 void GameScene::ConstructShadowGrid()
 {
     //Each shadow tile is 25px square.
-    const int size_texture_shadow_grid = 25.f;
+    const float size_texture_shadow_grid = 25.f;
 
     // Calculate the number of tiles in the grid. 
     sf::IntRect levelArea;
