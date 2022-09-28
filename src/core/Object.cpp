@@ -17,7 +17,7 @@ Object::Object(const Scene& scene)
 }
 
 // Gives the object the given sprite.
-bool Object::setSprite(const sf::Texture& texture, const bool isSmooth, const int frames, const int frameSpeed)
+bool Object::setSprite(const sf::Texture& texture, const int frames, const int frameSpeed)
 {
 	// Create a sprite from the loaded texture.
 	m_sprite.setTexture(texture);
@@ -54,9 +54,9 @@ bool Object::setSprite(const sf::Texture& texture, const bool isSmooth, const in
 	return true;
 }
 
-bool Object::setSprite(const std::string& textureId, const bool isSmooth, const int frames, const int frameSpeed)
+bool Object::setSprite(const std::string& textureId, const int frames, const int frameSpeed)
 {
-	return setSprite(getTexture(textureId), isSmooth, frames, frameSpeed);
+	return setSprite(getTexture(textureId), frames, frameSpeed);
 }
 
 // Returns the object's sprite.
@@ -68,9 +68,8 @@ sf::Sprite& Object::getSprite()
 // Sets the position of the object.
 void Object::setPosition(const sf::Vector2f position)
 {
-	m_position.x = position.x;
-	m_position.y = position.y;
-	m_sprite.setPosition(position.x, position.y);
+	m_position = position;
+	m_sprite.setPosition(position);
 }
 
 // Returns the position of the object.

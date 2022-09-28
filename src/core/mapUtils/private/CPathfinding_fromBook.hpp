@@ -37,6 +37,8 @@ private:
 
 	explicit CPathfinding_fromBook(const sf::Vector2u& mapSize);
 
+	Tile* getTile(const uint32_t columnIndex, const uint32_t rowIndex);
+
 	std::list<sf::Vector2u> pathfinding(const sf::Vector2u from, const sf::Vector2u to);
 
 	void resetMap();

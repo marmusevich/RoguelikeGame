@@ -7,10 +7,6 @@
 
 namespace NMapUtils
 {
-namespace
-{
-
-}
 
 CPathfinding_fromBook::CPathfinding_fromBook(const sf::Vector2u& mapSize)
 : mMapSize(mapSize)
@@ -29,7 +25,7 @@ void CPathfinding_fromBook::resetMap()
 {
 	for (uint32_t columnIndex = 0; columnIndex < mMapSize.x; ++columnIndex)
 	{
-		for (uint32_t rowIndex = 0; rowIndex < mMapSize.x; ++rowIndex)
+		for (uint32_t rowIndex = 0; rowIndex < mMapSize.y; ++rowIndex)
 		{
 			auto& tile = mMap[columnIndex][rowIndex];
 			tile.H = 0;
@@ -40,16 +36,29 @@ void CPathfinding_fromBook::resetMap()
 	}
 }
 
+CPathfinding_fromBook::Tile* CPathfinding_fromBook::getTile(const uint32_t columnIndex, const uint32_t rowIndex)
+{
+	if (   columnIndex >= mMapSize.x
+		|| columnIndex < 0
+		|| rowIndex >= mMapSize.y
+		|| rowIndex < 0 )
+	{
+		LOG_DEBUG << "out of map bound, map [ "<< mMapSize.x << ", " << mMapSize.y <<" ], but getting columnIndex = " << columnIndex <<", rowIndex = " << rowIndex;
+		return nullptr;
+	}
+	return &mMap[columnIndex][rowIndex];
+}
+
 std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u from, const sf::Vector2u to)
 {
 	using Tile = CPathfinding_fromBook::Tile;
 
 	// Store the start and goal nodes.
-	Tile* startNode = &mMap[from.x][from.y];
-	Tile* goalNode = &mMap[to.x][to.y];
+	Tile* startNode = getTile(from.x, from.y);
+	Tile* goalNode = getTile(to.x, to.y);
 
 	// Check we have a valid path to find. If not we can just end the function as there's no path to find.
-	if (startNode == goalNode)
+	if (startNode == nullptr || goalNode == nullptr || startNode == goalNode)
 	{
 		return std::list<sf::Vector2u>{};
 	}
@@ -108,28 +117,28 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 		Tile* node;
 
 		// Top.
-		node = &mMap[currentNode->columnIndex][currentNode->rowIndex - 1];
+		node = getTile(currentNode->columnIndex, currentNode->rowIndex - 1);
 		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(&mMap[currentNode->columnIndex][currentNode->rowIndex - 1]);
+			adjacentTiles.push_back(node);
 		}
 		// Right.
-		node = &mMap[currentNode->columnIndex + 1][currentNode->rowIndex];
+		node = getTile(currentNode->columnIndex + 1, currentNode->rowIndex);
 		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(&mMap[currentNode->columnIndex + 1][currentNode->rowIndex]);
+			adjacentTiles.push_back(node);
 		}
 		// Bottom.
-		node = &mMap[currentNode->columnIndex][currentNode->rowIndex + 1];
+		node = getTile(currentNode->columnIndex, currentNode->rowIndex + 1);
 		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(&mMap[currentNode->columnIndex][currentNode->rowIndex + 1]);
+			adjacentTiles.push_back(node);
 		}
 		// Left.
-		node = &mMap[currentNode->columnIndex - 1][currentNode->rowIndex];
+		node = getTile(currentNode->columnIndex - 1, currentNode->rowIndex);
 		if ((node != nullptr) && (node->type == eTILE_TYPE::FLOOR))
 		{
-			adjacentTiles.push_back(&mMap[currentNode->columnIndex - 1][currentNode->rowIndex]);
+			adjacentTiles.push_back(node);
 		}
 
 		// For all adjacent nodes.
@@ -193,10 +202,6 @@ std::list<sf::Vector2u> CPathfinding_fromBook::pathfinding(const sf::Vector2u fr
 
 	// 
 	std::list<sf::Vector2u> ret;
-	//ret.reverse(pathList.size());
-	
-	LOG_DEBUG << "node count = " << pathList.size();
-
 	 
 	// Store the node locations as the enemies target locations.
 	for (Tile* tile : pathList)

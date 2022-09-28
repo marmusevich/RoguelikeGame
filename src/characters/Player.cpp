@@ -81,9 +81,9 @@ Player::Player(const Scene& scene)
 	getResourceManager().mTexture->loadFromFile(m_uiTextureID, m_uiTextureID);
 
 	// Set initial sprite.
-	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), 8, 12);
 	m_currentTextureIndex = static_cast<int>(eANIMATION_STATE::WALK_UP);
-	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
+	getSpriteWA().setOrigin(sf::Vector2f(13.f, 18.f));
 
 	// Create the player's aim sprite.
 	m_aimSprite.setTexture(getTexture("spr_aim"));
@@ -121,7 +121,6 @@ void Player::update(const float timeDelta, Level& level)
 {
 	// Calculate movement speed based on the timeDelta since the last update.
 	sf::Vector2f movementSpeed(0.f, 0.f);
-	sf::Vector2f previousPosition = m_position;
 
 	// Calculate where the current movement will put us.
 	eANIMATION_STATE animState = static_cast<eANIMATION_STATE>(m_currentTextureIndex);
@@ -160,34 +159,27 @@ void Player::update(const float timeDelta, Level& level)
 		animState = eANIMATION_STATE::WALK_DOWN;
 	}
 
+	sf::Vector2f newPos = getPosition();
 	// Calculate horizontal movement.
-	if (CausesCollision(sf::Vector2f(movementSpeed.x, 0.0f), level))
+	if (!CausesCollision(sf::Vector2f(movementSpeed.x, 0.0f), level))
 	{
-		m_position.x = previousPosition.x;
-	}
-	else
-	{
-		m_position.x += movementSpeed.x;
+		newPos.x += movementSpeed.x;
 	}
 
 	// Calculate horizontal movement.
-	if (CausesCollision(sf::Vector2f(0.0f, movementSpeed.y), level))
+	if (!CausesCollision(sf::Vector2f(0.0f, movementSpeed.y), level))
 	{
-		m_position.y = previousPosition.y;
-	}
-	else
-	{
-		m_position.y += movementSpeed.y;
+		newPos.y += movementSpeed.y;
 	}
 
 	// update the sprite position
-	m_sprite.setPosition(m_position);
+	setPosition(newPos);
 
 	// Set the sprite.
 	if (m_currentTextureIndex != static_cast<int>(animState))
 	{
 		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
+		getSpriteWA().setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 	}
 
 	// set animation speed
@@ -200,7 +192,7 @@ void Player::update(const float timeDelta, Level& level)
 			// In our enum we have 4 walking sprites followed by 4 idle sprites.
 			// Given this, we can simply add 4 to a walking sprite to get its idle counterpart.
 			m_currentTextureIndex += 4;
-			m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
+			getSpriteWA().setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Stop movement animations.
 			setAnimated(false);
@@ -213,7 +205,7 @@ void Player::update(const float timeDelta, Level& level)
 		{
 			// update sprite to walking version.
 			//m_currentTextureIndex -= 4;
-			m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
+			getSpriteWA().setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 
 			// Start movement animations.
 			setAnimated(true);
@@ -347,7 +339,7 @@ void Player::Damage(int damage)
 bool Player::CausesCollision(sf::Vector2f movement, const Level& level)
 {
 	const auto STRANGE_CONST{ 14.f };
-	const sf::Vector2f newPosition = m_position + movement;
+	const sf::Vector2f newPosition = getPosition() + movement;
 
 	// Get the tiles that the four corners other player are overlapping with.
 	std::array<sf::Vector2f, 4> overlappingPos

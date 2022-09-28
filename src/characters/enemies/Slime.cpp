@@ -16,11 +16,11 @@ Slime::Slime(const Scene& scene)
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "spr_slime_idle_left";
 
 	// Set initial sprite.
-	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)]), false, 8, 12);
+	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_DOWN)]), 8, 12);
 	// Choose the random sprite color and set it.
-	m_sprite.setColor(RandomColor(100u, 255u));
+	getSpriteWA().setColor(RandomColor(100u, 255u));
 
 	// Generate a random scale between 0.5 and 1.5 and set it.
 	const float scale { Random(5, 15) / 10.0f };
-	m_sprite.setScale(sf::Vector2f(scale, scale));
+	getSpriteWA().setScale(sf::Vector2f(scale, scale));
 }

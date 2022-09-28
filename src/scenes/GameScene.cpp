@@ -280,8 +280,8 @@ void GameScene::ConstructShadowGrid()
     levelArea.height = m_level->getSize().y * m_level->getTileSize();
 
 
-    const int width = levelArea.width / size_texture_shadow_grid;
-    const int height = levelArea.height / size_texture_shadow_grid;
+    const int width = levelArea.width / static_cast<int>( size_texture_shadow_grid );
+    const int height = levelArea.height / static_cast<int>(size_texture_shadow_grid);
     const int shadowTotal = width * height;
 
     const auto& shadow_texture = getResourceManager().get<NResurceManagement::EResourceType::Texture>("spr_shadow_grid");
@@ -315,7 +315,7 @@ void GameScene::PopulateLevel()
 
 
     //debug path finding
-#ifdef NDEBUG
+//#ifdef NDEBUG
     // Spawn enemies.
     for (int i = 0; i < MAX_ENEMY_SPAWN_COUNT; i++)
     {
@@ -324,9 +324,9 @@ void GameScene::PopulateLevel()
             SpawnEnemy(Random(eENEMY::COUNT));
         }
     }
-#else
-    SpawnEnemy(eENEMY::HUMANOID);
-#endif
+//#else
+//    SpawnEnemy(eENEMY::HUMANOID);
+//#endif
 
 }
 
@@ -358,17 +358,17 @@ void GameScene::SpawnItem(const eITEM itemType, const sf::Vector2f position)
 
     case eITEM::GEM:
         item = std::make_unique<Gem>(*this);
-        item->setSprite("spr_pickup_gem", false, 8, 12);
+        item->setSprite("spr_pickup_gem", 8, 12);
         break;
 
     case eITEM::KEY:
         item = std::make_unique<Key>(*this);
-        item->setSprite("spr_pickup_key", false, 8, 12);
+        item->setSprite("spr_pickup_key", 8, 12);
         break;
 
     case eITEM::HEART:
         item = std::make_unique<Heart>(*this);
-        item->setSprite("spr_pickup_heart", false, 8, 12);
+        item->setSprite("spr_pickup_heart", 8, 12);
         break;
     }
 

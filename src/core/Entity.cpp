@@ -61,7 +61,6 @@ void Entity::update(const float timeDelta)
 		{
 			// update sprite to idle version.
 			m_currentTextureIndex += 4;
-
 			// Stop movement animations.
 			setAnimated(false);
 		}
@@ -73,7 +72,6 @@ void Entity::update(const float timeDelta)
 		{
 			// update sprite to walking version.
 			m_currentTextureIndex -= 4;
-
 			// Start movement animations.
 			setAnimated(true);
 		}
@@ -83,77 +81,65 @@ void Entity::update(const float timeDelta)
 	if (m_currentTextureIndex != static_cast<int>(animState))
 	{
 		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
+		getSpriteWA().setTexture(getTexture(m_textureIDs[m_currentTextureIndex]));
 	}
 }
 
-// Gets the entities health.
 int Entity::getHealth() const
 {
 	return m_health;
 }
 
-// Gets the entities max health.
 int Entity::getMaxHealth() const
 {
 	return m_maxHealth;
 }
 
-// Gets the entities attack.
 int Entity::getAttack() const
 {
 	return m_attack;
 }
 
-// Gets the entities defense.
 int Entity::getDefense() const
 {
 	return m_defense;
 }
 
-// Gets the entities strength.
 int Entity::getStrength() const
 {
 	return m_strength;
 }
 
-// Gets the entities dexterity.
 int Entity::getDexterity() const
 {
 	return m_dexterity;
 }
 
-// Gets the entities stamina.
 int Entity::getStamina() const
 {
 	return m_stamina;
 }
 
-// Sets the entities attack stat.
 void Entity::setAttack(const int attackValue)
 {
 	m_attack = attackValue;
 }
 
-// Sets the entities defense stat.
 void Entity::setDefense(const int defenseValue)
 {
 	m_defense = defenseValue;
 }
 
-// Sets the entities strength stat.
 void Entity::setStrength(const int strengthValue)
 {
 	m_strength = strengthValue;
 }
 
-// Sets the entities dexterity stat.
 void Entity::setDexterity(const int dexterityValue)
 {
 	m_dexterity = dexterityValue;
 }
 
-// Sets the entities stamina stat.
 void Entity::setStamina(const int staminaValue)
 {
 	m_stamina = staminaValue;

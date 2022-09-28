@@ -40,7 +40,7 @@ Humanoid::Humanoid(const Scene& scene)
 	m_textureIDs[static_cast<int>(eANIMATION_STATE::IDLE_LEFT)] = "spr_" + enemyName + "_idle_left";
 
 	// Set initial sprite.
-	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	setSprite(getTexture(m_textureIDs[static_cast<int>(eANIMATION_STATE::WALK_UP)]), 8, 12);
 
 	// Copy textures.
 	for (int i = 0; i < static_cast<int>(eANIMATION_STATE::COUNT); i++)
@@ -152,14 +152,4 @@ void Humanoid::generateArmor()
 		// Store the resulting texture.
 		m_textures[i].loadFromImage(img);
 	}
-}
-
-// Overrides the update event of Enemy.
-void Humanoid::update(const float timeDelta)
-{
-	// Call parent functionality.
-	Enemy::update(timeDelta);
-
-	// update the texture with our custom textures.
-	m_sprite.setTexture(m_textures[m_currentTextureIndex]);
 }

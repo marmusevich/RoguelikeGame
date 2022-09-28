@@ -50,6 +50,7 @@ void Item::draw(sf::RenderWindow& window, const float timeDelta)
 	Object::draw(window, timeDelta);
 
 	// Draw the item name.
-	m_text.setPosition(m_position.x - m_textOffset.x, (m_position.y - 30.f) - m_textOffset.y);
+	const auto sprPos = getPosition();
+	m_text.setPosition(sprPos.x - m_textOffset.x, (sprPos.y - 30.f) - m_textOffset.y);
 	window.draw(m_text);
 }

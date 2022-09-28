@@ -14,15 +14,15 @@ Gold::Gold(const Scene& scene)
 	// Choose a sprite based on the gold value.
 	if (this->goldValue < 9)
 	{
-		setSprite("spr_pickup_gold_small", false, 8, 12);
+		setSprite("spr_pickup_gold_small", 8, 12);
 	}
 	else if (this->goldValue >= 16)
 	{
-		setSprite("spr_pickup_gold_large", false, 8, 12);
+		setSprite("spr_pickup_gold_large", 8, 12);
 	}
 	else
 	{
-		setSprite("spr_pickup_gold_medium", false, 8, 12);
+		setSprite("spr_pickup_gold_medium", 8, 12);
 	}
 
 	// Set the item type.

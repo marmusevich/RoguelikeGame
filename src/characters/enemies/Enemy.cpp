@@ -37,7 +37,7 @@ void Enemy::update(const float timeDelta)
 	if (!m_targetPositions.empty())
 	{
 		const sf::Vector2f targetLocation{ m_targetPositions.front() };
-		m_velocity = sf::Vector2f(targetLocation.x - m_position.x, targetLocation.y - m_position.y);
+		m_velocity = targetLocation - getPosition();
 
 		if (abs(m_velocity.x) < 10.f && abs(m_velocity.y) < 10.f)
 		{
@@ -49,10 +49,7 @@ void Enemy::update(const float timeDelta)
 			m_velocity.x /= length;
 			m_velocity.y /= length;
 
-			m_position.x += m_velocity.x * (m_speed * timeDelta);
-			m_position.y += m_velocity.y * (m_speed * timeDelta);
-
-			m_sprite.setPosition(m_position);
+			setPosition(getPosition()+ m_velocity * (m_speed * timeDelta));
 		}
 	}
 
@@ -89,17 +86,15 @@ void Enemy::invokeAI(const Level& level, const sf::Vector2f playerPosition)
 	{
 		s_playerPreviousPos = playerCurrentPos;
 
-		LOG_DEBUG << "s_playerPosition = { " << s_playerPreviousPos.x << " ; " << s_playerPreviousPos.y << " } ";
-
-
-#ifdef NDEBUG
+//#ifdef NDEBUG
 		const float distanceToPlayer = 300.f;
-#else
-		const float distanceToPlayer = 30000.f;
-#endif
-		if (DistanceBetweenPoints(m_position, playerPosition) < distanceToPlayer)
+//#else
+//		const float distanceToPlayer = 30000.f;
+//#endif
+		const auto myPos = getPosition();
+		if (DistanceBetweenPoints(myPos, playerPosition) < distanceToPlayer)
 		{
-			m_targetPositions = level.pathfinding(m_position, playerPosition);
+			m_targetPositions = level.pathfinding(myPos, playerPosition);
 		}
 	}
 }

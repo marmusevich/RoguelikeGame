@@ -54,8 +54,8 @@ public:
 	 * @param frameSpeed The speed that the animation plays at. Defaults to 1.
 	 * @return true if the operation succeeded.
 	 */
-	bool setSprite(const sf::Texture& texture, const bool isSmooth, const int frames = 1, const int frameSpeed = 0);
-	bool setSprite(const std::string& textureId, const bool isSmooth, const int frames = 1, const int frameSpeed = 0);
+	bool setSprite(const sf::Texture& texture, const int frames = 1, const int frameSpeed = 1);
+	bool setSprite(const std::string& textureId, const int frames = 1, const int frameSpeed = 1);
 
 	/**
 	 * Returns a reference the object's sprite.
@@ -87,24 +87,24 @@ protected:
 	const NResurceManagement::ResourceManager& getResourceManager() const;
 	const sf::Texture& getTexture(const std::string& textureId) const;
 
-	/**
-	 * The object's sprite.
-	 */
-	sf::Sprite m_sprite;
+	// The object's sprite.
+	sf::Sprite& getSpriteWA()
+	{
+		return m_sprite;
+	}
 
-	/**
-	 * The position of the object in the game window.
-	 */
-	sf::Vector2f m_position;
 
 private:
-
-	/**
-	 * Advances the sprite by a frame.
-	 */
+	// Advances the sprite by a frame.
 	void NextFrame();
 
 private:
+	// The object's sprite.
+	sf::Sprite m_sprite;
+
+	// The position of the object in the game window.
+	sf::Vector2f m_position;
+
 	/**
 	 * The animation speed of the image if applicable.
 	 * Value is frames per second.

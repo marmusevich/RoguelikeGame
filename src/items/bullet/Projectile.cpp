@@ -5,14 +5,11 @@ Projectile::Projectile(const Scene& scene, const std::string& textureId, const s
 	: tBase(scene)
 {
 	// Create the sprite.
-	setSprite(textureId, false);
+	setSprite(textureId);
 
 	// Set the sprite position.
-	m_sprite.setPosition(origin);
-
-	// Set the position.
-	m_position = origin;
-
+	setPosition(origin);
+	
 	// Calculate the velocity of the object.
 	m_velocity = target - screenCenter;
 
@@ -25,9 +22,9 @@ Projectile::Projectile(const Scene& scene, const std::string& textureId, const s
 void Projectile::update(const float timeDelta)
 {
 	// update rotation.
-	m_sprite.setRotation(m_sprite.getRotation() + (400.f * timeDelta));
+	getSpriteWA().setRotation(getSpriteWA().getRotation() + (400.f * timeDelta));
 
 	// update position.
-	m_sprite.setPosition(m_sprite.getPosition().x + (m_velocity.x * (500 * timeDelta)), m_sprite.getPosition().y + (m_velocity.y * (500 * timeDelta)));
-	m_position = m_sprite.getPosition();
+	const auto newPos = getPosition() + m_velocity * (500 * timeDelta);
+	setPosition(newPos);
 }
